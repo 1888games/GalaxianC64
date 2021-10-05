@@ -1,0 +1,89 @@
+parsing
+flex pass 1
+flex pass 2
+flex pass 3
+Output pass
+Writing prg file: /Users/nick/Dropbox/C64/Projects/GalagaC64/Scripts/bin/main.prg
+
+Memory Map
+----------
+Default-segment:
+  *$0002-$0022 Temp vars zero page
+  *$0023-$0033 LPAX
+  *$0034-$0047 SpriteX
+  *$0048-$00ab SpriteY
+  *$00ac-$00da SpriteCopyY
+  $0801-$080d Basic
+  $080e-$080d Basic End
+  $0810-$0832 Hi score_Data
+  $0880-$08c1 Modules
+  $08c2-$09dc IRQ
+  $09dd-$0a28 Utility
+  $0a29-$0a45 Input
+  $0a46-$0ae3 Joystick
+  $0ae4-$0e7d SHIP
+  $0e7e-$0f17 CheckDead
+  $0f18-$141e Bullets
+  $141f-$1c37 Enemies Left
+  $1c38-$1f22 Maploader
+  $1f23-$22f2 WaveMovement
+  $22f3-$26be WaveMovement Mirror
+  $26bf-$273e XPaths
+  $273f-$27be YPaths
+  $27bf-$2856 WaveStartPos
+  $2857-$28c4 StagesIndex
+  $28c5-$29d8 StagesIndexLookup
+  $29d9-$32ff Challenge Paths 4-8
+  $3300-$3388 VicSpriteTable
+  $3389-$367a IRQ
+  $367b-$36fd Enemy
+  $36fe-$3775 Enemy Variables
+  $3776-$37b1 Plan
+  $37b2-$37ca Extra
+  $37cb-$37cf Enemies In Wave
+  $37d0-$37f2 Enemy Ship ID
+  $37f3-$39f4 Enemies
+  $39f5-$3c1d Spawn
+  $3c1e-$4471 Pathfinding
+  $4472-$47f5 Stage
+  $47f6-$4884 Check Complete
+  $4885-$48fa Check Spawn
+  $48fb-$4aed ---String Data
+  $4aee-$4c23 ---Text
+  $4c24-$56e3 Enemy Data
+  $56e4-$5766 Title
+  $5767-$58e7 Check Left Finish
+  $5900-$5a03 Demo Map
+  $6000-$6be9 sid
+  $6c00-$6e91 Main
+  $7400-$7503 Game Map
+  $7504-$7777 Game Tiles
+  $7800-$78ff Game Colours
+  $7900-$7937 Logo
+  $8000-$8157 Unnamed
+  $8158-$84ad Score
+  $84ae-$8a0f Bombs
+  $8a10-$8bf7 Lives
+  $8bf8-$8ec9 Pre-Stage
+  $8eca-$8f1b -Random
+  $8f1c-$8fc5 -Plot
+  $8fc6-$9231 STATS
+  $9232-$9233 GAME OVER
+  $9234-$9258 
+  $9259-$9433 DisplayGameOver
+  $9434-$99ec BEAM
+  $99ed-$9f2f -Sound
+  $9f30-$9f7a Attacks
+  $9f7b-$a38d Attackers
+  $a400-$a5ff Game ZP Backup
+  $a800-$bfff Sprites Source
+  $c400-$e57f Sprites
+  $f000-$f7ff Charset
+  $f800-$f7ff Unnamed
+  $f800-$f829 High Scores
+  $f82a-$fc60 Position
+  $fc61-$fcb4 Demo
+  $fd00-$feff SpriteCharLookup
+
+Writing Vice symbol file: /Users/nick/Dropbox/C64/Projects/GalagaC64/Scripts/bin/main.vs
+Writing Symbol file: main.sym
