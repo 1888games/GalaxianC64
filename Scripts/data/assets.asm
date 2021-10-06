@@ -16,7 +16,7 @@
 * = $f000 "Charset"
 
 	CHAR_SET:
-		.import binary "../assets/charpad/galaxian_W - Chars.bin"   //roll 12!
+		.import binary "../assets/charpad/galaxian_W2 - Chars.bin"   //roll 12!
 
 * = $5900 "Demo Map" 
 MAP_DEMO: .import binary "../assets/charpad/galaga_D - Demo (8bpc, 20x13).bin"

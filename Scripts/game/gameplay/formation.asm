@@ -122,7 +122,7 @@ FORMATION: {
 				.byte 0, 1, 0, 1, 0, 1, 0, 1
 				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
 				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
-				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+				.byte 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 				.byte 0, 1
 
 
@@ -204,7 +204,7 @@ FORMATION: {
 	Position:	.byte 0
 	PreviousPosition: .byte 0
 	Direction:	.byte 1
-	Speeds:		.byte 12, 18
+	Speeds:		.byte 7, 12
 	SpreadPosition:	.byte 0
 
 

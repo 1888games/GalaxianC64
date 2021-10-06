@@ -22,7 +22,7 @@ BULLETS: {
 	PlayerShooting:	.byte 0
 	PlayerLookup:	.byte 0, 0, 1, 1
 
-	.label SPEED_MSB = 4
+	.label SPEED_MSB = 7
 	.label SPEED_LSB = 20
 	.label CooldownTime = 3
 	.label SpriteYOffset = 12
@@ -641,8 +641,10 @@ BULLETS: {
 			lda CharX, x
 			sec
 			sbc ZP.Amount
-			cmp #2
+			cmp #1
 			bcs EndLoop
+
+			jmp NoOffsetCheck
 
 			cmp #1
 			beq NoOffsetCheck
