@@ -67,7 +67,7 @@ PRE_STAGE: {
 		sta STARS.Scrolling
 		sta GameStarted
 
-		lda #24
+		lda #28
 		sta STARS.MaxColumns
 
 		lda #TRUE

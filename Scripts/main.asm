@@ -41,9 +41,12 @@ MAIN: {
 	#import "data/enemy_data.asm"
 	#import "game/system/title.asm"
 
+
 	* = $f800
 	#import "game/system/hi_score.asm"
 	#import "game/system/demo.asm"
+
+		
 
  	* = $8000
 
@@ -56,6 +59,7 @@ MAIN: {
 	#import "common/plot.asm"
 
 
+
 	#import "game/system/stats.asm"
 	#import "game/system/game_over.asm"
 	#import "game/gameplay/beam.asm"
@@ -63,7 +67,7 @@ MAIN: {
 	#import "game/system/challenge.asm"
 	#import "game/system/bonus.asm"
 	#import "game/gameplay/attacks.asm"
-		
+
 	#import "game/gameplay/spriteCharLookup.asm"
 
 
@@ -132,7 +136,7 @@ MAIN: {
 		jsr TEXT.Draw
 
 
-		jsr LoadScores
+		//jsr LoadScores
 
 		ldx #0
 
@@ -147,7 +151,7 @@ MAIN: {
 		Wait:
 			cmp $d012
 			beq Wait
-			cpx #40
+			cpx #1
 			bcc DelayLoop
 
 		sfx(SFX_COIN)
@@ -523,16 +527,24 @@ MAIN: {
 			beq Skip
 
 			jsr STARS.FrameUpdate
-			jsr FORMATION.FrameUpdate
+			
 			jsr BULLETS.FrameUpdate
 			jsr STAGE.FrameUpdate
-			jsr ENEMY.FrameUpdate
-			jsr BOMBS.FrameUpdate
-			jsr LIVES.FrameUpdate
-			jsr ATTACKS.FrameUpdate
+			//jsr ENEMY.FrameUpdate
+			//jsr BOMBS.FrameUpdate
+			//jsr LIVES.FrameUpdate
+			//jsr ATTACKS.FrameUpdate
 			jsr SHIP.FrameUpdate
-			jsr BEAM.FrameUpdate
-			jsr BONUS.FrameUpdate
+
+			Delay:
+
+			lda $d012
+			cmp #140
+			bcc Delay
+			
+			jsr FORMATION.FrameUpdate
+		//	jsr BEAM.FrameUpdate
+			//jsr BONUS.FrameUpdate
 
 			Skip:
 

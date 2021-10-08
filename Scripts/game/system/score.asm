@@ -329,7 +329,7 @@ SCORE:{
 			adc #CharacterSetStart
 			sta SCREEN_RAM + 95, y
 
-			lda #WHITE
+			lda #RED
 			sta VIC.COLOR_RAM + 95, y
 			dey
 			rts
@@ -405,10 +405,10 @@ SCORE:{
 
 			clc
 			adc #CharacterSetStart
-			sta SCREEN_RAM + 148, y
+			sta SCREEN_RAM + 149, y
 
-			lda #WHITE
-			sta VIC.COLOR_RAM + 148, y
+			lda #RED
+			sta VIC.COLOR_RAM + 149, y
 			dey
 			rts
 
@@ -480,10 +480,10 @@ SCORE:{
 
 			clc
 			adc #CharacterSetStart
-			sta SCREEN_RAM + 308, y
+			sta SCREEN_RAM + 309, y
 
-			lda #WHITE
-			sta VIC.COLOR_RAM + 308, y
+			lda #RED
+			sta VIC.COLOR_RAM + 309, y
 			dey
 			rts
 
@@ -557,7 +557,7 @@ SCORE:{
 			adc #CharacterSetStart
 			sta SCREEN_RAM + 105, y
 
-			lda #WHITE
+			lda #RED
 			sta VIC.COLOR_RAM + 105, y
 			dey
 			rts
@@ -632,7 +632,7 @@ SCORE:{
 			adc #CharacterSetStart
 			sta SCREEN_RAM + 83, y
 
-			lda #WHITE
+			lda #RED
 			sta VIC.COLOR_RAM + 83, y
 			dey
 			rts
@@ -721,10 +721,10 @@ SCORE:{
 
 			clc
 			adc #CharacterSetStart
-			sta SCREEN_RAM + 468, y
+			sta SCREEN_RAM + 469, y
 
-			lda #WHITE
-			sta VIC.COLOR_RAM + 468, y
+			lda #RED
+			sta VIC.COLOR_RAM + 469, y
 			dey
 			rts
 

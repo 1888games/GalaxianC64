@@ -233,7 +233,7 @@ ATTACKS: {
 
 		inc NumAttackers
 
-		jsr FORMATION.Delete
+		///jsr FORMATION.Delete
 
 		ldy ZP.CurrentID
 
@@ -795,7 +795,7 @@ ATTACKS: {
 		dec TransformsQueued
 
 		ldx TransformID
-		jsr FORMATION.Delete
+		//jsr FORMATION.Delete
 
 		ldy TransformID
 
@@ -814,8 +814,8 @@ ATTACKS: {
 		lda FORMATION.Column, x
 		sta FORMATION.Column, y
 
-		lda FORMATION.Row, x
-		sta FORMATION.Row, y
+		lda FORMATION.Home_Row, x
+		sta FORMATION.Home_Row, y
 
 		lda Mirror, x
 		sta Mirror, y

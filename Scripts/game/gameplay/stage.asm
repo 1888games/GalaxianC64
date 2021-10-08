@@ -717,7 +717,7 @@ STAGE: {
 			sta FORMATION.HitsLeft, x
 
 			inx
-			cpx #46
+			cpx #48
 		//	cpx #1
 			bcc Loop
 
@@ -725,7 +725,10 @@ STAGE: {
 		jsr MoveIntoFormationMode
 
 		lda #0
+		sta FORMATION.Occupied + 1
+		sta FORMATION.Occupied + 2
 		sta FORMATION.Mode
+
 
 		lda #0
 		sta FORMATION.Switching

@@ -321,7 +321,7 @@
 
 			stx ZP.Amount
 
-			jsr FORMATION.DrawOne
+		//	jsr FORMATION.DrawOne
 
 			ldx ZP.Amount
 
@@ -464,7 +464,7 @@
 			lda ZP.Amount
 			sta FORMATION.HitsLeft, x
 
-			jsr FORMATION.DrawOne
+			//jsr FORMATION.DrawOne
 
 			ldx ZP.EnemyID
 
@@ -993,7 +993,7 @@
 			lda Slot, x
 			sta ZP.Amount
 			tay
-			lda FORMATION.Row, y
+			lda FORMATION.Home_Row, y
 			tay
 			lda FORMATION.RowSpriteY, y
 			sta UltimateTargetSpriteY, x

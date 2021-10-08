@@ -180,7 +180,7 @@ END_GAME: {
 		sta VIC.SPRITE_ENABLE
 		
 
-		jsr FORMATION.DeleteAll
+	//	jsr FORMATION.DeleteAll
 
 		ldy #OverRow
 		ldx #OverColumn

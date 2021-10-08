@@ -15,14 +15,14 @@ BULLETS: {
 	OffsetY:	.byte 0, 0, 0, 0
 
 
-	CharLookups:	.byte 177, 178, 179, 180
+	CharLookups:	.byte 179, 180, 181, 182
 	Cooldown:		.byte CooldownTime, CooldownTime
 	MaxBullets:		.byte 1, 4
 	BulletToDie:	.byte 0
 	PlayerShooting:	.byte 0
 	PlayerLookup:	.byte 0, 0, 1, 1
 
-	.label SPEED_MSB = 7
+	.label SPEED_MSB = 5
 	.label SPEED_LSB = 20
 	.label CooldownTime = 3
 	.label SpriteYOffset = 12
@@ -237,8 +237,8 @@ BULLETS: {
 
 			lda #3
 
-			.break
-			nop
+			//.break
+		//	nop
 
 		Okay:
 
@@ -301,10 +301,10 @@ BULLETS: {
 		Okay:
 
 		lda CharLookups, y
-		cmp #177
+		cmp #179
 		bcc Error
 
-		cmp #181
+		cmp #183
 		bcs Error
 
 		jmp NoError
@@ -608,6 +608,8 @@ BULLETS: {
 
 	CheckFormationCollision: {
 
+		rts
+
 		lda CharY, x
 		cmp #14
 		bcs Finish
@@ -623,7 +625,7 @@ BULLETS: {
 
 			lda CharY, x
 			sec
-			sbc FORMATION.Row, y
+			sbc FORMATION.Home_Row, y
 			sta ZP.Temp4
 			cmp #2
 			bcc WithinRange

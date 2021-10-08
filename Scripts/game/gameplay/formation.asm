@@ -60,130 +60,158 @@ FORMATION: {
 	Stop:			.byte 0
 
 
+	DrawIteration:	.byte 0
+	
+	FrameTimer:	.byte 0
+
 
 	* = * "Enemies Left"
 	EnemiesLeftInStage:	.byte 0
 
 
-
-	Home_Column:
-				.byte 9, 15
-				.byte 7, 9, 11, 13, 15, 17
-				.byte 5, 7, 9, 11, 13, 15, 17, 19
-				.byte 3, 5, 7, 9, 11, 13, 15, 17, 19, 21
-				.byte 3, 5, 7, 9, 11, 13, 15, 17, 19, 21
-				.byte 3, 5, 7, 9, 11, 13, 15, 17, 19, 21
-				.byte 9, 9
+	TypeToColour:		.byte YELLOW + 8, RED + 8, PURPLE + 8, CYAN + 8
 
 
-	Spread_1:	.byte 9, 11, 13, 15
-				.byte 5, 7, 9, 11, 13, 15, 17, 19
-				.byte 5, 7, 9, 11, 13, 15, 17, 19
-				.byte 2, 5, 7, 9, 11, 13, 15, 17, 19, 22
-				.byte 2, 5, 7, 9, 11, 13, 15, 17, 19, 22
-
-	Spread_2:	.byte 9, 11, 13, 15
-				.byte 4, 7, 9, 11, 13, 15, 17, 20
-				.byte 4, 7, 9, 11, 13, 15, 17, 20
-				.byte 2, 5, 7, 9, 11, 13, 15, 17,20, 22
-				.byte 2, 5, 7, 9, 11, 13, 15, 17, 20, 22
-
-	Spread_3:	.byte 9, 11, 13, 15
-				.byte 3, 6, 9, 11, 13, 15, 18, 20
-				.byte 3, 6, 9, 11, 13, 15, 18, 20
-				.byte 2, 4, 7, 9, 11, 13, 15, 17, 20, 22
-				.byte 2, 4, 7, 9, 11, 13, 15, 17, 20, 22
+	CurrentRow:	.byte 255
 
 
-	Spread_4:	.byte 9, 11, 13, 15
-				.byte 2, 6, 9, 11, 13, 15, 18, 21
-				.byte 2, 6, 9, 11, 13, 15, 18, 21
-				.byte 1, 4, 7, 9, 11, 13, 15, 17, 20, 23
-				.byte 1, 4, 7, 9, 11, 13, 15, 17, 20, 23
+	LeftMaxColumn:	.byte 3
+	RightMinColumn:	.byte 21
+	FrameAdd:	.byte 0, 8
 
-	Spread_5:	.byte 9, 11, 13, 15
-				.byte 2, 6, 8, 11, 13, 17, 18, 21
-				.byte 2, 6, 8, 11, 13, 17, 18, 21
-				.byte 1, 3, 7, 9, 11, 13, 15, 17, 21, 23
-				.byte 1, 3, 7, 9, 11, 13, 15, 17, 21, 23
-
-
-
-	Row:		.byte 0, 0
-				.byte 2, 2, 2, 2, 2, 2
-				.byte 4, 4, 4, 4, 4, 4, 4, 4
-				.byte 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
-				.byte 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
-				.byte 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
-				.byte 9, 9
-				
-	Frames:		.byte 0, 1
-				.byte 0, 1, 0, 1, 0, 1
-				.byte 0, 1, 0, 1, 0, 1, 0, 1
-				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
-				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
-				.byte 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-				.byte 0, 1
-
-
-	Home_Row:	
-				.byte 0, 0
-				.byte 2, 2, 2, 2, 2, 2
-				.byte 4, 4, 4, 4, 4, 4, 4, 4
-				.byte 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
-				.byte 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
-				.byte 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
-				.byte 9, 9
-
-	Spread_R1:	
-				.byte 0, 0, 0, 0
-				.byte 2, 2, 2, 2, 2, 2, 2, 2
-				.byte 4, 4, 4, 4, 4, 4, 4, 4
-				.byte 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
-				.byte 9, 9, 9, 9, 9, 9, 9, 9, 9, 9
-
-	Spread_R2:	.byte 0, 0, 0, 0
-				.byte 2, 2, 2, 2, 2, 2, 2, 2
-				.byte 4, 4, 4, 4, 4, 4, 4, 4
-				.byte 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
-				.byte 9, 9, 9, 9, 9, 9, 9, 9, 9, 9
-
-	Spread_R3:	.byte 0, 0, 0, 0
-				.byte 2, 2, 2, 2, 2, 2, 2, 2
-				.byte 4, 4, 4, 4, 4, 4, 4, 4
-				.byte 7, 7, 7, 7, 7, 7, 7, 7, 7, 7
-				.byte 9, 9, 9, 9, 9, 9, 9, 9, 9, 9
-
-	Spread_R4:	.byte 0, 0, 0, 0
-				.byte 2, 2, 2, 2, 2, 2, 2, 2
-				.byte 5, 5, 5, 5, 5, 5, 5, 5
-				.byte 7, 7, 7, 7, 7, 7, 7, 7, 7, 7
-				.byte 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
-
-
-	Spread_R5:	.byte 0, 0, 0, 0
-				.byte 2, 2, 2, 2, 2, 2, 2, 2
-				.byte 5, 5, 5, 5, 5, 5, 5, 5
-				.byte 7, 7, 7, 7, 7, 7, 7, 7, 7, 7
-				.byte 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
+	IllegalOffsetLeft:	.byte -4
+	IllegalOffsetRight: .byte 4
 
 
 
 
-	SpreadLookupR:	.word Home_Row, Spread_R1, Spread_R2, Spread_R3, Spread_R4, Spread_R5
+	
+	Offset_0_Frame_0_Clear:		.byte 135, 136, 000, 138, 137, 000 
+	Offset_0_Frame_0_Nexty:		.byte 135, 136, 158, 138, 137, 000 // check right
+	Offset_1_Frame_0_Clear:		.byte 139, 140, 000, 142, 141, 000
+	Offset_1_Frame_0_Nexty:		.byte 139, 140, 162, 142, 141, 000 // check right
+	Offset_2_Frame_0_Clear:		.byte 143, 144, 147, 146, 145, 150
+	Offset_2_Frame_0_Nexty:		.byte 143, 144, 147, 146, 145, 150 // check right
+	Offset_3_Frame_0_Clear:		.byte 166, 148, 151, 169, 149, 152
+	Offset_3_Frame_0_Nexty:		.byte 176, 148, 151, 169, 149, 152 // check left
 
-	SpreadLookup:	.word Home_Column, Spread_1, Spread_2, Spread_3, Spread_4, Spread_5
+
+
+	Offset_0_Frame_1_Clear:		.byte 154, 155, 139, 157, 165, 000 
+	Offset_0_Frame_1_Nexty:		.byte 154, 155, 139, 157, 165, 142 // check right
+	Offset_1_Frame_1_Clear:		.byte 158, 159, 000, 000, 000, 000
+	Offset_1_Frame_1_Nexty:		.byte 158, 159, 143, 000, 000, 146 // check right
+	Offset_2_Frame_1_Clear:		.byte 162, 163, 000, 000, 164, 000
+	Offset_2_Frame_1_Nexty:		.byte 162, 163, 166, 000, 164, 169 // check right
+	Offset_3_Frame_1_Clear:		.byte 174, 167, 170, 000, 168, 165
+	Offset_3_Frame_1_Nexty:		.byte 147, 167, 170, 150, 168, 165 // check left
+
+
+						      // 0         // 1      // 2       // 3
+	TopLeftChars:		.byte 135, 135, 139, 139, 143, 143, 000, 166
+
+						.byte 154, 154, 158, 158, 162, 162, 174, 147
+
+	TopMiddleChars:		.byte 136, 136, 140, 140, 144, 144, 148, 148
+
+						.byte 155, 155, 159, 159, 163, 163, 167, 167
+
+	TopRightChars:		.byte 000, 158, 000, 162, 173, 147, 151, 151
+
+						.byte 000, 139, 000, 143, 175, 166, 170, 170
+
+
+	BottomLeftChars:	.byte 138, 138, 142, 142, 146, 146, 169, 169
+
+						.byte 157, 157, 000, 000, 000, 000, 000, 150
+
+	BottomMiddleChars:	.byte 137, 137, 141, 141, 145, 145, 149, 149
+
+						.byte 000, 000, 160, 160, 164, 164, 168, 168
+
+
+	BottomRightChars:	.byte 000, 000, 000, 000, 150, 150, 152, 152
+
+						.byte 000, 142, 000, 146, 000, 169, 000, 000
+
+
+
+
 
 	//Spread_Order:	.byte 0, 3, 4, 11, 12, 19, 20, 29, 30, 39
 
 
-		Type:	.byte 0, 0	// 0-3
-				.byte 1, 1, 1, 1, 1, 1 // 4-11
-				.byte 2, 2, 2, 2, 2, 2, 2, 2 // 12-19
-				.byte 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 // 20-29
-				.byte 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 // 30-39
-				.byte 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 // 30-39
+		Type:	.byte          0, 0, 0, 0	// 0-1
+				.byte       1, 1, 1, 1, 1, 1 // 2-7
+				.byte    2, 2, 2, 2, 2, 2, 2, 2 // 8-15
+				.byte 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 // 16-25
+				.byte 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 // 26-35
+				.byte 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 // 36-45
 				.byte 4, 4, 4 // 40-42
+
+		StartOffset:
+
+				.byte          0, 1, 2, 3	// 0-1
+				.byte       3, 0, 1, 2, 3, 0 // 2-7
+				.byte    2, 3, 0, 1, 2, 3, 0, 1 // 8-15
+				.byte 1, 2, 3, 0, 1, 2, 3, 0, 1, 2 // 16-25
+				.byte 1, 2, 3, 0, 1, 2, 3, 0, 1, 2 // 26-35
+				.byte 1, 2, 3, 0, 1, 2, 3, 0, 1, 2 // 36-45
+				.byte 4, 4, 4 // 40-42
+
+			ReverseOrder:		.byte 3, 2, 1, 0
+								.byte 9, 8, 7, 6, 5, 4
+								.byte 17, 16, 15, 14, 13, 12, 11, 10
+								.byte 27, 26, 25, 24, 23, 22, 21, 20, 19, 18
+								.byte 37, 36, 35, 34, 33, 32, 31, 30, 29, 28
+								.byte 47, 46, 45, 44, 43, 42, 41, 40, 39, 38
+
+		* = * "Offset"
+
+		Offset:
+
+				.byte          0, 1, 2, 3	// 0-3
+				.byte       3, 0, 1, 2, 3, 0 // 4-9
+				.byte    2, 3, 0, 1, 2, 3, 0, 1 // 10-17
+				.byte 1, 2, 3, 0, 1, 2, 3, 0, 1, 2 // 18-27
+				.byte 1, 2, 3, 0, 1, 2, 3, 0, 1, 2 // 28-37
+				.byte 1, 2, 3, 0, 1, 2, 3, 0, 1, 2 // 38-47
+				.byte 4, 4, 4 // 40-42
+
+
+	Home_Column:
+				.byte 			  10, 12, 14, 16	
+				.byte         07, 10, 12, 14, 16, 19
+				.byte     05, 07, 10, 12, 14, 16, 19, 21
+				.byte 03, 05, 07, 10, 12, 14, 16, 19, 21, 23
+				.byte 03, 05, 07, 10, 12, 14, 16, 19, 21, 23
+				.byte 03, 05, 07, 10, 12, 14, 16, 19, 21, 23
+				
+				.byte 9, 9
+
+
+	Home_Row:	.byte 				0, 0, 0, 0	
+				.byte 			2, 2, 2, 2, 2, 2
+				.byte 		4, 4, 4, 4, 4, 4, 4, 4
+				.byte 	6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+				.byte 	8, 8, 8, 8, 8, 8, 8, 8, 8, 8
+				.byte 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
+
+
+
+
+
+	Frames:		.byte 		   0, 1, 0, 1
+				.byte 		0, 1, 0, 1, 0, 1
+				.byte 	 0, 1, 0, 1, 0, 1, 0, 1
+				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+				.byte 0, 1
+
+			StartIDs:		.byte 0, 4, 10, 18, 28, 38
+			EndIDs:			.byte 3, 9, 17, 27, 37, 47
+
 
 
 
@@ -204,6 +232,7 @@ FORMATION: {
 	Position:	.byte 0
 	PreviousPosition: .byte 0
 	Direction:	.byte 1
+	SwitchingDirection:	.byte 0
 	Speeds:		.byte 7, 12
 	SpreadPosition:	.byte 0
 
@@ -225,6 +254,9 @@ FORMATION: {
 	TransformTimer:		.byte 0
 	TransformID:		.byte 255
 
+	OffsetChars:		.byte 0
+
+
 
 	Initialise: {
 
@@ -233,11 +265,12 @@ FORMATION: {
 		Loop:
 
 			lda Home_Column, x
-			sta Column, x
+			
 			sta PreviousColumn, x
-			lda Home_Row, x
-			sta Row, x
 			sta PreviousRow, x
+
+			lda StartOffset, x
+			sta Offset, x
 
 			lda Hits, x
 			sta HitsLeft, x
@@ -247,6 +280,7 @@ FORMATION: {
 
 			lda #0
 			sta Occupied, x
+			sta Column, x
 		
 			inx
 			cpx #48
@@ -261,21 +295,25 @@ FORMATION: {
 		sta SpreadPosition
 		sta Switching
 		sta Stop
+		sta OffsetChars
+		sta SwitchingDirection
 	
 
 		lda #1
 		sta Direction
 		sta Frame
-		
+		sta Mode
+		sta FrameTimer
 
 		lda #STAGE.NumberOfWaves * 8
 		sta Alive
 
-		lda #FORMATION_UNISON
-		sta Mode
+
 
 		lda #255
 		sta TransformID
+		sta DrawIteration
+		sta CurrentRow
 
 
 		rts
@@ -298,117 +336,7 @@ FORMATION: {
 		rts
 	}
 
-	SpreadFormation: {
-
-		FrameChange:
-
-			ldx Mode
-			lda Speeds, x
-			sta FrameCounter
-
-			lda Frame
-			beq MakeOne	
-
-			MakeZero:
-
-				dec Frame
-				lda SpreadPosition
-				clc
-				adc Direction
-				sta SpreadPosition
-
-				jmp CheckTurnAround
-
-			MakeOne:
-
-				inc Frame
-
-
-		CheckTurnAround:
-
-			lda SpreadPosition
-			cmp #255
-			beq TurnAroundLeft
-
-			cmp #6
-			beq TurnAroundRight
-
-			jmp NowDraw
-
-		TurnAroundRight:
-
-			lda #255
-			sta Direction
-
-			lda #4
-			sta SpreadPosition
-
-			jmp NowDraw
-
-		TurnAroundLeft:
-
-			lda #1
-			sta Direction
-
-			lda #1
-			sta SpreadPosition
-
-		NowDraw:
-
-		lda SpreadPosition
-		asl	
-		tax
-
-		ldy #0
-
-		lda SpreadLookup, x
-		sta ZP.TextAddress
-
-		lda SpreadLookup + 1, x
-		sta ZP.TextAddress + 1
-
-		lda SpreadLookupR, x
-		sta ZP.ColourAddress
-
-		lda SpreadLookupR + 1, x
-		sta ZP.ColourAddress + 1
-
-		Loop:
-
-			lda (ZP.TextAddress), y
-			sta Column, y
-
-			lda (ZP.ColourAddress), y
-			sta Row, y
-
-			iny
-			cpy #48
-			bcc Loop
-
-
-			lda Direction
-			bmi StartFrom0
-
-			lda #47
-			sta CurrentSlot
-			jmp Finish
-
-		StartFrom0:
-
-			lda #0
-			sta CurrentSlot
-			
-
-		Finish:	
-
-
-
-
-		rts
-	}	
-
-
-
+	
 	EnemyKilled: {
 
 		dec Alive
@@ -433,155 +361,323 @@ FORMATION: {
 		rts
 	}
 
-	Delete: {
+	
+	
 
-		stx ZP.FormationID
+		
 
-		cpx #48
-		bcc NoError
+	DrawEnemy: {
 
-		rts
-		clc
-
-	NoError:
-
-		lda PreviousColumn, x
-		sta ZP.Column
-
-	TopLeft:
-
-		lda PreviousRow, x
-		tay
-		ldx ZP.Column
-
-		jsr PLOT.GetCharacter
-
-		jmp Okay
-
-		ldx STAGE.CurrentWave
-		beq Okay
-
-		cmp #161
-		bcc NotEnemy
-
-		cmp #197
-		bcs NotEnemy
-
-		jmp Okay
-
-	NotEnemy:
-
-		.break
-		nop
-
-		ldx ZP.FormationID
-		lda PreviousColumn, x
-		tay
+		// x = enemy ID
+		// ZP.Row
+		// ZP.Column > y
 
 		lda Column, x
 		clc
-		adc Position
+		adc Home_Column, x
+		//clc
+		//adc OffsetChars
+		sta ZP.Column
+
+		lda Type, x
+		tay
+		lda TypeToColour, y
+		sta ZP.Colour
 
 
+		lda Offset, x
+		asl
+		sta ZP.Amount
 
-	Okay:
+		cmp #6
+		beq LookLeft
 
-		ldy #0
-		lda #0
-		sta (ZP.ScreenAddress), y
-		
-	TopRight:
 
-		iny
-		sta (ZP.ScreenAddress), y
+		LookRight:
 
-	BottomRight:
+			cpx ZP.EndID
+			beq AddFrame
 
-		ldy #41
-		sta (ZP.ScreenAddress), y
+			clc
+			adc Occupied + 1, x
+			sta ZP.Amount
+			jmp AddFrame
 
-	BottomLeft:
+		LookLeft:
 
-		dey
-		sta (ZP.ScreenAddress), y
+			cpx ZP.StartID
+			beq AddFrame
 
-		ldx ZP.FormationID
+			clc
+			adc Occupied - 1, x
+			sta ZP.Amount
+
+
+		AddFrame:
+
+			txa
+			clc
+			adc Frame
+			tax
+
+			lda Frames, x
+			ldx ZP.CurrentID
+			tay
+			lda FrameAdd, y
+			clc
+			adc ZP.Amount
+			sta ZP.CharID
+
+		DrawChars:
+
+			ldy ZP.Column
+			ldx ZP.CharID
+			lda TopLeftChars, x
+			sta (ZP.ScreenAddress), y
+
+				lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			iny
+			lda TopMiddleChars, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			iny
+			lda TopRightChars, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+
+			tya
+			clc
+			adc #38
+			tay
+
+			lda BottomLeftChars, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			iny
+			lda BottomMiddleChars, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			iny
+			lda BottomRightChars, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
 
 		rts
-
 	}
+	
 
-	DeleteAll: {
+	ProcessIteration: {
 
-		ldx #0
+		jsr ClearRow
+
+		ldx DrawIteration
+		lda StartIDs, x
+		sta ZP.CurrentID
+		sta ZP.StartID
+
+
+		lda EndIDs, x
+		sta ZP.EndID
+		//inc ZP.EndID
+
+
+		ldx ZP.CurrentID
+
+		GetScreenAddress:
+
+			lda Home_Row, x
+			sta ZP.Row
+			tay
+
+			ldx #0
+			stx ZP.Column
+			jsr PLOT.GetCharacter
+
+		ldx ZP.CurrentID
 
 		Loop:
 
-			stx ZP.StoredXReg
+			stx ZP.CurrentID
 
-			lda #0
-			sta Occupied, x
+			lda Occupied, x
+			beq EndLoop
 
-			jsr Delete
+			jsr DrawEnemy
 
 			EndLoop:
 
-				ldx ZP.StoredXReg
+				ldx ZP.CurrentID
+
+				lda Direction
+				beq GoingLeft
+
+				GoingRight:
+
+					lda Offset, x
+					clc
+					adc #1
+					sta Offset, x
+
+					cmp #4
+					bcc Okay
+
+					lda #0
+					sta Offset, x
+
+					inc Column, x
+					
+					lda Column, x
+					cmp IllegalOffsetRight
+					bne Okay
+
+				ReachedEdge:
+
+					lda Offset, x
+					beq NoDec
+
+					dec Column, x
+
+				NoDec:
+
+					inc SwitchingDirection
+
+					jmp Okay
+
+				GoingLeft:
+
+					lda Offset, x
+					sec
+					sbc #1
+					sta Offset, x
+					bpl Okay
+
+					lda #3
+					sta Offset, x
+
+					dec Column, x
+					lda Column, x
+					cmp IllegalOffsetLeft
+					bne Okay
+
+				ReachedEdgeLeft:
+
+					lda Offset, x
+					cmp #3
+					beq NoIncrease
+
+					inc Column, x
+
+				NoIncrease:
+					inc SwitchingDirection
+
+
+			Okay:
+
+				cpx ZP.EndID
+				beq Done
+
 				inx
-				cpx #48
-				bcc Loop
+			
 
+			NotSwitching:
+
+				jmp Loop
+
+
+		Done:
 
 		rts
 	}
-
-	DrawOne: {
-
-		stx ZP.FormationID
-
-		lda Column, x
-		clc
-		adc Position
-		sta ZP.Column
-		sta PreviousColumn, x
-
-		lda Type, x
-		//sec
-		//sbc HitsLeft, x
-
-		tay
-		lda TypeCharStart, y
-		sta ZP.CharID
-
-		lda Frame
-		asl
-		asl
-		clc
-		adc ZP.CharID
-		sta ZP.CharID
-
-		lda Colours, y
-		sta ZP.Colour
-
-		lda Row, x
-		sta PreviousRow, x
-		tay
-		ldx ZP.Column
-
-		jsr DrawFourCorners
-
-		ldx ZP.FormationID
-
-		rts
-
-
-
-	}
-
-	
-
 
 		
+	FrameUpdate: {
+
+		inc $d020
+
+		lda #0
+		sta ZP.Temp4
+
+		lda #1
+		sta EnemiesLeftInStage
+
+		//lda FrameTimer
+		//beq Ready
+
+		//dec FrameTimer
+		//rts
+
+		Ready:
+
+		lda Mode
+		bne Finish
+
+		Start:
+
+			inc ZP.Temp4
+			inc DrawIteration
+			lda DrawIteration
+			cmp #6
+			bcc Okay
+
+			lda #0
+			sta DrawIteration
+
+
+			lda SwitchingDirection
+			beq NotSwitching
+
+			lda #0
+			sta SwitchingDirection
+
+			lda Direction
+			eor #%00000001
+			sta Direction
+
+		NotSwitching:
+
+			lda #1
+			sta FrameTimer
+
+			inc FrameCounter
+			lda FrameCounter
+			cmp #3
+			bcc Okay
+
+			lda #0
+			sta FrameCounter
+
+			lda Frame
+			eor #%00000001
+			sta Frame
+
+		Okay:
+
+			jsr ProcessIteration
+
+			lda ZP.Temp4
+			cmp #1
+			bcc Start
+
+
+
+		Finish:
+
+		dec $d020
+
+		rts
+	}
 
 	DrawFourCorners: {
 
@@ -879,7 +975,7 @@ FORMATION: {
 			adc Position
 			sta ExplosionX, y
 
-			lda Row, x
+			//lda Row, x
 			sta ExplosionY, y
 
 			lda #0
@@ -905,8 +1001,8 @@ FORMATION: {
 
 		ldx ZP.FormationID
 		
-		jsr Delete
-		jsr DrawOne
+		//jsr Delete
+		//jsr DrawOne
 		jmp NoDelete
 
 		Destroy:
@@ -942,7 +1038,7 @@ FORMATION: {
 			ldx ZP.FormationID
 
 			jsr AddExplosion
-			jsr Delete
+			//jsr Delete
 
 
 
@@ -955,141 +1051,7 @@ FORMATION: {
 		rts
 	}
 
-	CheckDraw: {
-
-		lda CurrentSlot
-		bpl NotExit
-
-		jmp Finish
-
-
-		NotExit:
-
-		lda Direction
-		bmi ZeroTo39
-
-			lda CurrentSlot
-			sec
-			sbc #UpdatesPerFrame
-			sta ZP.EndID
-
-
-			jmp Loop
-
-		ZeroTo39:
-
-			lda CurrentSlot
-			clc
-			adc #UpdatesPerFrame
-			sta ZP.EndID
-
-
-		Loop:
-
-			ldx CurrentSlot
-
-			lda Occupied, x
-			beq EndLoop
-
-			jsr Delete
-
-			ldx CurrentSlot
-
-			lda Column, x
-			clc
-			adc Position
-			sta PreviousColumn, x
-			sta ZP.Column
-
-			lda Type, x
-			//sec
-			//sbc HitsLeft, x
-
-			tay
-
-			CheckTransform:
-
-				lda Frame
-				beq NotTransform
-
-				cpx TransformID
-				bne NotTransform
-
-				iny
-				iny
-
-			NotTransform:
-
-				lda TypeCharStart, y
-				sta ZP.CharID
-
-				tya
-				pha
-
-				txa
-				clc
-				adc Frame
-				tay
-
-				lda Frames, y	
-				asl
-				asl
-				clc
-				adc ZP.CharID
-				sta ZP.CharID
-
-				pla
-				tay
-
-				lda Colours, y
-				sta ZP.Colour
-
-			RowAndColumn:
-
-				lda Row, x
-				sta PreviousRow, x
-				tay
-				ldx ZP.Column
-
-				jsr DrawFourCorners
-
-
-
-		EndLoop:
-
-			lda CurrentSlot
-			sec
-			sbc Direction
-			sta CurrentSlot
-			cmp ZP.EndID
-			beq Finish
-
-			jmp Loop
-
-
-		Finish:
-
-			cmp #255
-			beq AllDone
-
-			cmp #48
-			bne NotFinished
-
-		AllDone:
-
-			lda #255
-			sta CurrentSlot
-
-			lda Position
-			sta PreviousPosition
-
-
-		NotFinished:
-
-
-			rts
-
-	}
+	
 
 	CalculateEnemiesLeft: {
 
@@ -1174,205 +1136,140 @@ FORMATION: {
 	}
 
 
-	CheckTransform: {
+	
+	
 
-		lda TransformID
-		bmi Finish
+	
+	ClearRow: {
 
+		//inc $d020
 
-		lda TransformTimer
-		beq Ready
+		ldx DrawIteration
+		bne NotOne
 
-		dec TransformTimer
-		rts
+		jmp One
 
-		Ready:
+		NotOne:
 
-		lda #TransformTime
-		sta TransformTimer
+		cpx #1
+		bne NotTwo
 
-		inc TransformProgress
-		lda TransformProgress
-		cmp #TransformStages
-		bcc Exit
+		jmp Two
 
-		ldy TransformID
-		lda Occupied, y
-		bne EnemyStillAlive
+		NotTwo:
 
-		EnemyKilled:
+		cpx #2
+		bne NotThree
 
-			jsr ATTACKS.CancelTransforms
-			jmp Finish
+		jmp Three
 
-		EnemyStillAlive:
+		NotThree:
 
-			jsr ATTACKS.StartTransforms
+		cpx #3
+		bne NotFour
 
-		Finish:
+		jmp Four
 
-		lda #255
-		sta TransformID
+		NotFour:
 
-		Exit:
+		cmp #4
+		bne NotFive
 
-		rts
-	}
+		jmp Five
 
-	FrameUpdate: {
-
-		SetDebugBorder(5)
-
-		jsr CalculateEnemiesLeft
-		jsr CheckTransform
-
-		CheckWhetherActive:
-
-			lda Mode
-			bmi Finish
-
-		Explosions:
-
-			jsr CheckExplosions
-
-		MoveCounter:
-
-
-
-			lda FrameCounter
-			beq ReadyToMove
-
-		NotYet:
-
-			dec FrameCounter
-			jmp CheckDraw
-			rts
-
-		ReadyToMove:
-
-			inc ENEMY.FormationUpdated
-
-		CheckSwitchToSpread:
-
-			lda Switching
-			beq NoSwitch
-
-			lda Position
-			bne NoSwitch
-
-			lda #FORMATION_SPREAD
-			sta Mode
-
-			jsr ATTACKS.AttackReady
+		NotFive:
 
 			lda #0
-			sta Switching
-
-		NoSwitch:
-
-			lda Mode
-			cmp #FORMATION_UNISON
-			bne NotInUnison
-
-			jmp UnisonFormation
-
-		NotInUnison:
-
-			jmp SpreadFormation 
-
-		Finish:
-
-
-
-		SetDebugBorder(0)
-
-			rts
-
-	}
-
-
-	UnisonFormation: {
-
-		FrameChange:
-
-			ldx Mode
-			lda Speeds, x
-			sta FrameCounter
-
-			lda Stop
-			beq NotStopped
-
-			jmp NowDraw
-
-		NotStopped:
-
-
-			lda Frame
-			beq MakeOne	
-
-			MakeZero:
-
-				dec Frame
-				lda Position
-				clc
-				adc Direction
-				sta Position
-
-				jmp CheckTurnAround
-
-			MakeOne:
-
-				inc Frame
-
-		CheckTurnAround:
-
-			cmp #252
-			beq TurnAroundLeft
-
-			cmp #4
-			beq TurnAroundRight
-
-			jmp NowDraw
-
-		TurnAroundRight:
-
-			lda #255
-			sta Direction
-
-			lda #2
-			sta Position
-
-			jmp NowDraw
-
-		TurnAroundLeft:
-
-			lda #1
-			sta Direction
-
-			lda #254
-			sta Position
-
-		NowDraw:
-
-			lda Direction
-			bmi StartFrom0
-
-			lda #47
-			sta CurrentSlot
-			jmp Finish
-
-		StartFrom0:
-
-			lda #0
-			sta CurrentSlot
 		
+			.for(var i=0; i<28; i++) {
+				
+				sta SCREEN_RAM + 400 + i
+				sta SCREEN_RAM + 440 + i
+			
+			}
 
-		Finish:	
+			//dec $d020
+
+			rts
 
 
-		SetDebugBorder(0)
 
-		rts
+		Five:
+
+			lda #0
+		
+			.for(var i=0; i<28; i++) {
+				
+				sta SCREEN_RAM + 320 + i
+				sta SCREEN_RAM + 360 + i
+			
+			}
+
+			//dec $d020
+
+			rts
+
+
+		Four:
+
+			lda #0
+		
+			.for(var i=0; i<28; i++) {
+				
+				sta SCREEN_RAM + 240 + i
+				sta SCREEN_RAM + 280 + i
+			
+			}
+
+		//	dec $d020
+
+			rts
+
+		Three:
+
+			lda #0
+		
+			.for(var i=0; i<28; i++) {
+				
+				sta SCREEN_RAM + 160 + i
+				sta SCREEN_RAM + 200 + i
+			
+			}
+
+			//dec $d020
+
+			rts
+			
+			
+		Two:
+
+			lda #0
+		
+			.for(var i=0; i<28; i++) {
+				
+				sta SCREEN_RAM + 080 + i
+				sta SCREEN_RAM + 120 + i
+				
+			}
+
+			//dec $d020
+			rts
+			
+
+		One:
+
+			lda #0
+
+			.for(var i=0; i<28; i++) {
+				
+				sta SCREEN_RAM + 000 + i
+				sta SCREEN_RAM + 040 + i
+				
+			}
+
+			//dec $d020
+			rts
+
 	}
 
 }

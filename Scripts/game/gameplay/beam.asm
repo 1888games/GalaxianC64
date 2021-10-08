@@ -1238,7 +1238,7 @@ BEAM: {
 
 
 		ldy ZP.Amount
-		lda FORMATION.Row, y
+		lda FORMATION.Home_Row, y
 		tay
 		lda FORMATION.RowSpriteY, y
 		sta BossRowY

@@ -40,6 +40,12 @@ STARS: {
 
 		lda FrameTimer
 		and #%00000001
+		beq Okay4
+
+		rts
+
+		Okay4:
+
 		tax
 		sta ZP.Temp1
 
@@ -158,7 +164,7 @@ STARS: {
 					sta CharIDs, x
 
 					lda ZP.Temp1
-					beq NoDoubleSpeed
+					jmp NoDoubleSpeed
 
 					lda CharIDs, x
 					clc
@@ -212,13 +218,18 @@ STARS: {
 				cmp MaxColumns
 				bcc Okay
 
+			PickAgain:
+
 				jsr RANDOM.Get
 				and #%00001111
-				clc
-				adc #3
+				cmp MaxColumns
+				bcs PickAgain
+
+				//clc
+				//adc #3
 				sta Columns, X
 
-				Okay:
+			Okay:
 
 				tax
 
