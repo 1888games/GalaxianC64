@@ -51,8 +51,8 @@ Default-segment:
   $3ede-$40d0 ---String Data
   $40d1-$4206 ---Text
   $4207-$4cc6 Enemy Data
-  $4cc7-$4d48 Title
-  $4d49-$4ed3 Check Left Finish
+  $4cc7-$4d5d Title
+  $4d5e-$4eeb Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6e76 Main

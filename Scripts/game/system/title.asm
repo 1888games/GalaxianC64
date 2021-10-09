@@ -9,10 +9,10 @@ TITLE: {
 	TargetRow:	.byte 1
 
 	//CurrentRows:	.byte 25, 26, 36, 38, 43, 47
-	CurrentRows:	.byte 2, 3, 13, 15, 20, 24
+	CurrentRows:	.byte 2, 3, 13, 15, 20, 22
 
 	Columns:		.byte 7, 7, 14, 14, 8, 9
-	Colours:		.byte WHITE, RED, WHITE, WHITE, WHITE
+	Colours:		.byte WHITE, RED, WHITE, WHITE, WHITE, RED
 	Mode:			.byte 1
 	Finishing:		.byte 0
 
@@ -98,6 +98,29 @@ TITLE: {
 		lda #32
 
 		jsr PLOT.PlotCharacter
+
+		rts
+	}
+
+	DrawNamco: {
+
+		ldx #63	
+		ldy #0
+
+
+		Loop:
+			txa
+			sta SCREEN_RAM + 976, y
+
+			lda #PURPLE
+			sta VIC.COLOR_RAM + 976, y
+
+			iny
+			inx
+			cpy #8
+			bcc Loop
+
+
 
 		rts
 	}
@@ -266,7 +289,7 @@ TITLE: {
 		lda #20
 		sta CurrentRows + 4
 
-		lda #24
+		lda #22
 		sta CurrentRows + 5
 
 		jsr DrawLogo
@@ -347,6 +370,8 @@ TITLE: {
 
 
 		Finish:
+
+		jsr DrawNamco
 
 
 		rts

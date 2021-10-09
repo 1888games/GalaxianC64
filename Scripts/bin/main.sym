@@ -2104,65 +2104,68 @@
 .label FALSE=$0
 .label TITLE=$4cc7 {
   .label FlipTime=$96
-  .label Scrolling=$4cdd
-  .label DrawArrow=$4d0c {
+  .label Scrolling=$4cde
+  .label DrawArrow=$4d0d {
   }
-  .label ScrollUp2=$4e4c {
-    .label Loop=$4e5c
-    .label Ready=$4e5b
-    .label DontDelete=$4e6a
-    .label NotTheEnd=$4e96
-    .label Draw=$4e7e
-    .label EndLoop=$4e8d
-    .label Finish=$4eac
-    .label NotFinished=$4e7a
+  .label ScrollUp2=$4e64 {
+    .label Loop=$4e74
+    .label Ready=$4e73
+    .label DontDelete=$4e82
+    .label NotTheEnd=$4eae
+    .label Draw=$4e96
+    .label EndLoop=$4ea5
+    .label Finish=$4ec4
+    .label NotFinished=$4e92
   }
   .label Colours=$4cd5
-  .label Infinite=$4ce7
-  .label Controls=$4d4a {
-    .label Okay=$4d53
-    .label CheckUp=$4d7b
-    .label Start=$4d5d
-    .label CheckDown=$4d8b
-    .label Finish=$4d98
+  .label Infinite=$4ce8
+  .label Controls=$4d5f {
+    .label Okay=$4d68
+    .label CheckUp=$4d90
+    .label Start=$4d72
+    .label CheckDown=$4da0
+    .label Finish=$4dad
   }
-  .label Players=$4ce6
-  .label DebounceTimer=$4ce8
-  .label DeleteRow=$4ead {
-    .label Loop=$4ec1
-    .label NoDelete=$4ed0
-    .label Finish=$4ed3
+  .label Players=$4ce7
+  .label DebounceTimer=$4ce9
+  .label DeleteRow=$4ec5 {
+    .label Loop=$4ed9
+    .label NoDelete=$4ee8
+    .label Finish=$4eeb
   }
-  .label DrawLogo=$4e14 {
-    .label Loop=$4e22
-    .label NextRow=$4e3d
-    .label Finish=$4e4b
+  .label DrawLogo=$4e29 {
+    .label Loop=$4e37
+    .label NextRow=$4e52
+    .label Finish=$4e60
   }
-  .label LogoColours=$4cde
-  .label Mode=$4cda
+  .label LogoColours=$4cdf
+  .label Mode=$4cdb
   .label DebounceTime=$28
   .label Columns=$4ccf
-  .label LogoFlash=$4d9c {
-    .label Okay=$4da3
-    .label Finish=$4db2
+  .label LogoFlash=$4db1 {
+    .label Okay=$4db8
+    .label Finish=$4dc7
   }
   .label DelayTimer=$4cc7
-  .label Initialise=$4db6 {
+  .label Initialise=$4dcb {
   }
-  .label FlipTimer=$4ce5
+  .label FlipTimer=$4ce6
   .label DelayTime=$5
   .label CurrentRows=$4cc9
-  .label FrameUpdate=$4ce9 {
-    .label NotScroll=$4cf1
-    .label Flip=$4d06
-    .label Exit=$4d05
+  .label FrameUpdate=$4cea {
+    .label NotScroll=$4cf2
+    .label Flip=$4d07
+    .label Exit=$4d06
   }
-  .label ScrollValue=$4cdc
+  .label ScrollValue=$4cdd
+  .label DrawNamco=$4d35 {
+    .label Loop=$4d39
+  }
   .label TargetRow=$4cc8
-  .label LogoColour=$4ce4
-  .label Finishing=$4cdb
-  .label CheckLeft=$4d34 {
-    .label Finish=$4d49
+  .label LogoColour=$4ce5
+  .label Finishing=$4cdc
+  .label CheckLeft=$4d49 {
+    .label Finish=$4d5e
   }
 }
 .label StageIndexLookup=$2125
