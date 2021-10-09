@@ -10,25 +10,18 @@ FORMATION: {
 	.label TransformTime = 20
 
 
-	SpriteRow:	.fill 2, SR
+	SpriteRow:	.fill 4, SR
 				.fill 6, SR + (2 * 8)
 				.fill 8, SR + (4 * 8)
 				.fill 10, SR + (6 * 8)
 				.fill 10, SR + (8* 8)
-				.fill 10, SR + (1* 8)
+				.fill 10, SR + (10* 8)
 				.fill 2, 0
 
 
-	SpriteColumn:
+	FormationSpriteX:
 
-				.fill 1, SC + (9 * 8) + (i*16)
-				.fill 1, SC + (1 * 8) + (i*16)
-				.fill 6, SC + (7 * 8) + (i*16)
-				.fill 8, SC + (5 * 8) + (i*16)
-				.fill 10, SC + (3 * 8) + (i*16)
-				.fill 10, SC + (3 * 8) + (i*16)
-				.fill 10, SC + (3 * 8) + (i*16)
-				.fill 2, 0
+				.fill 48, 0
 
 
 	.label ExplosionChar = 63
@@ -44,8 +37,6 @@ FORMATION: {
 
 
 	Column:		.fill 48, 0
-	PreviousColumn:	.fill 48, 0
-	PreviousRow:	.fill 48, 0
 	HitsLeft:	.fill 40, 1
 				.fill 8, 0
 	Switching:	.byte 0
@@ -58,6 +49,8 @@ FORMATION: {
 	Alive:			.byte 0
 
 	Stop:			.byte 0
+	Stopping:		.byte 0
+	Starting:		.byte 0
 
 
 	DrawIteration:	.byte 0
@@ -109,33 +102,33 @@ FORMATION: {
 
 						      // 0         // 1      // 2       // 3
 	TopLeftChars:		.byte 135, 135, 139, 139, 143, 143, 000, 166
-
 						.byte 154, 154, 158, 158, 162, 162, 174, 147
 
 	TopMiddleChars:		.byte 136, 136, 140, 140, 144, 144, 148, 148
-
 						.byte 155, 155, 159, 159, 163, 163, 167, 167
 
 	TopRightChars:		.byte 000, 158, 000, 162, 173, 147, 151, 151
-
 						.byte 000, 139, 000, 143, 175, 166, 170, 170
 
 
 	BottomLeftChars:	.byte 138, 138, 142, 142, 146, 146, 169, 169
-
 						.byte 157, 157, 000, 000, 000, 000, 000, 150
 
 	BottomMiddleChars:	.byte 137, 137, 141, 141, 145, 145, 149, 149
-
 						.byte 000, 000, 160, 160, 164, 164, 168, 168
 
 
 	BottomRightChars:	.byte 000, 000, 000, 000, 150, 150, 152, 152
-
 						.byte 000, 142, 000, 146, 000, 169, 000, 000
 
 
 
+	TopLeftChar:		.byte 184, 184, 188, 188, 192, 192, 208, 213
+	TopMiddleChar:		.byte 185, 185, 189, 189, 193, 193, 209, 209
+	TopRightChar:		.byte 000, 188, 000, 192, 196, 213, 212, 212
+	BottomLeftChar:		.byte 187, 187, 191, 191, 195, 195, 000, 000
+	BottomMiddleChar:	.byte 186, 186, 190, 190, 194, 194, 210, 210
+	BottomRightChar:	.byte 000, 191, 000, 192, 000, 000, 211, 211
 
 
 	//Spread_Order:	.byte 0, 3, 4, 11, 12, 19, 20, 29, 30, 39
@@ -201,13 +194,13 @@ FORMATION: {
 
 
 
-	Frames:		.byte 		   0, 1, 0, 1
-				.byte 		0, 1, 0, 1, 0, 1
-				.byte 	 0, 1, 0, 1, 0, 1, 0, 1
-				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
-				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
-				.byte 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
-				.byte 0, 1
+	Frames:		.byte 		   1, 0, 1, 0
+				.byte 		1, 0, 1, 0, 1, 0
+				.byte 	 1, 0, 1, 0, 1, 0, 1, 0
+				.byte 1, 0, 1, 0, 1, 0, 1, 0, 1, 0
+				.byte 1, 0, 1, 0, 1, 0, 1, 0, 1, 0
+				.byte 1, 0, 1, 0, 1, 0, 1, 0, 1, 0
+				.byte 1, 0
 
 			StartIDs:		.byte 0, 4, 10, 18, 28, 38
 			EndIDs:			.byte 3, 9, 17, 27, 37, 47
@@ -264,19 +257,19 @@ FORMATION: {
 
 		Loop:
 
-			lda Home_Column, x
-			
-			sta PreviousColumn, x
-			sta PreviousRow, x
-
 			lda StartOffset, x
 			sta Offset, x
+			asl
+			sta FormationSpriteX, x
+
+			ldy Home_Column, x
+			lda ColumnSpriteX, y
+			clc
+			adc FormationSpriteX, x
+			sta FormationSpriteX, x
 
 			lda Hits, x
 			sta HitsLeft, x
-
-			//jsr RANDOM.Get
-			//and #%00000001
 
 			lda #0
 			sta Occupied, x
@@ -297,6 +290,8 @@ FORMATION: {
 		sta Stop
 		sta OffsetChars
 		sta SwitchingDirection
+		sta Stopping
+		sta Starting
 	
 
 		lda #1
@@ -322,19 +317,6 @@ FORMATION: {
 
 	
 
-
-	StartTransform: {
-
-		sty TransformID
-
-		lda #0
-		sta TransformProgress
-
-		lda #TransformTime
-		sta TransformTimer
-
-		rts
-	}
 
 	
 	EnemyKilled: {
@@ -415,6 +397,59 @@ FORMATION: {
 
 		AddFrame:
 
+			cpx #4
+			bcs NormalEnemy
+
+
+		Flagship:
+
+			ldy ZP.Column
+			ldx ZP.Amount
+
+			lda TopLeftChar, x
+			sta (ZP.ScreenAddress), y
+
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			iny
+			lda TopMiddleChar, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			iny
+			lda TopRightChar, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			tya
+			clc
+			adc #38
+			tay
+
+			lda BottomLeftChar, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			iny
+			lda BottomMiddleChar, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			iny
+			lda BottomRightChar, x
+			sta (ZP.ScreenAddress), y
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			rts
+
+		NormalEnemy:
+
 			txa
 			clc
 			adc Frame
@@ -430,12 +465,14 @@ FORMATION: {
 
 		DrawChars:
 
+
+
 			ldy ZP.Column
 			ldx ZP.CharID
 			lda TopLeftChars, x
 			sta (ZP.ScreenAddress), y
 
-				lda ZP.Colour
+			lda ZP.Colour
 			sta (ZP.ColourAddress), y
 
 			iny
@@ -514,16 +551,22 @@ FORMATION: {
 			lda Occupied, x
 			beq EndLoop
 
-			jsr DrawEnemy
-
-			EndLoop:
+			MoveIt:
 
 				ldx ZP.CurrentID
+
+				lda Stop
+				bne Okay
 
 				lda Direction
 				beq GoingLeft
 
 				GoingRight:
+
+					lda FormationSpriteX, x
+					clc
+					adc #2
+					sta FormationSpriteX, x
 
 					lda Offset, x
 					clc
@@ -542,20 +585,21 @@ FORMATION: {
 					cmp IllegalOffsetRight
 					bne Okay
 
-				ReachedEdge:
-
-					lda Offset, x
-					beq NoDec
-
-					dec Column, x
-
 				NoDec:
 
+				
 					inc SwitchingDirection
 
 					jmp Okay
 
 				GoingLeft:
+
+
+					lda FormationSpriteX, x
+					sec
+					sbc #2
+					sta FormationSpriteX, x
+
 
 					lda Offset, x
 					sec
@@ -573,18 +617,19 @@ FORMATION: {
 
 				ReachedEdgeLeft:
 
-					lda Offset, x
-					cmp #3
-					beq NoIncrease
-
-					inc Column, x
-
 				NoIncrease:
 					inc SwitchingDirection
 
 
 			Okay:
 
+				ldx ZP.CurrentID
+
+				jsr DrawEnemy
+
+			EndLoop:
+
+				ldx ZP.CurrentID
 				cpx ZP.EndID
 				beq Done
 
@@ -604,7 +649,7 @@ FORMATION: {
 		
 	FrameUpdate: {
 
-		inc $d020
+		//inc $d020
 
 		lda #0
 		sta ZP.Temp4
@@ -634,6 +679,22 @@ FORMATION: {
 			lda #0
 			sta DrawIteration
 
+			lda Stopping
+			sta Stop
+
+			lda Starting
+			beq NotStarting
+
+			lda #0
+			sta Stop
+
+		NotStarting:
+
+		
+			lda #0
+			sta Stopping
+			sta Starting
+
 
 			lda SwitchingDirection
 			beq NotSwitching
@@ -652,7 +713,7 @@ FORMATION: {
 
 			inc FrameCounter
 			lda FrameCounter
-			cmp #3
+			cmp #2
 			bcc Okay
 
 			lda #0
@@ -666,326 +727,21 @@ FORMATION: {
 
 			jsr ProcessIteration
 
-			lda ZP.Temp4
+			lda DrawIteration
 			cmp #1
-			bcc Start
+			beq Start
 
 
 
 		Finish:
 
-		dec $d020
+		//dec $d020
 
 		rts
 	}
 
-	DrawFourCorners: {
+	
 
-		TopLeft:
-
-			lda ZP.CharID
-
-			jsr PLOT.PlotCharacter
-			lda ZP.Colour
-			jsr PLOT.ColorCharacter
-
-			inc ZP.CharID
-
-		TopRight:
-
-			iny
-			lda ZP.CharID
-			sta (ZP.ScreenAddress), y
-
-			lda ZP.Colour
-			sta (ZP.ColourAddress), y
-
-			inc ZP.CharID
-
-		BottomRight:
-
-			ldy #41
-			lda ZP.CharID
-			sta (ZP.ScreenAddress), y
-
-			lda ZP.Colour
-			sta (ZP.ColourAddress), y
-
-			inc ZP.CharID
-
-		BottomLeft:
-
-			dey
-			lda ZP.CharID
-			sta (ZP.ScreenAddress), y
-
-			lda ZP.Colour
-			sta (ZP.ColourAddress), y
-
-
-		rts
-	}
-
-	DeleteExplosion: {
-
-		stx ZP.FormationID
-
-		lda ExplosionX, x
-		sta ZP.Column
-		
-	TopLeft:
-
-		lda ExplosionY, x
-		tay
-		ldx ZP.Column
-
-		lda #0
-		jsr PLOT.GetCharacter
-
-
-		bmi TopRight
-
-		ldy #0
-		lda #0
-		sta (ZP.ScreenAddress), y
-		
-	TopRight:
-
-		ldy #1
-		lda (ZP.ScreenAddress), y
-		bmi BottomRight
-
-		lda #0
-		sta (ZP.ScreenAddress), y
-
-	BottomRight:
-
-		ldy #41
-		lda (ZP.ScreenAddress), y
-		bmi BottomLeft
-
-		lda #0
-		sta (ZP.ScreenAddress), y
-
-	BottomLeft:
-
-		ldy #40
-		lda (ZP.ScreenAddress), y
-		bmi Finish
-
-		lda #0
-		sta (ZP.ScreenAddress), y
-
-		ldx ZP.FormationID
-		
-		Finish:
-
-		rts
-	}
-
-
-	DrawExplosion: {
-
-		TopLeft:
-
-			jsr PLOT.GetCharacter
-
-			bmi TopRight
-
-			ldy #0
-			lda ZP.CharID
-			sta (ZP.ScreenAddress), y
-
-			lda ZP.Colour
-			sta (ZP.ColourAddress), y
-
-
-		TopRight:
-
-			inc ZP.CharID
-
-			iny
-			lda (ZP.ScreenAddress), y
-			bmi BottomRight
-
-			lda ZP.CharID
-			sta (ZP.ScreenAddress), y
-
-			lda ZP.Colour
-			sta (ZP.ColourAddress), y
-
-			
-
-		BottomRight:
-
-			inc ZP.CharID
-
-			ldy #41
-
-			lda (ZP.ScreenAddress), y
-			bmi BottomLeft
-
-			lda ZP.CharID
-			sta (ZP.ScreenAddress), y
-
-			lda ZP.Colour
-			sta (ZP.ColourAddress), y
-
-		
-		BottomLeft:
-
-			inc ZP.CharID
-
-			dey
-			lda (ZP.ScreenAddress), y
-			bmi Finish
-
-			lda ZP.CharID
-			sta (ZP.ScreenAddress), y
-
-			lda ZP.Colour
-			sta (ZP.ColourAddress), y
-
-		Finish:
-
-		rts
-	}
-
-	ProcessExplosion: {
-
-		lda ExplosionTimer, x
-		beq ReadyToDraw
-
-		dec ExplosionTimer, x
-		rts
-
-		ReadyToDraw:
-
-
-		DeleteFirst:
-
-
-			jsr DeleteExplosion
-
-			ldx ZP.StoredXReg
-			lda ExplosionProgress, x
-			cmp #4
-			bcc NowDraw
-
-			lda #255
-			sta ExplosionList, x
-			jmp Finish
-
-
-		NowDraw:
-
-			ldx ZP.StoredXReg
-
-			lda #EXPLOSION_TIME
-			sta ExplosionTimer, x
-
-			lda ExplosionProgress, x
-			asl
-			asl
-			clc
-			adc #ExplosionChar
-			sta ZP.CharID
-
-			lda ExplosionProgress, x
-			tay
-			lda ExplosionColour, y
-			sta ZP.Colour
-
-			ldx ZP.StoredXReg
-
-			lda ExplosionX, x
-			sta ZP.Column
-
-			lda ExplosionY, x
-			tay
-
-			ldx ZP.Column
-
-			jsr DrawExplosion
-
-			
-			ldx ZP.StoredXReg
-			inc ExplosionProgress, x
-			
-
-
-		Finish:
-
-
-		rts
-	}
-
-	CheckExplosions: {
-
-		ldx #0
-
-		Loop:
-
-			stx ZP.StoredXReg
-			lda ExplosionList, x
-			bmi EndLoop	
-
-			sta ZP.CurrentID
-
-			jsr ProcessExplosion
-
-		EndLoop:
-
-			ldx ZP.StoredXReg
-			inx
-			cpx #MAX_EXPLOSIONS
-			bcc Loop
-
-
-		rts
-	}
-
-	AddExplosion: {
-
-
-		ldy #0
-
-		Loop:
-
-			lda ExplosionList, y
-			bmi Found
-
-			iny
-			cpy #MAX_EXPLOSIONS
-			beq Exit
-
-			jmp Loop
-
-		Exit:
-
-			rts
-
-		Found:
-
-			txa
-			sta ExplosionList, y
-
-			lda Column, x
-			clc
-			adc Position
-			sta ExplosionX, y
-
-			//lda Row, x
-			sta ExplosionY, y
-
-			lda #0
-			sta ExplosionTimer, y
-			sta ExplosionProgress, y
-
-
-
-			rts
-	}
 
 	Hit: {
 
@@ -1036,10 +792,6 @@ FORMATION: {
 			jsr SCORE.AddScore
 
 			ldx ZP.FormationID
-
-			jsr AddExplosion
-			//jsr Delete
-
 
 
 

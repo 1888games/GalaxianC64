@@ -146,8 +146,9 @@ StopChannel0: {
 .label SFX_EXTRA = 11
 .label SFX_DEAD = 12
 .label SFX_TRANSFORM = 13
+.label SFX_THEME = 14
 
-channels:	.byte 1, 1, 1, 1, 0, 2, 0, 1, 2, 0, 1, 0, 0, 0
+channels:	.byte 1, 1, 1, 1, 0, 2, 0, 1, 2, 0, 1, 0, 0, 0, 1, 0
 
 sfx_hit1: .import binary "../../Assets/goattracker/hit1.sfx"
 sfx_hit2: .import binary "../../Assets/goattracker/hit2.sfx"
@@ -164,7 +165,7 @@ sfx_coin: .import binary "../../Assets/goattracker/coin.sfx"
 sfx_extra: .import binary "../../Assets/goattracker/extra.sfx"
 sfx_dead: .import binary "../../Assets/goattracker/dead2.sfx"
 sfx_transform: .import binary "../../Assets/goattracker/transform.sfx"
-
+sfx_theme: .import binary "../../Assets/goattracker/galax.sfx"
 //.import binary "../../Assets/sfx/high_blip.sfx"
 
 
@@ -175,8 +176,8 @@ sfx_transform: .import binary "../../Assets/goattracker/transform.sfx"
 
 
 wavetable_l:
-.byte <sfx_hit3, <sfx_hit4, <sfx_hit1, <sfx_hit2, <sfx_dive, <sfx_fire, <sfx_ch1, <sfx_ch2, <sfx_ch3, <sfx_badge, <sfx_coin, <sfx_extra, <sfx_dead, <sfx_transform
+.byte <sfx_hit3, <sfx_hit4, <sfx_hit1, <sfx_hit2, <sfx_dive, <sfx_fire, <sfx_ch1, <sfx_ch2, <sfx_ch3, <sfx_badge, <sfx_coin, <sfx_extra, <sfx_dead, <sfx_transform, <sfx_theme
 
 wavetable_h:
-.byte >sfx_hit3, >sfx_hit4, >sfx_hit1, >sfx_hit2, >sfx_dive, >sfx_fire, >sfx_ch1, >sfx_ch2,>sfx_ch3, >sfx_badge, >sfx_coin, >sfx_extra, >sfx_dead, >sfx_transform
+.byte >sfx_hit3, >sfx_hit4, >sfx_hit1, >sfx_hit2, >sfx_dive, >sfx_fire, >sfx_ch1, >sfx_ch2,>sfx_ch3, >sfx_badge, >sfx_coin, >sfx_extra, >sfx_dead, >sfx_transform, >sfx_theme
 

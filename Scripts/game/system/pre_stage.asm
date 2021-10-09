@@ -14,7 +14,7 @@ PRE_STAGE: {
 
 
 
-	.label StartTime = 1
+	.label StartTime = 90
 	.label DelayTime = 2
 	.label StageTime = 2
 	.label ReadyTime = 5
@@ -113,9 +113,7 @@ PRE_STAGE: {
 		jsr SHIP.Initialise
 		jsr STAGE.NewGame
 		jsr ENEMY.NewGame
-		jsr BEAM.NewGame
-	
-
+		
 
 		NoShipDecrease:
 

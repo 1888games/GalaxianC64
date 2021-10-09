@@ -110,10 +110,26 @@ MP_IRQ: {
 
 					sta $d001 + i * 2
 
-					lda SpriteColor, x
-					sta $d027 + i
 					lda SpritePointer, x
 					sta SPRITE_POINTERS + i
+
+					lda SpriteColor, x
+					sta $d027 + i
+				//cmp #8
+					//bcc 
+
+
+				// 	lda SpriteColor, x
+				// 	bpl !nomsb+
+				// !msb:
+				// 	lda $d010 
+				// 	ora #[pow(2,i)]
+				// 	sta $d010
+				// 	jmp !msbdone+
+				// !nomsb:
+				// 	lda $d010 
+				// 	and #[255 - pow(2,i)]
+				// 	sta $d010
 				
 					lda SpriteX, x
 					sta $d000 + i * 2

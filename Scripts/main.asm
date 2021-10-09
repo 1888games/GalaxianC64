@@ -62,7 +62,6 @@ MAIN: {
 
 	#import "game/system/stats.asm"
 	#import "game/system/game_over.asm"
-	#import "game/gameplay/beam.asm"
 	#import "common/sfx.asm"
 	#import "game/system/challenge.asm"
 	#import "game/system/bonus.asm"
@@ -349,8 +348,8 @@ MAIN: {
 		jsr MAPLOADER.DrawMap
 
 		lda #RED
-		sta VIC.COLOR_RAM + 271
-		sta VIC.COLOR_RAM + 431
+		sta VIC.COLOR_RAM + 272
+		sta VIC.COLOR_RAM + 432
 
 
 
@@ -397,7 +396,7 @@ MAIN: {
 		lda #BLACK
 		sta VIC.BORDER_COLOR
 
-		lda #RED
+		lda #LIGHT_RED
 		sta VIC.EXTENDED_BG_COLOR_1
 		sta VIC.SPRITE_MULTICOLOR_1
 	 	lda #BLUE
@@ -530,7 +529,7 @@ MAIN: {
 			
 			jsr BULLETS.FrameUpdate
 			jsr STAGE.FrameUpdate
-			//jsr ENEMY.FrameUpdate
+			jsr ENEMY.FrameUpdate
 			//jsr BOMBS.FrameUpdate
 			//jsr LIVES.FrameUpdate
 			//jsr ATTACKS.FrameUpdate
@@ -630,7 +629,7 @@ MAIN: {
 		MedByte:			.byte $50, $00, $00, $00, $00
 		LowByte:			.byte $00, $00, $00, $00, $00
 
-* = $a400 "Game ZP Backup"
+* = $a500 "Game ZP Backup"
 	
 GameZP:		.fill 256, 0
 KernalZP:	.fill 256, 0

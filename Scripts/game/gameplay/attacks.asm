@@ -133,10 +133,6 @@ ATTACKS: {
 		lda #2
 		sta InitialAttacks
 
-		lda BEAM.Progress
-		cmp #BEAM_DOCKED
-		beq NoResetBeam
-
 		ResetBeam:
 
 			lda #255
@@ -258,26 +254,7 @@ ATTACKS: {
 		lda #DelayTime
 		sta DelayTimer
 
-		CheckIfBeamBoss:
-
-			cpx BeamBoss
-			bne NotBeamBoss
-
-			lda BEAM.Progress
-			cmp #BEAM_CLOSING
-			bne NotBeamBoss
-
-			lda #0
-			sta BeamStatus
-
-			lda BEAM.BeamBossSpriteID
-			bmi NotBeamBoss
-
-			lda #255
-			sta BeamBoss
-
-		NotBeamBoss:
-
+		
 		rts
 
 
@@ -285,8 +262,6 @@ ATTACKS: {
 
 			lda #0
 			sta NumAttackers
-
-			jmp CheckIfBeamBoss
 
 			rts
 	}
@@ -385,8 +360,6 @@ ATTACKS: {
 
 			LaunchAndTakeShip:
 
-				lda #CAPTURE_PLAYER_ATTACK
-				sta BEAM.CaptureProgress
 				
 				jsr LaunchAttacker
 
@@ -421,8 +394,6 @@ ATTACKS: {
 				lda #DelayTime
 	 			sta DelayTimer
 
-
-				stx BEAM.BeamBossSpriteID
 
 				lda #PLAN_GOTO_BEAM
 				sta FORMATION.NextPlan, y
@@ -529,7 +500,7 @@ ATTACKS: {
 	 	lda #250
 	 	sta TransformTimer
 
-	 	jsr FORMATION.StartTransform
+	 	//jsr FORMATION.StartTransform
 
 	 	sfx(SFX_TRANSFORM)
 
@@ -901,10 +872,6 @@ ATTACKS: {
 			rts
 
 		DoneInitial:
-
-			lda BEAM.CaptureProgress
-			cmp #RECAPTURE_PLAYER_SPIN
-			beq Finish
 
 			jsr ChooseAttacker
 

@@ -1,13 +1,14 @@
 BOMBS: {
 
 	* = * "Bombs"
-	// Enemies - Sprites 0-11
+	// Enemies - Sprites 0-7
 
-	// Bombs - Sprites 12-17
+	// Bombs - Sprites 8-16
 
+	// Our bullet = 17
 	// Ship - Sprites 18-19
 
-	.label BombStartID = 12
+	.label BombStartID = 8
 	.label Pointer =69
 	.label BombEndID = BombStartID + 6
 	.label ReloadTime = 15
@@ -525,9 +526,6 @@ BOMBS: {
 			adc SHIP.TwoPlayer
 			beq NoCollision
 
-			lda BEAM.CaptureProgress
-			bne NoCollision
-
 			lda SHIP.PosX_MSB + 1
 			clc
 			adc #3
@@ -620,8 +618,7 @@ BOMBS: {
 		lda #0
 		sta BombsLeft, x
 
-		cpx BEAM.BeamBossSpriteID
-		beq Finish
+		
 
 		lda STAGE.CurrentStage
 		cmp #3

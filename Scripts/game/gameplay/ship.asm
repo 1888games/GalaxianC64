@@ -3,10 +3,10 @@ SHIP: {
 	* = * "SHIP"
 
 	.label SPRITE_POINTER = 16
-	.label SHIP_Y = 240
+	.label SHIP_Y = 252
 
-	.label MIN_SHIP_X = 34
-	.label MAX_SHIP_X = 206
+	.label MIN_SHIP_X = 24
+	.label MAX_SHIP_X = 232
 	.label LEFT_OFFSET = 0
 	.label RIGHT_OFFSET = 7
 	
@@ -21,7 +21,7 @@ SHIP: {
 	Active:			.byte 0, 0
 	DualFighter:	.byte 0
 	TwoPlayer:		.byte 0
-	MaxShipX:		.byte 208, 192
+	MaxShipX:		.byte 232, 216
 	Dead:			.byte 0, 0
 	Docked:			.byte 0
 
@@ -840,12 +840,6 @@ SHIP: {
 		lda Dead
 		beq Finish
 
-		lda BEAM.CaptureProgress
-		cmp #7
-		beq SkipCheck
-
-		cmp #0
-		bne Finish
 
 		SkipCheck:
 
@@ -926,24 +920,6 @@ SHIP: {
 
 	FrameUpdate: {
 
-		CheckIfCaptured:
-
-			lda Captured
-			beq NotCapture
-
-		ShipCaptured:
-
-			jmp BEAM.ShipCaptured
-
-		NotCapture:
-
-			lda Recaptured
-			beq NotRecaptured
-
-			jsr BEAM.ShipRecaptured
-
-		NotRecaptured:
-
 			jsr Control
 
 			lda TwoPlayer
@@ -957,15 +933,7 @@ SHIP: {
 			jsr UpdateSprites
 			jsr CheckDead
 
-		CheckIfShipDocked:
-
-			lda Docked
-			beq Finish
-
-		IsDocked:
-
-			jsr BEAM.ShipDocked
-
+		
 
 		Finish:
 

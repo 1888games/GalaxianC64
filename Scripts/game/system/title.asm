@@ -12,7 +12,7 @@ TITLE: {
 	CurrentRows:	.byte 2, 3, 13, 15, 20, 24
 
 	Columns:		.byte 7, 7, 14, 14, 8, 9
-	Colours:		.byte RED, WHITE, WHITE, WHITE, WHITE, WHITE
+	Colours:		.byte WHITE, RED, WHITE, WHITE, WHITE
 	Mode:			.byte 1
 	Finishing:		.byte 0
 
@@ -20,7 +20,7 @@ TITLE: {
 
 	Scrolling:		.byte 0
 
-	LogoColours:	.byte GREEN, GREEN, WHITE, GREEN, GREEN, WHITE
+	LogoColours:	.byte CYAN, CYAN, WHITE, CYAN, CYAN, WHITE
 	LogoColour:		.byte 0
 
 	FlipTimer:		.byte 0
@@ -159,8 +159,9 @@ TITLE: {
 
 			jsr MAIN.ResetGame
 
-			lda #SUBTUNE_START
-			jsr sid.init
+			sfx(SFX_THEME)
+		//	lda #SUBTUNE_START
+		//	jsr sid.init
 
 			rts
 

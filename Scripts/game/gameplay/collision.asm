@@ -61,6 +61,28 @@
 	}
 
 
+	CreateExplosion: {
+
+		jsr GetNextAvailable
+
+		lda #PLAN_EXPLODE
+		sta Plan, x
+
+		lda #0
+		sta ExplosionProgress, x
+
+		lda ExplosionFrames
+		sta SpritePointer, x
+
+		lda #FORMATION.EXPLOSION_TIME
+		sta ExplosionTimer, x
+
+		lda #YELLOW
+		sta SpriteColor, x
+
+		rts
+	}
+
 
 	CheckShipCollision: {
 
@@ -312,8 +334,6 @@
 			jsr CheckWaveBonus
 //
 		Kamikaze:	
-
-			jsr BEAM.CheckEnemy
 
 			stx ZP.Temp2
 

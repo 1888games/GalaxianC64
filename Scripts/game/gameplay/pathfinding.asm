@@ -285,14 +285,7 @@
 
 		ArrivedGrid:
 
-			cpx EnemyWithShipID
-			bne NoShipAttached
-
-			jsr BEAM.BossReturnedHomeWithShip
-
-			lda #255
-			sta EnemyWithShipID
-
+		
 		NoShipAttached:
 
 			lda #10
@@ -353,81 +346,7 @@
 
 
 
-	OrphanedFighterDocked: {
-
-			lda #1
-			sta SHIP.Docked
-
-			lda #0
-			sta BEAM.Angle
-			sta BEAM.CaptureProgress
-
-			lda FORMATION.Home_Column
- 			tay
-  			lda FORMATION.ColumnSpriteX, y
-  			sta BEAM.BossColumnX
-  			sec
-  			sbc #4
-			sta BEAM.ShipX
-
-			lda FORMATION.Home_Row
-			tay
-			lda FORMATION.RowSpriteY, y
-			sec
-			sbc #16
-			sta BEAM.ShipY
-
-			lda #WHITE
-			sta BEAM.Colour
-
-			lda #BEAM_DOCKED
-			sta BEAM.Progress
-
-			lda #106
-			sta BEAM.Pointer
-
-			jsr BEAM.OrphanedFighterSprite
-
-			lda FORMATION.Occupied
-			beq BossAlreadyKilled
-
-		BossAlive:
-
-			lda #PLAN_GRID
-			sta FORMATION.Plan
-
-			lda #0
-			sta ATTACKS.BeamBoss
-			sta ATTACKS.AddFighterToWave
-
-			lda #BEAM_DOCKED
-			sta ATTACKS.BeamStatus
-			rts
-
-		BossAlreadyKilled:
-
-			lda FORMATION.Column
-			sta ATTACKS.OrphanedFighterColumn
-
-			lda #BEAM_ORPHANED
-			sta ATTACKS.BeamStatus
-
-			lda #0
-			sta ATTACKS.OrphanedFighterID
-
-			lda #255
-			sta ATTACKS.BeamBoss
-
-			inc ATTACKS.AddFighterToWave
-			rts
-
-
-
-
-		rts
-	}
-
-
+	
 
 	ArrivedAtGrid: {
 
@@ -440,14 +359,6 @@
 			lda #PLAN_INACTIVE
 			sta Plan, x
 
-			lda BasePointer, x
-			cmp #106
-			bne NotFighter
-
-		IsFighter:
-
-			jsr OrphanedFighterDocked	
-			jmp UpdateCount
 
 		NotFighter:
 
@@ -1195,81 +1106,8 @@
 	
 
 
-	WaitBeam: {
-
-		lda BEAM.Active
-		bne BeamActivated
-
-		jsr BEAM.Launch
-
-		ldx ZP.EnemyID
-
-		lda #8
-		sta Angle, x
 	
-
-
-		BeamActivated:
-
-		dec PositionInPath, X
-
-		rts
-	}
-
-	BossBeamStraightOut: {
-
-		jmp GotoBeam
-
-		lda #255
-		sta PositionInPath, x
-		
-		lda Mirror, y
-		clc
-		adc #PATH_BEE_ATTACK
-		sta PathID, x
-
-		jsr GetNextMovement
-
-		ldx ZP.EnemyID
-
-		rts
-	}
-
-	GotoBeam: {
-
-		jsr TargetShipX
-
-		tya
-		pha
-
-		lda SHIP.CharX
-		sta BEAM.Column
-		tay
-
-		lda FORMATION.ColumnSpriteX, y
-		sec
-		sbc #2
-		sta TargetSpriteX, x
-
-		pla
-		tay
-
-		lda #164
-		sta TargetSpriteY, x
-		sec
-		sbc SpriteY, x
-		sta MoveY
-
-		lda #PLAN_WAIT_BEAM
-		sta Plan, x
-		sta FORMATION.Plan, y
-
-		jsr CalculateRequiredSpeed
-
-		dec PositionInPath, x
 	
-		rts
-	}
 
 
 
@@ -1711,13 +1549,6 @@
 
 		NotFlutter:
 
-			cmp #PLAN_GOTO_BEAM
-			bne NotBeam
-
-			jmp BossBeamStraightOut
-
-		NotBeam:
-
 
 			lda #PLAN_INACTIVE
 			sta Plan, x
@@ -1814,12 +1645,7 @@
 
 		NotFlutter:
 
-			cmp #PLAN_GOTO_BEAM
-			bne NotBeam
 
-			jmp GotoBeam
-
-		NotBeam:
 
 			cmp #PLAN_TRANSFORM
 			bne NotTransform
@@ -1828,12 +1654,7 @@
 
 		NotTransform:
 
-			cmp #PLAN_WAIT_BEAM
-			bne NotWaitBeam
-
-			jmp WaitBeam
-
-		NotWaitBeam:
+			
 
 			cmp #PLAN_BOSS_HELD
 			bne NotHeld	

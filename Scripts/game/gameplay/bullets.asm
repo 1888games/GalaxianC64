@@ -4,8 +4,8 @@ BULLETS: {
 	* = * "Bullets"
 	
 	BulletSpriteX:		.byte 0, 0, 0, 0
-	SpriteY_MSB:	.byte 0, 0, 0, 0
-	SpriteY_LSB:	.byte 0, 0, 0, 0
+	SpriteY_MSB:		.byte 0, 0, 0, 0
+	SpriteY_LSB:		.byte 0, 0, 0, 0
 
 
 	CharX:		.byte 255, 255, 255, 255
@@ -23,13 +23,14 @@ BULLETS: {
 	PlayerLookup:	.byte 0, 0, 1, 1
 
 	.label SPEED_MSB = 5
-	.label SPEED_LSB = 20
+	.label SPEED_LSB = 250
 	.label CooldownTime = 3
 	.label SpriteYOffset = 12
 
+	.label BulletSpriteID = 17
+	.label BulletSpritePointer = 148
+
 	ActiveBullets:		.byte 0, 0
-
-
 
 
 
@@ -119,7 +120,7 @@ BULLETS: {
 
 			inc ActiveBullets + 1
 
-			jsr DrawBullet
+			jsr SetupSprite
 
 			lda #1
 			sta BULLETS.PlayerShooting
@@ -246,7 +247,7 @@ BULLETS: {
 
 			inc ActiveBullets
 
-			jsr DrawBullet
+			jsr SetupSprite
 
 			lda #0
 			sta BULLETS.PlayerShooting
@@ -279,81 +280,35 @@ BULLETS: {
 	}
 
 
-	DrawBullet: {
+	
 
-		lda CharX, x
-		bmi Finish
+	SetupSprite: {
 
-		sta ZP.Column
-
-		lda CharY, x
-		sta ZP.Row
-
-		lda OffsetX, x
-		tay
-		cpy #4
-		bcc Okay
-
-		.break
-		nop
-
-
-		Okay:
-
-		lda CharLookups, y
-		cmp #179
-		bcc Error
-
-		cmp #183
-		bcs Error
-
-		jmp NoError
-
-		Error:
-
-		.break
-		nop
-
-		NoError:
-
-
-		ldx ZP.Column
-		ldy ZP.Row
-
-		jsr PLOT.PlotCharacter
+		lda BulletSpriteX
+		sta SpriteX + BulletSpriteID
 
 		lda #YELLOW
-		jsr PLOT.ColorCharacter
+		sta SpriteColor + BulletSpriteID
 
+		lda #BulletSpritePointer
+		sta SpritePointer + BulletSpriteID
 
-		Finish:
-
-		rts
-
-	}
-
-	DeleteBullet: {
-
-		lda CharX, x
-		sta ZP.Column
-
-		lda ZP.Temp1
-		tay
-
-		lda #0
-		ldx ZP.Column
-
-		jsr PLOT.PlotCharacter
-
-		
-		Finish:
+		lda SpriteY_MSB
+		sta SpriteY + BulletSpriteID
 
 		rts
-
-
 	}
 
+	UpdateSprite: {
 
+		lda SpriteY_MSB
+		sta SpriteY + BulletSpriteID
+
+
+		rts
+	}
+
+	
 	Move: {
 
 		ldx #0
@@ -367,7 +322,6 @@ BULLETS: {
 
 			lda CharX, x
 			bmi EndLoop
-
 
 			lda CharY, x
 			sta ZP.Temp1
@@ -404,16 +358,17 @@ BULLETS: {
 			sta OffsetY, x
 
 			dec CharY, x
-			bmi BulletDead
+			lda CharY, x
+			cmp #253
+			beq BulletDead
 
+			
+			
+			jsr UpdateSprite
 			jsr CheckFormationCollision
 
 			
-			ldx ZP.StoredXReg
-			jsr DeleteBullet
-			ldx ZP.StoredXReg
-			jsr DrawBullet
-
+			
 			jmp EndLoop
 
 		BulletDead:
@@ -486,9 +441,10 @@ BULLETS: {
 
 	KillBullet: {
 
-		jsr DeleteBullet
+		lda #10
+		sta SpriteY + BulletSpriteID
 
-		ldx ZP.StoredXReg
+		ldx #0
 		lda #255
 		sta CharX, x
 
@@ -516,8 +472,9 @@ BULLETS: {
 
 		Okay:
 
-		lda #0
-		sta FORMATION.Stop
+		lda #1
+		sta FORMATION.Starting
+	
 
 		rts
 
@@ -608,13 +565,16 @@ BULLETS: {
 
 	CheckFormationCollision: {
 
+		lda CharY, x
+		cmp #13
+
+		bcc NotTooLow
+
 		rts
 
-		lda CharY, x
-		cmp #14
-		bcs Finish
+		NotTooLow:
 
-		ldy #45
+		ldy #47
 
 		Loop:
 
@@ -635,31 +595,49 @@ BULLETS: {
 
 		WithinRange:
 
-			lda FORMATION.Column, y
-			clc
-			adc FORMATION.Position
+			lda FORMATION.FormationSpriteX, y
 			sta ZP.Amount
 
-			lda CharX, x
+			lda BulletSpriteX, x
 			sec
 			sbc ZP.Amount
-			cmp #1
+			clc
+			adc #9
+			cmp #18
+			bcs EndLoop
+
+			pha
+
+			lda FORMATION.Direction
+			beq GoingLeft
+
+		GoingRight:
+
+			pla
+			cmp #14
+			bcs Missed
+
+			cmp #4
+			bcc EndLoop
+
+			jmp NoOffsetCheck
+
+		GoingLeft:	
+
+			pla
+			cmp #3
+			bcc Missed
+
+			cmp #15
 			bcs EndLoop
 
 			jmp NoOffsetCheck
 
-			cmp #1
-			beq NoOffsetCheck
-	
-			lda OffsetX, x
-			cmp #2
-			bcs NoOffsetCheck
-
 			Missed:
 
 				lda #1
-				sta FORMATION.Stop
-				
+				sta FORMATION.Stopping
+
 				jmp EndLoop
 
 			NoOffsetCheck:
@@ -672,19 +650,35 @@ BULLETS: {
 			tax
 			jsr FORMATION.Hit
 
+			jsr ENEMY.CreateExplosion
+
+			ldy ZP.StoredYReg
+
+			lda FORMATION.FormationSpriteX, y
+			sec
+			sbc #4
+			sta SpriteX, x
+
+			lda FORMATION.SpriteRow, y
+			sec
+			sbc #6
+			sta SpriteY, x
+
 			ldx ZP.StoredXReg
 
 			lda #1
 			sta Cooldown
 			jsr KillBullet
 
+			jmp Finish
 
-			
 			EndLoop:
 
 				ldy ZP.StoredYReg
 				dey
-				bpl Loop
+				bmi Finish
+
+				jmp Loop
 
 
 		Finish:
@@ -694,12 +688,6 @@ BULLETS: {
 	}
 
 	FrameUpdate: {
-
-		lda SHIP.DualFighter
-		asl
-		clc
-		adc #1
-		sta MaxBullets
 
 		jsr Move
 
