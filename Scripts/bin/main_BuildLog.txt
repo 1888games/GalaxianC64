@@ -46,16 +46,16 @@ Default-segment:
   $30db-$3303 Spawn
   $3304-$3a59 Pathfinding
   $3a5a-$3de3 Stage
-  $3de4-$3e72 Check Complete
-  $3e73-$3ee8 Check Spawn
-  $3ee9-$40db ---String Data
-  $40dc-$4211 ---Text
-  $4212-$4cd1 Enemy Data
-  $4cd2-$4d53 Title
-  $4d54-$4ede Check Left Finish
+  $3de4-$3e67 Check Complete
+  $3e68-$3edd Check Spawn
+  $3ede-$40d0 ---String Data
+  $40d1-$4206 ---Text
+  $4207-$4cc6 Enemy Data
+  $4cc7-$4d48 Title
+  $4d49-$4ed3 Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6e86 Main
+  $6c00-$6e76 Main
   $7400-$7503 Game Map
   $7504-$7797 Game Tiles
   $7800-$78ff Game Colours
@@ -71,9 +71,9 @@ Default-segment:
   $921f-$9220 GAME OVER
   $9221-$9245 
   $9246-$941d DisplayGameOver
-  $941e-$9a50 -Sound
-  $9a51-$9a9b Attacks
-  $9a9c-$9e71 Attackers
+  $941e-$9854 -Sound
+  $9855-$989f Attacks
+  $98a0-$9c75 Attackers
   $a500-$a6ff Game ZP Backup
   $a800-$bfff Sprites Source
   $c400-$e57f Sprites

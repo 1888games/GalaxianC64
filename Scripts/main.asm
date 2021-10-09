@@ -63,7 +63,7 @@ MAIN: {
 	#import "game/system/stats.asm"
 	#import "game/system/game_over.asm"
 	#import "common/sfx.asm"
-	#import "game/system/challenge.asm"
+
 	#import "game/system/bonus.asm"
 	#import "game/gameplay/attacks.asm"
 
@@ -444,10 +444,7 @@ MAIN: {
 
 		cmp #GAME_MODE_OVER
 		beq GameOver
-
-		cmp #GAME_MODE_CHALLENGE
-		beq Challenge
-
+		
 		cmp #GAME_MODE_SCORE
 		beq Score
 
@@ -485,12 +482,6 @@ MAIN: {
 
 			jmp Loop
 
-		Challenge:
-
-			jsr PLEXOR.Sort
-			jsr CHALLENGE.FrameUpdate
-			jsr STARS.FrameUpdate
-			jmp Loop
 
 		TitleScreen:
 			

@@ -805,15 +805,7 @@ STAGE: {
 
 		NoWrap:
 
-			lda STAGE.StageIndex
-			cmp #3
-			bcc NormalStage
-
-		ChallengeStage:
-
-			jsr CHALLENGE.Initialise
-			rts
-
+	
 		NormalStage:
 
 			lda #GAME_MODE_PRE_STAGE
