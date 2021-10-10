@@ -1563,6 +1563,7 @@ al C:9bec .Loop__40
 al C:6d98 .Loop__41
 al C:6e59 .Loop__42
 al C:6e69 .Loop__43
+al C:6e74 .Loop__44
 al C:3e99 .Digit
 al C:9913 .AttackReady
 al C:9945 .SecondAttack
@@ -1677,7 +1678,7 @@ al C:5 .BEAM_CLOSING
 al C:3afb .EveryFourth
 al C:a .StageRow
 al C:1e80 .NextColumn
-al C:6e67 .SaveGameZP
+al C:6e72 .SaveGameZP
 al C:fb7d .MakeFullStop2
 al C:fb96 .MakeFullStop1
 al C:13a6 .IllegalOffsetLeft
@@ -1738,6 +1739,7 @@ al C:ef5 .BulletSpriteX
 al C:7 .EXPLODE_TIME
 al C:1397 .Stop
 al C:8a90 .CheckNotWinning
+al C:6e67 .SaveKernalZPOnly
 al C:3 .BEAM_OPENING
 al C:c .PLAN_FLUTTER
 al C:2a39 ._SpriteY
