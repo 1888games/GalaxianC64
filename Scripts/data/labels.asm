@@ -55,7 +55,7 @@
 .label FORMATION_PAUSE = 255
 
 .label MAX_BOMBS = 9
-.label MAX_ENEMIES = 9
+.label MAX_ENEMIES = 8
 .label MAX_CHARGERS = 7
 
 

@@ -67,6 +67,7 @@ MAIN: {
 	#import "game/system/bonus.asm"
 	#import "game/gameplay/attacks.asm"
 	#import "game/gameplay/charger.asm"
+	#import "game/gameplay/flight.asm"
 
 	#import "game/gameplay/spriteCharLookup.asm"
 

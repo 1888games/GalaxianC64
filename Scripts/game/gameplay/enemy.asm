@@ -60,6 +60,13 @@
 
 			jsr ProcessEnemy
 
+			ldx ZP.EnemyID
+			lda Plan, x
+			beq EndLoop
+
+			jsr CheckShipCollision
+			//jsr BOMBS.CheckEnemyFire
+
 		EndLoop:
 
 			ldx ZP.EnemyID
@@ -85,47 +92,17 @@
 		jmp Explode
 		
 		DontExplode:
+			
+			asl
+			tay
+			lda CHARGER.FlightJumpTable, y
+			sta ZP.DataAddress
 
-			ldy FormationUpdated
-			//bne FormationIsUpdated
-			//jmp NotMovingTowardsGrid
+			lda CHARGER.FlightJumpTable + 1, y
+			sta ZP.DataAddress + 1
 
-		FormationIsUpdated:
+			jmp (ZP.DataAddress)
 
-			//cmp #PLAN_GOTO_GRID
-			//beq GotoGrid
-
-			//cmp #PLAN_RETURN_GRID
-		//	beq GotoGrid
-
-			cmp #PLAN_RETURN_GRID_TOP
-			beq GotoGridTop
-
-			cmp #PLAN_WAIT_BEAM
-			beq NotMovingTowardsGrid
-
-			jmp NotMovingTowardsGrid
-
-		GotoGridTop:
-
-			jsr ReturnToGridFromTop
-			jmp NotMovingTowardsGrid
-
-		GotoGrid:
-
-			jsr FindGridSlot
-
-		NotMovingTowardsGrid:
-
-			jsr CheckMove
-
-		Waiting:
-
-			lda Plan, x
-			beq Finish
-
-			jsr CheckShipCollision
-			jsr BOMBS.CheckEnemyFire
 
 		Finish:
 

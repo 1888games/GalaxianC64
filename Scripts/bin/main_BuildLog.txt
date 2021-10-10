@@ -37,23 +37,23 @@ Default-segment:
   $21c3-$29ff Challenge Paths 4-8
   $2a00-$2a88 VicSpriteTable
   $2a89-$2d7a IRQ
-  $2d7b-$2dfd Enemy
-  $2dfe-$2e57 Enemy Variables
-  $2e58-$2e84 Plan
-  $2e85-$2ea0 Extra
-  $2ea1-$2ea5 Enemies In Wave
-  $2ea6-$2ec8 Enemy Ship ID
-  $2ec9-$3096 Enemies
-  $3097-$32b4 Spawn
-  $32b5-$3a0a Pathfinding
-  $3a0b-$3d94 Stage
-  $3d95-$3e18 Check Complete
-  $3e19-$3e8e Check Spawn
-  $3e8f-$4081 ---String Data
-  $4082-$41b7 ---Text
-  $41b8-$4c77 Enemy Data
-  $4c78-$4d0e Title
-  $4d0f-$4e9c Check Left Finish
+  $2d7b-$2df1 Enemy
+  $2df2-$2e41 Enemy Variables
+  $2e42-$2e69 Plan
+  $2e6a-$2e82 Extra
+  $2e83-$2e87 Enemies In Wave
+  $2e88-$2eaa Enemy Ship ID
+  $2eab-$3078 Enemies
+  $3079-$3296 Spawn
+  $3297-$39ec Pathfinding
+  $39ed-$3d76 Stage
+  $3d77-$3dfa Check Complete
+  $3dfb-$3e70 Check Spawn
+  $3e71-$4063 ---String Data
+  $4064-$4199 ---Text
+  $419a-$4c59 Enemy Data
+  $4c5a-$4cf0 Title
+  $4cf1-$4e7e Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6e93 Main
@@ -63,19 +63,20 @@ Default-segment:
   $7900-$7937 Logo
   $8000-$8157 Unnamed
   $8158-$84ad Score
-  $84ae-$89ff Bombs
-  $8a00-$8be7 Lives
-  $8be8-$8eb9 Pre-Stage
-  $8eba-$8f0b -Random
-  $8f0c-$8fb5 -Plot
-  $8fb6-$9221 STATS
-  $9222-$9223 GAME OVER
-  $9224-$9248 
-  $9249-$9420 DisplayGameOver
-  $9421-$9857 -Sound
-  $9858-$98a2 Attacks
-  $98a3-$9c78 Attackers
-  $9c79-$9f49 Chargers
+  $84ae-$89f8 Bombs
+  $89f9-$8be0 Lives
+  $8be1-$8eb2 Pre-Stage
+  $8eb3-$8f04 -Random
+  $8f05-$8fae -Plot
+  $8faf-$921a STATS
+  $921b-$921c GAME OVER
+  $921d-$9241 
+  $9242-$9419 DisplayGameOver
+  $941a-$9850 -Sound
+  $9851-$989b Attacks
+  $989c-$9c71 Attackers
+  $9c72-$9f42 Chargers
+  $9f43-$9f6e Flight
   $a500-$a6ff Game ZP Backup
   $a800-$bfff Sprites Source
   $c400-$e57f Sprites

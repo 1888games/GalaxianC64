@@ -1,4 +1,4 @@
-CHARGER: {
+.namespace CHARGER {
 
 	* = * "Chargers"
 
@@ -641,7 +641,6 @@ CHARGER: {
 
 	SingleLeft: {
 
-		.break
 
 		ldy #0
 
@@ -676,10 +675,7 @@ CHARGER: {
 		rts
 	}
 
-
 	StartAlienAttack: {
-
-
 
 		lda #0
 		sta FORMATION.Occupied, x
@@ -687,10 +683,6 @@ CHARGER: {
 		ldy ZP.EnemyID
 		lda #PACKS_BAGS
 		sta ENEMY.Plan, y
-
-
-
-
 
 		rts
 	}
