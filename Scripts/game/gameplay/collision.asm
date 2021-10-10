@@ -14,9 +14,7 @@
 	.label StandardEnemiesInWave = 8
 
 
-	
 
-	
 	Explode: {
 
 		lda ExplosionTimer, x
@@ -168,69 +166,7 @@
 	}
 
 
-	CheckWaveBonus: {
-
-		stx ZP.Temp4
-
-		lda SHIP.TwoPlayer
-		beq OnePlayer
-
-
-	TwoPlayer:
-
-		ldx BULLETS.PlayerShooting
-		inc STAGE.KillCount, x
-
-		jmp NoWaveBonus
-
-	OnePlayer:
-
-		inc STAGE.KillCount
-		inc STAGE.WaveKillCount
-
 	
-
-		lda STAGE.StageIndex
-		cmp #3
-		bcc NoWaveBonus
-
-		lda STAGE.WaveKillCount
-		cmp #8
-		bcc NoWaveBonus
-
-		ldx STAGE.CurrentPlayer
-		lda STAGE.ChallengeStage, x
-		tay
-		sty ZP.Temp3
-
-		lda ChallengeBonusLookup, y
-		tay
-		
-		jsr SCORE.AddScore
-		
-		ldy ZP.Temp3
-		lda BonusSpriteLookup, y
-		tay
-
-		ldx ZP.Temp4
-		lda SpriteX, x
-		sta ZP.Column
-
-		lda SpriteY, x
-		sta ZP.Row
-
-		jsr BONUS.ShowBonus
-
-		NoWaveBonus:
-
-		
-		ldx ZP.Temp4
-
-
-
-		rts
-	}
-
 
 	CheckTransformBonus: {
 
@@ -330,8 +266,6 @@
 
 			lda #WHITE
 			sta SpriteColor, x
-
-			jsr CheckWaveBonus
 //
 		Kamikaze:	
 

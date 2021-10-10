@@ -1,0 +1,7 @@
+.namespace ENEMY {
+
+	* = * "Chargers"
+
+
+
+}
