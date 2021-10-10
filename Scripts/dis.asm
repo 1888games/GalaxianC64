@@ -5459,79 +5459,79 @@ HANDLE_CALC_INFLIGHT_ALIEN_SHOOTING_DISTANCE:
 // HAVE_NO_ALIENS_IN_SWARM is set to 1 AND
 // HAVE_NO_INFLIGHT_OR_DYING_ALIENS is set to 1 AND
 // LEVEL_COMPLETE is clear 
-//
+               //
 
-CHECK_IF_LEVEL_IS_COMPLETE:
-1621: 3A 20 42      ld   a,($4220)           // read HAVE_NO_ALIENS_IN_SWARM
-1624: 0F            rrca                     // move flag bit into carry
-1625: D0            ret  nc                  // return if flag is not set, meaning that there are aliens left in the swarm
-1626: 3A 25 42      ld   a,($4225)           // read HAVE_NO_INFLIGHT_OR_DYING_ALIENS
-1629: 0F            rrca                     // move flag bit into carry
-162A: D0            ret  nc                  // return if flag is not set, meaning that there are aliens attacking, or dying
-162B: 3A 22 42      ld   a,($4222)           // read LEVEL_COMPLETE
-162E: 0F            rrca                     // move flag bit into carry
-162F: D8            ret  c                   // return if flag is not set
-1630: 21 01 00      ld   hl,$0001
-1633: 22 22 42      ld   ($4222),hl          // set LEVEL_COMPLETE to 1 and NEXT_LEVEL_DELAY_COUNTER to 0.                  
-1636: C9            ret
-
-
-
-HANDLE_LEVEL_COMPLETE:
-1637: 21 22 42      ld   hl,$4222            // load HL with address of LEVEL_COMPLETE
-163A: CB 46         bit  0,(hl)              // test flag 
-163C: C8            ret  z                   // return if level is not complete
-
-// OK, level is complete. Wait until NEXT_LEVEL_DELAY_COUNTER to reach 0. 
-163D: 23            inc  hl                  // bump HL to point to NEXT_LEVEL_DELAY_COUNTER
-163E: 35            dec  (hl)                // decrement count
-163F: C0            ret  nz                  // return if count is !=0
-
-1640: 2B            dec  hl                  // bump HL to point to LEVEL_COMPLETE again.
-1641: 36 00         ld   (hl),$00            // clear LEVEL_COMPLETE flag.
-
-1643: 11 1B 05      ld   de,$051B            // load DE with address of PACKED_DEFAULT_SWARM_DEFINITION
-1646: CD 46 06      call $0646               // call UNPACK_ALIEN_SWARM 
-1649: AF            xor  a
-164A: 32 1A 42      ld   ($421A),a           // reset DIFFICULTY_EXTRA_VALUE
-164D: 32 5F 42      ld   ($425F),a           // reset TIMING_VARIABLE
-1650: 21 01 00      ld   hl,$0001
-1653: 22 0E 42      ld   ($420E),hl          // set SWARM_SCROLL_VALUE
-
-// increase game difficulty level, if we can.
-1656: 2A 1B 42      ld   hl,($421B)          // load H with PLAYER_LEVEL and L with DIFFICULTY_BASE_VALUE
-1659: 24            inc  h                   // increment player level 
-165A: 7D            ld   a,l                 // load A with DIFFICULTY_BASE_VALUE
-165B: FE 07         cp   $07                 // are we at max difficulty?
-165D: 28 03         jr   z,$1662             // yes, goto $1662
-165F: 30 22         jr   nc,$1683            // edge case: we're above max difficulty! So clamp difficulty level to 7.
-1661: 3C            inc  a                   // otherwise, increment DIFFICULTY_BASE_VALUE
-1662: 6F            ld   l,a
-1663: 22 1B 42      ld   ($421B),hl          // update PLAYER_LEVEL and DIFFICULTY_BASE_VALUE
-
-1666: 11 00 07      ld   de,$0700            // command: BOTTOM_OF_SCREEN_INFO_COMMAND, parameter: 0 (DISPLAY_LEVEL_FLAGS)
-1669: CD F2 08      call $08F2               // call QUEUE_COMMAND. 
-
-// How many flagships survived from the last round? If so, they need to be added into the swarm before the level starts.
-166C: 3A 1E 42      ld   a,($421E)           // get value of FLAGSHIP_SURVIVOR_COUNT into A
-166F: A7            and  a                   // Did any flagships survive from the last round?
-1670: C8            ret  z                   // Return if no flagships survived.
-1671: 21 77 41      ld   hl,$4177            // load HL with address of free slot in flagship row of ALIEN_SWARM_FLAGS
-1674: 36 01         ld   (hl),$01            // create a flagship!
-1676: 3D            dec  a                   //   
-1677: 32 1E 42      ld   ($421E),a           // set value of FLAGSHIP_SURVIVOR_COUNT
-167A: C8            ret  z                   // return if zero. 
-167B: 23            inc  hl                  // bump HL to address of next free slot in flagship row 
-167C: 36 01         ld   (hl),$01            // create a flagship!
-167E: AF            xor  a                
-167F: 32 1E 42      ld   ($421E),a           // clear value of FLAGSHIP_SURVIVOR_COUNT
-1682: C9            ret
+               CHECK_IF_LEVEL_IS_COMPLETE:
+               1621: 3A 20 42      ld   a,($4220)           // read HAVE_NO_ALIENS_IN_SWARM
+               1624: 0F            rrca                     // move flag bit into carry
+               1625: D0            ret  nc                  // return if flag is not set, meaning that there are aliens left in the swarm
+               1626: 3A 25 42      ld   a,($4225)           // read HAVE_NO_INFLIGHT_OR_DYING_ALIENS
+               1629: 0F            rrca                     // move flag bit into carry
+               162A: D0            ret  nc                  // return if flag is not set, meaning that there are aliens attacking, or dying
+               162B: 3A 22 42      ld   a,($4222)           // read LEVEL_COMPLETE
+               162E: 0F            rrca                     // move flag bit into carry
+               162F: D8            ret  c                   // return if flag is not set
+               1630: 21 01 00      ld   hl,$0001
+               1633: 22 22 42      ld   ($4222),hl          // set LEVEL_COMPLETE to 1 and NEXT_LEVEL_DELAY_COUNTER to 0.                  
+               1636: C9            ret
 
 
 
-CLAMP_DIFFICULTY_LEVEL:
-1683: 3E 07         ld   a,$07               // maximum value for DIFFICULTY_BASE_VALUE
-1685: C3 62 16      jp   $1662               // set DIFFICULTY_BASE_VALUE 
+               HANDLE_LEVEL_COMPLETE:
+               1637: 21 22 42      ld   hl,$4222            // load HL with address of LEVEL_COMPLETE
+               163A: CB 46         bit  0,(hl)              // test flag 
+               163C: C8            ret  z                   // return if level is not complete
+
+               // OK, level is complete. Wait until NEXT_LEVEL_DELAY_COUNTER to reach 0. 
+               163D: 23            inc  hl                  // bump HL to point to NEXT_LEVEL_DELAY_COUNTER
+               163E: 35            dec  (hl)                // decrement count
+               163F: C0            ret  nz                  // return if count is !=0
+
+               1640: 2B            dec  hl                  // bump HL to point to LEVEL_COMPLETE again.
+               1641: 36 00         ld   (hl),$00            // clear LEVEL_COMPLETE flag.
+
+               1643: 11 1B 05      ld   de,$051B            // load DE with address of PACKED_DEFAULT_SWARM_DEFINITION
+               1646: CD 46 06      call $0646               // call UNPACK_ALIEN_SWARM 
+               1649: AF            xor  a
+               164A: 32 1A 42      ld   ($421A),a           // reset DIFFICULTY_EXTRA_VALUE
+               164D: 32 5F 42      ld   ($425F),a           // reset TIMING_VARIABLE
+               1650: 21 01 00      ld   hl,$0001
+               1653: 22 0E 42      ld   ($420E),hl          // set SWARM_SCROLL_VALUE
+
+               // increase game difficulty level, if we can.
+               1656: 2A 1B 42      ld   hl,($421B)          // load H with PLAYER_LEVEL and L with DIFFICULTY_BASE_VALUE
+               1659: 24            inc  h                   // increment player level 
+               165A: 7D            ld   a,l                 // load A with DIFFICULTY_BASE_VALUE
+               165B: FE 07         cp   $07                 // are we at max difficulty?
+               165D: 28 03         jr   z,$1662             // yes, goto $1662
+               165F: 30 22         jr   nc,$1683            // edge case: we're above max difficulty! So clamp difficulty level to 7.
+               1661: 3C            inc  a                   // otherwise, increment DIFFICULTY_BASE_VALUE
+               1662: 6F            ld   l,a
+               1663: 22 1B 42      ld   ($421B),hl          // update PLAYER_LEVEL and DIFFICULTY_BASE_VALUE
+
+               1666: 11 00 07      ld   de,$0700            // command: BOTTOM_OF_SCREEN_INFO_COMMAND, parameter: 0 (DISPLAY_LEVEL_FLAGS)
+               1669: CD F2 08      call $08F2               // call QUEUE_COMMAND. 
+
+               // How many flagships survived from the last round? If so, they need to be added into the swarm before the level starts.
+               166C: 3A 1E 42      ld   a,($421E)           // get value of FLAGSHIP_SURVIVOR_COUNT into A
+               166F: A7            and  a                   // Did any flagships survive from the last round?
+               1670: C8            ret  z                   // Return if no flagships survived.
+               1671: 21 77 41      ld   hl,$4177            // load HL with address of free slot in flagship row of ALIEN_SWARM_FLAGS
+               1674: 36 01         ld   (hl),$01            // create a flagship!
+               1676: 3D            dec  a                   //   
+               1677: 32 1E 42      ld   ($421E),a           // set value of FLAGSHIP_SURVIVOR_COUNT
+               167A: C8            ret  z                   // return if zero. 
+               167B: 23            inc  hl                  // bump HL to address of next free slot in flagship row 
+               167C: 36 01         ld   (hl),$01            // create a flagship!
+               167E: AF            xor  a                
+               167F: 32 1E 42      ld   ($421E),a           // clear value of FLAGSHIP_SURVIVOR_COUNT
+               1682: C9            ret
+
+
+
+               CLAMP_DIFFICULTY_LEVEL:
+               1683: 3E 07         ld   a,$07               // maximum value for DIFFICULTY_BASE_VALUE
+               1685: C3 62 16      jp   $1662               // set DIFFICULTY_BASE_VALUE 
 
 
 //

@@ -8,11 +8,11 @@ Writing prg file: /Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/b
 Memory Map
 ----------
 Default-segment:
-  *$0002-$0022 Temp vars zero page
-  *$0023-$0033 LPAX
-  *$0034-$0047 SpriteX
-  *$0048-$00ab SpriteY
-  *$00ac-$00da SpriteCopyY
+  *$0002-$0024 Temp vars zero page
+  *$0025-$0035 LPAX
+  *$0036-$0049 SpriteX
+  *$004a-$00ad SpriteY
+  *$00ae-$00dc SpriteCopyY
   $0801-$080d Basic
   $080e-$080d Basic End
   $0810-$0832 Hi score_Data
@@ -21,41 +21,42 @@ Default-segment:
   $09dd-$0a28 Utility
   $0a29-$0a45 Input
   $0a46-$0ae3 Joystick
-  $0ae4-$0e7d SHIP
-  $0e7e-$0ef4 CheckDead
-  $0ef5-$139b Bullets
-  $139c-$152d Enemies Left
-  $152e-$1dad Offset
-  $1dae-$209e Maploader
-  $209f-$209e WaveMovement
-  $209f-$209e XPaths
-  $209f-$209e YPaths
-  $209f-$20b6 WaveStartPos
-  $20b7-$2124 StagesIndex
-  $2125-$2198 StagesIndexLookup
-  $2199-$29ff Challenge Paths 4-8
+  $0ae4-$0e81 SHIP
+  $0e82-$0efd CheckDead
+  $0efe-$123f Bullets
+  $1240-$1374 Formation
+  $1375-$1476 Enemies Left
+  $1477-$1dd7 Offset
+  $1dd8-$20c8 Maploader
+  $20c9-$20c8 WaveMovement
+  $20c9-$20c8 XPaths
+  $20c9-$20c8 YPaths
+  $20c9-$20e0 WaveStartPos
+  $20e1-$214e StagesIndex
+  $214f-$21c2 StagesIndexLookup
+  $21c3-$29ff Challenge Paths 4-8
   $2a00-$2a88 VicSpriteTable
   $2a89-$2d7a IRQ
   $2d7b-$2dfd Enemy
   $2dfe-$2e57 Enemy Variables
   $2e58-$2e84 Plan
-  $2e85-$2e97 Extra
-  $2e98-$2e9c Enemies In Wave
-  $2e9d-$2ebf Enemy Ship ID
-  $2ec0-$308d Enemies
-  $308e-$32b6 Spawn
-  $32b7-$3a0c Pathfinding
-  $3a0d-$3d96 Stage
-  $3d97-$3e1a Check Complete
-  $3e1b-$3e90 Check Spawn
-  $3e91-$4083 ---String Data
-  $4084-$41b9 ---Text
-  $41ba-$4c79 Enemy Data
-  $4c7a-$4d10 Title
-  $4d11-$4e9e Check Left Finish
+  $2e85-$2ea0 Extra
+  $2ea1-$2ea5 Enemies In Wave
+  $2ea6-$2ec8 Enemy Ship ID
+  $2ec9-$3096 Enemies
+  $3097-$32b4 Spawn
+  $32b5-$3a0a Pathfinding
+  $3a0b-$3d94 Stage
+  $3d95-$3e18 Check Complete
+  $3e19-$3e8e Check Spawn
+  $3e8f-$4081 ---String Data
+  $4082-$41b7 ---Text
+  $41b8-$4c77 Enemy Data
+  $4c78-$4d0e Title
+  $4d0f-$4e9c Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6e81 Main
+  $6c00-$6e93 Main
   $7400-$7503 Game Map
   $7504-$7797 Game Tiles
   $7800-$78ff Game Colours
@@ -64,16 +65,17 @@ Default-segment:
   $8158-$84ad Score
   $84ae-$89ff Bombs
   $8a00-$8be7 Lives
-  $8be8-$8eb6 Pre-Stage
-  $8eb7-$8f08 -Random
-  $8f09-$8fb2 -Plot
-  $8fb3-$921e STATS
-  $921f-$9220 GAME OVER
-  $9221-$9245 
-  $9246-$941d DisplayGameOver
-  $941e-$9854 -Sound
-  $9855-$989f Attacks
-  $98a0-$9c75 Attackers
+  $8be8-$8eb9 Pre-Stage
+  $8eba-$8f0b -Random
+  $8f0c-$8fb5 -Plot
+  $8fb6-$9221 STATS
+  $9222-$9223 GAME OVER
+  $9224-$9248 
+  $9249-$9420 DisplayGameOver
+  $9421-$9857 -Sound
+  $9858-$98a2 Attacks
+  $98a3-$9c78 Attackers
+  $9c79-$9f49 Chargers
   $a500-$a6ff Game ZP Backup
   $a800-$bfff Sprites Source
   $c400-$e57f Sprites

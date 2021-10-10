@@ -39,7 +39,7 @@ ZP: {
 	ColourAddress:			.word 0
 	CharOffset:				.byte 0
 	TextAddress:			.word 0
-
+	DataAddress:			.word 0
 	StageWaveOrderAddress:	.word 0
 
 	* = * "LPAX" virtual

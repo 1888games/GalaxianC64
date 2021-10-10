@@ -761,6 +761,7 @@ STAGE: {
 		//sta SCREEN_RAM + 558
 		bne LevelNotComplete
 
+
 		lda ATTACKS.OrphanedFighterColumn
 		//sta SCREEN_RAM + 598
 		bne LevelNotComplete

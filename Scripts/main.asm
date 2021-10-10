@@ -66,6 +66,7 @@ MAIN: {
 
 	#import "game/system/bonus.asm"
 	#import "game/gameplay/attacks.asm"
+	#import "game/gameplay/charger.asm"
 
 	#import "game/gameplay/spriteCharLookup.asm"
 
@@ -464,6 +465,7 @@ MAIN: {
 			jsr STARS.FrameUpdate
 			jsr END_GAME.FrameUpdate
 			jsr BONUS.FrameUpdate
+			jsr CHARGER.FrameUpdate
 
 			jmp Loop
 		
@@ -472,6 +474,7 @@ MAIN: {
 
 			jsr STARS.FrameUpdate
 			jsr DEMO.FrameCode
+			jsr CHARGER.FrameUpdate
 
 			jmp Loop
 
@@ -479,6 +482,7 @@ MAIN: {
 
 			jsr STARS.FrameUpdate
 			jsr HI_SCORE.FrameCode
+			jsr CHARGER.FrameUpdate
 
 			jmp Loop
 
@@ -493,6 +497,7 @@ MAIN: {
 			beq Loop
 
 			jsr STARS.FrameUpdate
+			jsr CHARGER.FrameUpdate
 
 			
 			jmp Loop
@@ -504,6 +509,7 @@ MAIN: {
 			jsr PRE_STAGE.FrameUpdate
 			jsr LIVES.FrameUpdate
 			jsr BONUS.FrameUpdate
+			jsr CHARGER.FrameUpdate
 
 			jmp Loop
 
@@ -521,6 +527,7 @@ MAIN: {
 			jsr BULLETS.FrameUpdate
 			jsr STAGE.FrameUpdate
 			jsr ENEMY.FrameUpdate
+			jsr CHARGER.FrameUpdate
 			//jsr BOMBS.FrameUpdate
 			//jsr LIVES.FrameUpdate
 			//jsr ATTACKS.FrameUpdate
@@ -529,7 +536,7 @@ MAIN: {
 			Delay:
 
 			lda $d012
-			cmp #140
+			cmp #100
 			bcc Delay
 			
 			jsr FORMATION.FrameUpdate
@@ -571,11 +578,11 @@ MAIN: {
 
 		Loop:
 
-			lda $02, x
+			lda $00, x
 			sta KernalZP, x
 
 			lda GameZP, x
-			sta $02, x
+			sta $00, x
 
 			inx
 			bne Loop

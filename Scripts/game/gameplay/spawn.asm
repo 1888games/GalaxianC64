@@ -394,13 +394,7 @@
 
 		Hits:
 
-			tay
-			lda FORMATION.Hits, y
-			sec
-			sbc AddingFighter
-			sta HitsLeft, x
-
-
+		
 		rts
 	}
 

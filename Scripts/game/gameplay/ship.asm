@@ -3,7 +3,7 @@ SHIP: {
 	* = * "SHIP"
 
 	.label SPRITE_POINTER = 16
-	.label SHIP_Y = 252
+	.label SHIP_Y = 245
 
 	.label MIN_SHIP_X = 24
 	.label MAX_SHIP_X = 232
@@ -44,6 +44,7 @@ SHIP: {
 	CanControl:			.byte 1
 	DeadTimer:			.byte 255
 	PlayerDied:			.byte 0
+	GameOver:			.byte 0
 
 	.label MAIN_SHIP_POINTER = 18
 
@@ -93,6 +94,7 @@ SHIP: {
 		lda #0
 		sta Captured
 		sta Recaptured
+		sta GameOver
 
 		lda #SPRITE_POINTER
 		sta SpritePointer + MAIN_SHIP_POINTER
@@ -873,6 +875,9 @@ SHIP: {
 
 		lda ZP.Amount
 		bne NotGameOver
+
+		lda #1
+		sta GameOver
 
 		jmp END_GAME.Initialise
 

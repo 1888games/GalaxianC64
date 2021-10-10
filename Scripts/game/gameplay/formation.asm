@@ -1,7 +1,7 @@
 FORMATION: {
 
 	
-
+	* = * "Formation"
 
 	.label SR = 50
 	.label SC = 20
@@ -28,12 +28,6 @@ FORMATION: {
 	.label EXPLOSION_TIME = 3
 	.label UpdatesPerFrame = 8
 	.label MAX_EXPLOSIONS= 3
-
-	Hits:		.fill 4, 0
-				.fill 36, 0
-				.fill 3, 0
-				.fill 3, 0
-				.fill 2, 0
 
 
 	Column:		.fill 48, 0
@@ -77,27 +71,6 @@ FORMATION: {
 
 
 
-
-	
-	Offset_0_Frame_0_Clear:		.byte 135, 136, 000, 138, 137, 000 
-	Offset_0_Frame_0_Nexty:		.byte 135, 136, 158, 138, 137, 000 // check right
-	Offset_1_Frame_0_Clear:		.byte 139, 140, 000, 142, 141, 000
-	Offset_1_Frame_0_Nexty:		.byte 139, 140, 162, 142, 141, 000 // check right
-	Offset_2_Frame_0_Clear:		.byte 143, 144, 147, 146, 145, 150
-	Offset_2_Frame_0_Nexty:		.byte 143, 144, 147, 146, 145, 150 // check right
-	Offset_3_Frame_0_Clear:		.byte 166, 148, 151, 169, 149, 152
-	Offset_3_Frame_0_Nexty:		.byte 176, 148, 151, 169, 149, 152 // check left
-
-
-
-	Offset_0_Frame_1_Clear:		.byte 154, 155, 139, 157, 165, 000 
-	Offset_0_Frame_1_Nexty:		.byte 154, 155, 139, 157, 165, 142 // check right
-	Offset_1_Frame_1_Clear:		.byte 158, 159, 000, 000, 000, 000
-	Offset_1_Frame_1_Nexty:		.byte 158, 159, 143, 000, 000, 146 // check right
-	Offset_2_Frame_1_Clear:		.byte 162, 163, 000, 000, 164, 000
-	Offset_2_Frame_1_Nexty:		.byte 162, 163, 166, 000, 164, 169 // check right
-	Offset_3_Frame_1_Clear:		.byte 174, 167, 170, 000, 168, 165
-	Offset_3_Frame_1_Nexty:		.byte 147, 167, 170, 150, 168, 165 // check left
 
 
 						      // 0         // 1      // 2       // 3
@@ -152,16 +125,9 @@ FORMATION: {
 				.byte 1, 2, 3, 0, 1, 2, 3, 0, 1, 2 // 36-45
 				.byte 4, 4, 4 // 40-42
 
-			ReverseOrder:		.byte 3, 2, 1, 0
-								.byte 9, 8, 7, 6, 5, 4
-								.byte 17, 16, 15, 14, 13, 12, 11, 10
-								.byte 27, 26, 25, 24, 23, 22, 21, 20, 19, 18
-								.byte 37, 36, 35, 34, 33, 32, 31, 30, 29, 28
-								.byte 47, 46, 45, 44, 43, 42, 41, 40, 39, 38
-
 		* = * "Offset"
 
-		Offset:
+Offset:
 
 				.byte          0, 1, 2, 3	// 0-3
 				.byte       3, 0, 1, 2, 3, 0 // 4-9
@@ -191,9 +157,22 @@ FORMATION: {
 				.byte 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
 
 
+	Relative_Row:	.fill 4, 0
+					.fill 6, 1
+					.fill 8, 2
+					.fill 8, 3
+					.fill 8, 4
+					.fill 8, 5
+
+	Relative_Column:	.byte   	   3, 4, 5, 6
+						.byte 	    2, 3, 4, 5, 6, 7
+						.byte    1, 2, 3, 4, 5, 6, 7, 8
+						.byte 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+						.byte 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+						.byte 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 
 
-
+   					//0  1  2  3  4  5  6  7  8  9
 	Frames:		.byte 		   1, 0, 1, 0
 				.byte 		1, 0, 1, 0, 1, 0
 				.byte 	 1, 0, 1, 0, 1, 0, 1, 0
@@ -202,9 +181,30 @@ FORMATION: {
 				.byte 1, 0, 1, 0, 1, 0, 1, 0, 1, 0
 				.byte 1, 0
 
+
+				//              0  1  2  3
+				//			 4  5  6  7  8  9
+				// 	     10 11 12 13 14 15 16 17
+				//    18 19 20 21 22 23 24 25 26 27
+				//    28 29 30 31 32 33 34 35 36 37
+				//    38 39 40 41 42 43 44 45 46 47
+
 			StartIDs:		.byte 0, 4, 10, 18, 28, 38
 			EndIDs:			.byte 3, 9, 17, 27, 37, 47
 
+
+	LeftSearchOrder:		.byte 18, 28, 38, 10, 19, 29, 39
+							.byte 4, 11, 20, 30, 40, 5, 12, 21, 31, 41
+							.byte 6, 13, 22, 32, 42, 7, 14, 23, 33, 43
+							.byte 8, 15, 24, 34, 44, 9, 16, 25, 35, 45
+							.byte 17, 26, 36, 46, 27, 37, 47
+
+
+	RightSearchOrder:		.byte 27, 37, 47, 17, 26, 36, 46
+							.byte 9, 16, 25, 35, 45, 8, 15, 24, 34, 44
+							.byte 7, 14, 23, 33, 43, 6, 13, 22, 32, 42
+							.byte 5, 12, 21, 31, 41,  4, 11, 20, 30, 40
+							.byte 10, 19, 29, 39, 18, 28, 38
 
 
 
@@ -268,9 +268,7 @@ FORMATION: {
 			adc FormationSpriteX, x
 			sta FormationSpriteX, x
 
-			lda Hits, x
-			sta HitsLeft, x
-
+			
 			lda #0
 			sta Occupied, x
 			sta Column, x
@@ -539,7 +537,7 @@ FORMATION: {
 			tay
 
 			ldx #0
-			stx ZP.Column
+			sty ZP.Column
 			jsr PLOT.GetCharacter
 
 		ldx ZP.CurrentID
@@ -587,13 +585,11 @@ FORMATION: {
 
 				NoDec:
 
-				
 					inc SwitchingDirection
 
 					jmp Okay
 
 				GoingLeft:
-
 
 					lda FormationSpriteX, x
 					sec
@@ -649,20 +645,14 @@ FORMATION: {
 		
 	FrameUpdate: {
 
-		//inc $d020
+		jsr CalculateEnemiesLeft
+
+		inc $d020
 
 		lda #0
 		sta ZP.Temp4
 
-		lda #1
-		sta EnemiesLeftInStage
-
-		//lda FrameTimer
-		//beq Ready
-
-		//dec FrameTimer
-		//rts
-
+		
 		Ready:
 
 		lda Mode
@@ -735,7 +725,8 @@ FORMATION: {
 
 		Finish:
 
-		//dec $d020
+	
+		dec $d020
 
 		rts
 	}
@@ -751,7 +742,7 @@ FORMATION: {
 
 		dec HitsLeft, x
 
-		stx ZP.FormationID
+		sty ZP.FormationID
 
 		jsr STATS.Hit
 
@@ -770,7 +761,7 @@ FORMATION: {
 			lda #0
 			sta Occupied, x
 
-			stx ZP.FormationID
+			sty ZP.FormationID
 
 			jsr ATTACKS.CheckBeamBossHit
 
@@ -805,83 +796,80 @@ FORMATION: {
 
 	
 
+	ResetFlags: {
+
+
+		ldy #0
+		sty EnemiesLeftInStage
+		sty CHARGER.HaveAliensInTopRow
+		sty CHARGER.HaveAliensIn2ndRow
+		sty CHARGER.HaveAliensIn3rdRow
+		sty CHARGER.HaveAliensIn4thRow
+		sty CHARGER.HaveAliensIn5thRow
+		sty CHARGER.HaveAliensIn6thRow
+		sty CHARGER.HaveBluePurpleAliens
+		sty CHARGER.SwarmAliens
+		sty CHARGER.InflightAliens
+		sty CHARGER.AliensInColumn + 1
+		sty CHARGER.AliensInColumn + 2
+		sty CHARGER.AliensInColumn + 3
+		sty CHARGER.AliensInColumn + 4
+		sty CHARGER.AliensInColumn + 5
+		sty CHARGER.AliensInColumn + 6
+		sty CHARGER.AliensInColumn + 7
+		sty CHARGER.AliensInColumn + 8
+		sty CHARGER.AliensInColumn + 9
+
+		rts
+	}
+
 	CalculateEnemiesLeft: {
 
-		lda #46
-		sta EnemiesLeftInStage
-
-
-		lda STAGE.StageIndex
-		cmp #3
-		bcc NotChallenging
-
-		ChallengingStage:
-
-		lda Alive
-		sta EnemiesLeftInStage
-		rts
-
-		NotChallenging:
-
-		lda ATTACKS.Active
-		bne Calculate
-
-		//lda #0
-		//sta SCREEN_RAM
-		//sta SCREEN_RAM + 1
-		rts
-
-		Calculate:
-
-		ldx #0
-		stx EnemiesLeftInStage
+		
+		jsr ResetFlags
 
 		Loop:
 
-			lda FORMATION.Occupied, x
+			lda FORMATION.Occupied, y
 			beq CheckDive
-
+			
+			inc CHARGER.SwarmAliens
 			inc EnemiesLeftInStage
 
+			UpdateRowCounts:
 
+				lda FORMATION.Relative_Row, y
+				tax
+				inc CHARGER.HaveAliensInTopRow, x
+
+				cpx #2
+				bcc UpdateColumnCounts
+
+				inc CHARGER.HaveBluePurpleAliens
+
+			UpdateColumnCounts:
+
+				lda FORMATION.Relative_Column, y
+				tax
+				inc CHARGER.AliensInColumn, x
+			
 			CheckDive:
 
-			cpx #MAX_ENEMIES
-			bcs EndLoop
+				cpy #MAX_ENEMIES
+				bcs EndLoop
 
-			lda ENEMY.Plan, x
-			beq EndLoop
+				lda ENEMY.Plan, y
+				beq EndLoop
 
-			inc EnemiesLeftInStage
+				inc EnemiesLeftInStage
+				inc CHARGER.InflightAliens
 
 			EndLoop:
 
-				inx
-				cpx #48
+				iny
+				cpy #48
 				bcc Loop
 
-		Display:
-
-			//lda #48
-			//sta SCREEN_RAM
-//
-			lda EnemiesLeftInStage
-
-		DisplayLoop:
-
-			sec
-			sbc #10
-			bmi Done
-
-			//inc SCREEN_RAM
-
-			jmp DisplayLoop
-
-			Done:
-
-			
-
-			
 
 		rts
 

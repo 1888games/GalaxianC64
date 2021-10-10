@@ -30,6 +30,7 @@
 
 	UltimateTargetSpriteY:	.fill MAX_ENEMIES, 0
 
+	ArcClockwise:			.fill MAX_ENEMIES, 0
 
 
 	Quadrant:			.byte 0

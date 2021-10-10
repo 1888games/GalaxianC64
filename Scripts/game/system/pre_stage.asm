@@ -14,7 +14,7 @@ PRE_STAGE: {
 
 
 
-	.label StartTime = 90
+	.label StartTime = 30
 	.label DelayTime = 2
 	.label StageTime = 2
 	.label ReadyTime = 5
@@ -130,6 +130,7 @@ PRE_STAGE: {
 			jsr SHIP.NewStage
 			jsr FORMATION.Initialise
 			jsr ATTACKS.Reset
+			jsr CHARGER.Reset
 			jsr STAGE.GetStageData
 			
 

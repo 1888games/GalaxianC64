@@ -67,6 +67,27 @@
 .label ENEMY_TRANSFORM = 4
 .label ENEMY_FIGHTER = 5
 
+.label ALIEN_FLAGSHIP = 0
+.label ALIEN_RED = 1
+.label ALIEN_PURPLE = 2
+.label ALIEN_BLUE = 3
+
+.label PLAN_INACTIVE                    =   0
+.label PACKS_BAGS = 1
+.label FLIES_IN_ARC = 2
+.label READY_TO_ATTACK = 3
+.label ATTACKING_PLAYER = 4
+.label NEAR_BOTTOM_OF_SCREEN = 5
+.label REACHED_BOTTOM_OF_SCREEN = 6
+.label RETURNING_TO_SWARM = 7
+.label CONTINUING_ATTACK_RUN_FROM_TOP_OF_SCREEN = 8
+.label FULL_SPEED_CHARGE = 9
+.label ATTACKING_PLAYER_AGGRESSIVELY = 10
+.label LOOP_THE_LOOP = 11
+.label COMPLETE_LOOP = 12
+.label UNKNOWN_1091 = 13
+.label PLAN_EXPLODE = 15
+
 
 .label DEG_0 = 0
 .label DEG_30 = 1
@@ -139,7 +160,7 @@
 .label RECAPTURE_PLAYER_MOVE_Y          = 10
 
 
-.label PLAN_INACTIVE					=	0
+
 .label PLAN_INIT						=	1
 .label PLAN_ALIVE						=	2
 .label PLAN_PATH						=	3
@@ -154,7 +175,6 @@
 .label PLAN_FLUTTER						=	12
 .label PLAN_GOTO_BEAM					=	13
 .label PLAN_BEAM_ACTION					=	14
-.label PLAN_EXPLODE 					=   15
 .label PLAN_ATTACK  					=   16
 .label PLAN_RETURN_GRID                 =   17
 .label PLAN_RETURN_GRID_TOP             =   18

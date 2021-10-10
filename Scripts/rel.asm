@@ -222,33 +222,22 @@ CALCULATE_TANGENT:
 
 
 HANDLE_MAIN_GAME_LOGIC:
-0661: CD 37 08      call $0837               // call HANDLE_PLAYER_MOVE
-0664: CD 98 08      call $0898               // call HANDLE_PLAYER_BULLET
-0667: CD 74 0A      call $0A74               // call HANDLE_ENEMY_BULLETS
+
 066A: CD C3 0C      call $0CC3               // call HANDLE_INFLIGHT_ALIENS
 066D: CD BE 0B      call $0BBE               // call HANDLE_INFLIGHT_ALIEN_SPRITE_UPDATE
-0670: CD 32 0A      call $0A32               // call HANDLE_PLAYER_SHOOT
-0673: CD 0B 0B      call $0B0B               // call HANDLE_SWARM_ALIEN_TO_PLAYER_BULLET_COLLISION_DETECTION
-0676: CD 77 0B      call $0B77               // call HANDLE_PLAYER_TO_ENEMY_BULLET_COLLISION_DETECTION
-0679: CD 27 12      call $1227               // call HANDLE_INFLIGHT_ALIEN_TO_PLAYER_BULLET_COLLISION_DETECTION
-067C: CD 9E 12      call $129E               // call HANDLE_PLAYER_TO_INFLIGHT_ALIEN_COLLISION_DETECTION
-067F: CD E5 08      call $08E5               // call HANDLE_PLAYER_BULLET_EXPIRED
 0682: CD 0C 14      call $140C               // call HANDLE_FLAGSHIP_ATTACK
 0685: CD 44 13      call $1344               // call HANDLE_SINGLE_ALIEN_ATTACK
 0688: CD E1 13      call $13E1               // call SET_ALIEN_ATTACK_FLANK
 068B: CD F3 14      call $14F3               // call HANDLE_LEVEL_DIFFICULTY
-068E: CD ED 12      call $12ED               // call HANDLE_PLAYER_HIT
-0691: CD 27 13      call $1327               // call HANDLE_PLAYER_DYING
-0694: CD A6 16      call $16A6               // Doesn't actually do anything
+
 0697: CD 15 15      call $1515               // call CHECK_IF_ALIEN_CAN_ATTACK
 069A: CD 55 15      call $1555               // call UPDATE_ATTACK_COUNTERS
 069D: CD C3 15      call $15C3               // call CHECK_IF_FLAGSHIP_CAN_ATTACK
 06A0: CD F4 15      call $15F4               // call HANDLE_CALC_INFLIGHT_ALIEN_SHOOTING_DISTANCE
-06A3: CD 21 16      call $1621               // call CHECK_IF_LEVEL_IS_COMPLETE
 06A6: CD 37 16      call $1637               // call HANDLE_LEVEL_COMPLETE
 06A9: CD B8 16      call $16B8               // call HANDLE_ALIEN_AGGRESSIVENESS
 06AC: CD 88 16      call $1688               // call HANDLE_SHOCKED_SWARM
-06AF: CD 8E 19      call $198E               // call HANDLE_SIMULATE_PLAYER_IN_ATTRACT_MODE
+
 
 
 //
@@ -1690,150 +1679,150 @@ HANDLE_PLAYER_HIT:
 // maincpu.pb@421B = 7
 //
 
-HANDLE_SINGLE_ALIEN_ATTACK:
-1344: 3A 28 42      ld   a,($4228)           // read CAN_ALIEN_ATTACK flag
-1347: 0F            rrca                     // move flag into carry
-1348: D0            ret  nc                  // return if flag is not set
-1349: AF            xor  a
-134A: 32 28 42      ld   ($4228),a           // reset flag
-134D: 3A 20 42      ld   a,($4220)           // read HAVE_NO_ALIENS_IN_SWARM flag.
-1350: 0F            rrca                     // move flag into carry
-1351: D8            ret  c                   // return if no aliens are in the swarm.
+              HANDLE_SINGLE_ALIEN_ATTACK:
+              1344: 3A 28 42      ld   a,($4228)           // read CAN_ALIEN_ATTACK flag
+              1347: 0F            rrca                     // move flag into carry
+              1348: D0            ret  nc                  // return if flag is not set
+              1349: AF            xor  a
+              134A: 32 28 42      ld   ($4228),a           // reset flag
+              134D: 3A 20 42      ld   a,($4220)           // read HAVE_NO_ALIENS_IN_SWARM flag.
+              1350: 0F            rrca                     // move flag into carry
+              1351: D8            ret  c                   // return if no aliens are in the swarm.
 
-// The difficulty level specifies how many aliens can be attacking the player at one time.
-1352: 2A 1A 42      ld   hl,($421A)          // load H with DIFFICULTY_BASE_VALUE and L with DIFFICULTY_EXTRA_VALUE
-1355: 7C            ld   a,h                 // 
-1356: 85            add  a,l                 // add DIFFICULTY_EXTRA_VALUE to DIFFICULTY_BASE_VALUE 
-1357: 1F            rra                      // divide by 2.
-1358: FE 04         cp   $04                 // is result < 4?
-135A: 38 02         jr   c,$135E             // yes, goto $135E.
-135C: 3E 03         ld   a,$03               // Clamp maximum number of INFLIGHT_ALIEN slots to scan to 3.
-135E: 3C            inc  a                   // ensure that slots to scan is in range of 1..4
+            // The difficulty level specifies how many aliens can be attacking the player at one time.
+            1352: 2A 1A 42      ld   hl,($421A)          // load H with DIFFICULTY_BASE_VALUE and L with DIFFICULTY_EXTRA_VALUE
+            1355: 7C            ld   a,h                 // 
+            1356: 85            add  a,l                 // add DIFFICULTY_EXTRA_VALUE to DIFFICULTY_BASE_VALUE 
+            1357: 1F            rra                      // divide by 2.
+            1358: FE 04         cp   $04                 // is result < 4?
+            135A: 38 02         jr   c,$135E             // yes, goto $135E.
+            135C: 3E 03         ld   a,$03               // Clamp maximum number of INFLIGHT_ALIEN slots to scan to 3.
+            135E: 3C            inc  a                   // ensure that slots to scan is in range of 1..4
 
-// Scan a specified number of slots (up to 4) in the INFLIGHT_ALIENS array, starting from the *last* slot and working back.
-// Take the first slot that has clear IsActive and IsDying flags.
-// A = number of slots to scan
-135F: 47            ld   b,a                  // save number of slots to scan in B
-1360: 21 91 43      ld   hl,$4391             // point HL to last INFLIGHT_ALIEN.IsDying flag in INFLIGHT_ALIENS array
-1363: 11 E1 FF      ld   de,$FFE1             // load DE with -31, which is sizeof(INFLIGHT_ALIEN)-1
-1366: 7E            ld   a,(hl)               // read INFLIGHT_ALIEN.IsDying flag
-1367: 2B            dec  hl                   // bump HL to point to INFLIGHT_ALIEN.IsActive flag  
-1368: B6            or   (hl)                 // combine flags. We want A to be 0, to indicate INFLIGHT_ALIEN slot is not in use. 
-1369: 28 04         jr   z,$136F              // OK, we have an unused slot, goto $136F
-136B: 19            add  hl,de
-136C: 10 F8         djnz $1366                // repeat until we've scanned all the slots we're allowed to
-136E: C9            ret
+            // Scan a specified number of slots (up to 4) in the INFLIGHT_ALIENS array, starting from the *last* slot and working back.
+            // Take the first slot that has clear IsActive and IsDying flags.
+            // A = number of slots to scan
+            135F: 47            ld   b,a                  // save number of slots to scan in B
+            1360: 21 91 43      ld   hl,$4391             // point HL to last INFLIGHT_ALIEN.IsDying flag in INFLIGHT_ALIENS array
+            1363: 11 E1 FF      ld   de,$FFE1             // load DE with -31, which is sizeof(INFLIGHT_ALIEN)-1
+            1366: 7E            ld   a,(hl)               // read INFLIGHT_ALIEN.IsDying flag
+            1367: 2B            dec  hl                   // bump HL to point to INFLIGHT_ALIEN.IsActive flag  
+            1368: B6            or   (hl)                 // combine flags. We want A to be 0, to indicate INFLIGHT_ALIEN slot is not in use. 
+            1369: 28 04         jr   z,$136F              // OK, we have an unused slot, goto $136F
+            136B: 19            add  hl,de
+            136C: 10 F8         djnz $1366                // repeat until we've scanned all the slots we're allowed to
+            136E: C9            ret
 
-// If we get here, HL points to an unused INFLIGHT_ALIEN record that will be repurposed for our soon-to-be attacking alien. 
-// HL = pointer to unused INFLIGHT_ALIEN structure
-136F: E5            push hl
-1370: DD E1         pop  ix                   // IX = HL
-1372: 3A 15 42      ld   a,($4215)            // read ALIENS_ATTACK_FROM_RIGHT_FLANK flag
-1375: DD 77 06      ld   (ix+$06),a           // update INFLIGHT_ALIEN.ArcClockwise flag
-1378: A7            and  a                    // test if flag is set  
-1379: 20 30         jr   nz,$13AB             // if flag is set, goto FIND_FIRST_OCCUPIED_SWARM_COLUMN_START_FROM_RIGHT
+          // If we get here, HL points to an unused INFLIGHT_ALIEN record that will be repurposed for our soon-to-be attacking alien. 
+          // HL = pointer to unused INFLIGHT_ALIEN structure
+          136F: E5            push hl
+          1370: DD E1         pop  ix                   // IX = HL
+          1372: 3A 15 42      ld   a,($4215)            // read ALIENS_ATTACK_FROM_RIGHT_FLANK flag
+          1375: DD 77 06      ld   (ix+$06),a           // update INFLIGHT_ALIEN.ArcClockwise flag
+          1378: A7            and  a                    // test if flag is set  
+          1379: 20 30         jr   nz,$13AB             // if flag is set, goto FIND_FIRST_OCCUPIED_SWARM_COLUMN_START_FROM_RIGHT
 
-// If we get here, we want an alien to break off from the left flank of the swarm.
-// We now need to find an alien in the swarm able to attack the player. 
-// Find first occupied column of aliens starting from the leftmost column.
-FIND_FIRST_OCCUPIED_SWARM_COLUMN_START_FROM_LEFT:
-137B: 21 FC 41      ld   hl,$41FC             // address of flag for leftmost alien in ALIEN_IN_COLUMN_FLAGS 
-137E: 01 0A 00      ld   bc,$000A             // 10 aliens maximum on a row         
-1381: 3E 01         ld   a,$01                // we are scanning for a value of 1, meaning "column occupied"
-1383: ED B9         cpdr                      // scan $41FC down to $41F3 for value #$01. 
-1385: C0            ret  nz                   // if we have no aliens in the swarm (all flags are 0) - return
-1386: E0            ret  po                   // if BC has overflowed, return
+          // If we get here, we want an alien to break off from the left flank of the swarm.
+          // We now need to find an alien in the swarm able to attack the player. 
+          // Find first occupied column of aliens starting from the leftmost column.
+          FIND_FIRST_OCCUPIED_SWARM_COLUMN_START_FROM_LEFT:
+          137B: 21 FC 41      ld   hl,$41FC             // address of flag for leftmost alien in ALIEN_IN_COLUMN_FLAGS 
+          137E: 01 0A 00      ld   bc,$000A             // 10 aliens maximum on a row         
+          1381: 3E 01         ld   a,$01                // we are scanning for a value of 1, meaning "column occupied"
+          1383: ED B9         cpdr                      // scan $41FC down to $41F3 for value #$01. 
+          1385: C0            ret  nz                   // if we have no aliens in the swarm (all flags are 0) - return
+          1386: E0            ret  po                   // if BC has overflowed, return
 
-1387: 1E 3F         ld   e,$3F
-1389: 2C            inc  l                    // adjust L because CPDR will have decremented it one time too many 
+          1387: 1E 3F         ld   e,$3F
+          1389: 2C            inc  l                    // adjust L because CPDR will have decremented it one time too many 
 
-// HL now points to an entry in ALIEN_IN_COLUMN_FLAGS where we have an alien present.
-// If we have flagships in the swarm, then only purple and blue aliens can be sent to attack by this routine.
-// If we have no flagships in the swarm, then any remaining red aliens are also considered. (See $13BD)
-TRY_FIND_ALIEN_TO_ATTACK:
-138A: 3A EF 41      ld   a,($41EF)            // load a with HAVE_ALIENS_IN_TOP_ROW flag
-138D: 0F            rrca                      // move flag into carry
-138E: 30 2D         jr   nc,$13BD             // if no flagships in swarm, goto INIT_SCAN_FROM_RED_ALIEN_ROW
+          // HL now points to an entry in ALIEN_IN_COLUMN_FLAGS where we have an alien present.
+          // If we have flagships in the swarm, then only purple and blue aliens can be sent to attack by this routine.
+          // If we have no flagships in the swarm, then any remaining red aliens are also considered. (See $13BD)
+          TRY_FIND_ALIEN_TO_ATTACK:
+          138A: 3A EF 41      ld   a,($41EF)            // load a with HAVE_ALIENS_IN_TOP_ROW flag
+          138D: 0F            rrca                      // move flag into carry
+          138E: 30 2D         jr   nc,$13BD             // if no flagships in swarm, goto INIT_SCAN_FROM_RED_ALIEN_ROW
 
-// we have flagships, so send a purple or blue alien.
-INIT_SCAN_FROM_PURPLE_ALIEN_ROW:
-1390: 16 04         ld   d,$04                // number of rows to scan (1 purple + 3 blue)
-1392: 26 41         ld   h,$41                // MSB of ALIEN_SWARM_FLAGS address 
-1394: 7D            ld   a,l                  
-1395: E6 0F         and  $0F                  // A = index of column containing alien 
-1397: C6 50         add  a,$50                // effectively: HL = $4150 + (L & 0x0f)       
-1399: 6F            ld   l,a                  // HL now points to slot for purple alien in ALIEN_SWARM_FLAGS
+          // we have flagships, so send a purple or blue alien.
+          INIT_SCAN_FROM_PURPLE_ALIEN_ROW:
+          1390: 16 04         ld   d,$04                // number of rows to scan (1 purple + 3 blue)
+          1392: 26 41         ld   h,$41                // MSB of ALIEN_SWARM_FLAGS address 
+          1394: 7D            ld   a,l                  
+          1395: E6 0F         and  $0F                  // A = index of column containing alien 
+          1397: C6 50         add  a,$50                // effectively: HL = $4150 + (L & 0x0f)       
+          1399: 6F            ld   l,a                  // HL now points to slot for purple alien in ALIEN_SWARM_FLAGS
 
-// HL now points to a slot in ALIEN_SWARM_FLAGS. D is a row counter.
-// If the slot is occupied, the occupying alien will be sent to attack the player.
-// If the slot is unoccupied, we'll scan the same column in the rows beneath until we find an occupied slot or we've done D rows.  
-// If we find an alien, we'll send it to attack the player.
-SCAN_SPECIFIC_COLUMN_FOR_D_ROWS:
-139A: 42            ld   b,d                  // set B to number of rows to scan
-139B: CB 46         bit  0,(hl)               // test for presence of alien in ALIEN_SWARM_FLAGS              
-139D: 20 2F         jr   nz,$13CE             // if there's an alien present, its "volunteered" to attack, goto $13CE 
-139F: 7D            ld   a,l                  
-13A0: D6 10         sub  $10                  // sizeof(row in ALIEN_SWARM_FLAGS)
-13A2: 6F            ld   l,a                  // bump HL to point to alien in row beneath
-13A3: 10 F6         djnz $139B                // repeat until B==0
+        // HL now points to a slot in ALIEN_SWARM_FLAGS. D is a row counter.
+        // If the slot is occupied, the occupying alien will be sent to attack the player.
+        // If the slot is unoccupied, we'll scan the same column in the rows beneath until we find an occupied slot or we've done D rows.  
+        // If we find an alien, we'll send it to attack the player.
+        SCAN_SPECIFIC_COLUMN_FOR_D_ROWS:
+        139A: 42            ld   b,d                  // set B to number of rows to scan
+        139B: CB 46         bit  0,(hl)               // test for presence of alien in ALIEN_SWARM_FLAGS              
+        139D: 20 2F         jr   nz,$13CE             // if there's an alien present, its "volunteered" to attack, goto $13CE 
+        139F: 7D            ld   a,l                  
+        13A0: D6 10         sub  $10                  // sizeof(row in ALIEN_SWARM_FLAGS)
+        13A2: 6F            ld   l,a                  // bump HL to point to alien in row beneath
+        13A3: 10 F6         djnz $139B                // repeat until B==0
 
-// OK, We've scanned the entire column and not found an alien. This means that ALIEN_IN_COLUMN_FLAGS isn't truthful,
-// and we need to resort to desperate measures. 
-// 
-// ** I've not seen this block of code called, and I think it might be legacy or debug **  
-//
-// Bump HL to point to the purple alien in the column to the right of the one we just scanned. We'll scan that column.  
-13A5: 83            add  a,e                  // add $3F to A.  
-13A6: 6F            ld   l,a                  // Now HL points to purple alien slot
-13A7: 0D            dec  c                    // decrement count of columns remaining that we *can* scan
-13A8: 20 F0         jr   nz,$139A             // if non-zero, repeat the column scan
-13AA: C9            ret
-
-
-// If we get here, we want an alien to break off from the right flank of the swarm.
-// We now need to find an alien in the swarm willing to attack the player. 
-// Find first occupied column of aliens starting from the rightmost column.
-FIND_FIRST_OCCUPIED_SWARM_COLUMN_START_FROM_RIGHT:
-13AB: 21 F3 41      ld   hl,$41F3            // address of flag for rightmost column of aliens 
-13AE: 01 0A 00      ld   bc,$000A            // 10 aliens maximum on a row  
-13B1: 3E 01         ld   a,$01               // we are scanning for a value of 1, meaning "column occupied"
-13B3: ED B1         cpir                     // scan $41F3 up to $41F3 for value #$01. 
-13B5: C0            ret  nz                  // if we have no aliens in the swarm - return
-13B6: E0            ret  po                  // if BC has overflowed, return
-
-// we've found an occupied column
-13B7: 1E 41         ld   e,$41
-13B9: 2D            dec  l
-13BA: C3 8A 13      jp   $138A               // jump to TRY_FIND_ALIEN_TO_ATTACK:
+        // OK, We've scanned the entire column and not found an alien. This means that ALIEN_IN_COLUMN_FLAGS isn't truthful,
+        // and we need to resort to desperate measures. 
+        // 
+        // ** I've not seen this block of code called, and I think it might be legacy or debug **  
+        //
+        // Bump HL to point to the purple alien in the column to the right of the one we just scanned. We'll scan that column.  
+        13A5: 83            add  a,e                  // add $3F to A.  
+        13A6: 6F            ld   l,a                  // Now HL points to purple alien slot
+        13A7: 0D            dec  c                    // decrement count of columns remaining that we *can* scan
+        13A8: 20 F0         jr   nz,$139A             // if non-zero, repeat the column scan
+        13AA: C9            ret
 
 
-// Called when no flagships present in flagship row. This means we can send any alien, including red, into the attack.
-INIT_SCAN_FROM_RED_ALIEN_ROW:
-13BD: 16 05         ld   d,$05                // number of rows of aliens to scan 
-13BF: 26 41         ld   h,$41                // MSB of ALIEN_SWARM_FLAGS address 
-13C1: 7D            ld   a,l
-13C2: E6 0F         and  $0F                  // A = index of column   
-13C4: C6 60         add  a,$60                // effectively: HL = $4150 + (L & 0x0f)
-13C6: 6F            ld   l,a                  // HL now points to slot for red alien in ALIEN_SWARM_FLAGS
-13C7: 7B            ld   a,e
-13C8: C6 10         add  a,$10
-13CA: 5F            ld   e,a
-13CB: C3 9A 13      jp   $139A                // jump to SCAN_SPECIFIC_COLUMN_FOR_D_ROWS
+            // If we get here, we want an alien to break off from the right flank of the swarm.
+            // We now need to find an alien in the swarm willing to attack the player. 
+            // Find first occupied column of aliens starting from the rightmost column.
+            FIND_FIRST_OCCUPIED_SWARM_COLUMN_START_FROM_RIGHT:
+            13AB: 21 F3 41      ld   hl,$41F3            // address of flag for rightmost column of aliens 
+            13AE: 01 0A 00      ld   bc,$000A            // 10 aliens maximum on a row  
+            13B1: 3E 01         ld   a,$01               // we are scanning for a value of 1, meaning "column occupied"
+            13B3: ED B1         cpir                     // scan $41F3 up to $41F3 for value #$01. 
+            13B5: C0            ret  nz                  // if we have no aliens in the swarm - return
+            13B6: E0            ret  po                  // if BC has overflowed, return
+
+            // we've found an occupied column
+            13B7: 1E 41         ld   e,$41
+            13B9: 2D            dec  l
+            13BA: C3 8A 13      jp   $138A               // jump to TRY_FIND_ALIEN_TO_ATTACK:
 
 
-//
-// Expects:
-// HL = pointer to occupied entry in ALIEN_SWARM_FLAGS
-// IX = pointer to vacant INFLIGHT_ALIEN structure
-//
+            // Called when no flagships present in flagship row. This means we can send any alien, including red, into the attack.
+            INIT_SCAN_FROM_RED_ALIEN_ROW:
+            13BD: 16 05         ld   d,$05                // number of rows of aliens to scan 
+            13BF: 26 41         ld   h,$41                // MSB of ALIEN_SWARM_FLAGS address 
+            13C1: 7D            ld   a,l
+            13C2: E6 0F         and  $0F                  // A = index of column   
+            13C4: C6 60         add  a,$60                // effectively: HL = $4150 + (L & 0x0f)
+            13C6: 6F            ld   l,a                  // HL now points to slot for red alien in ALIEN_SWARM_FLAGS
+            13C7: 7B            ld   a,e
+            13C8: C6 10         add  a,$10
+            13CA: 5F            ld   e,a
+            13CB: C3 9A 13      jp   $139A                // jump to SCAN_SPECIFIC_COLUMN_FOR_D_ROWS
 
-13CE: 36 00         ld   (hl),$00
-13D0: DD 75 07      ld   (ix+$07),l          // set INFLIGHT_ALIEN.IndexInSwarm
-13D3: DD 36 00 01   ld   (ix+$00),$01        // set INFLIGHT_ALIEN.IsActive 
-13D7: DD 36 02 00   ld   (ix+$02),$00        // set INFLIGHT_ALIEN.StageOfLife
-13DB: 16 01         ld   d,$01               // command: DELETE_ALIEN_COMMAND
-13DD: 5D            ld   e,l                 // parameter: index of alien in swarm
-13DE: C3 F2 08      jp   $08F2               // jump to QUEUE COMMAND
+
+              //
+              // Expects:
+              // HL = pointer to occupied entry in ALIEN_SWARM_FLAGS
+              // IX = pointer to vacant INFLIGHT_ALIEN structure
+              //
+
+              13CE: 36 00         ld   (hl),$00
+              13D0: DD 75 07      ld   (ix+$07),l          // set INFLIGHT_ALIEN.IndexInSwarm
+              13D3: DD 36 00 01   ld   (ix+$00),$01        // set INFLIGHT_ALIEN.IsActive 
+              13D7: DD 36 02 00   ld   (ix+$02),$00        // set INFLIGHT_ALIEN.StageOfLife
+              13DB: 16 01         ld   d,$01               // command: DELETE_ALIEN_COMMAND
+              13DD: 5D            ld   e,l                 // parameter: index of alien in swarm
+              13DE: C3 F2 08      jp   $08F2               // jump to QUEUE COMMAND
 
 
 
@@ -2132,66 +2121,82 @@ HANDLE_LEVEL_DIFFICULTY:
 1514: C9            ret
 
 
-//
-// Check if an alien can attack the player.
-// For flagships, see $15C3 
-//
+    //
+    // Check if an alien can attack the player.
+    // For flagships, see $15C3 
+          //
 
-CHECK_IF_ALIEN_CAN_ATTACK:
-1515: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
-1518: 0F            rrca                     // move flag into carry
-1519: D0            ret  nc                  // return if player has not spawned
-151A: 3A 20 42      ld   a,($4220)           // read HAVE_NO_ALIENS_IN_SWARM flag
-151D: 0F            rrca                     // move flag into carry
-151E: D8            ret  c                   // return if we don't have any aliens in the swarm
-151F: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT
-1522: 0F            rrca                     // move flag into carry
-1523: D8            ret  c                   // return if the flagship has been hit
+          CHECK_IF_ALIEN_CAN_ATTACK:
+          1515: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
+          1518: 0F            rrca                     // move flag into carry
+          1519: D0            ret  nc                  // return if player has not spawned
+          151A: 3A 20 42      ld   a,($4220)           // read HAVE_NO_ALIENS_IN_SWARM flag
+          151D: 0F            rrca                     // move flag into carry
+          151E: D8            ret  c                   // return if we don't have any aliens in the swarm
+          151F: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT
+          1522: 0F            rrca                     // move flag into carry
+          1523: D8            ret  c                   // return if the flagship has been hit
 
-// Use DIFFICULTY_EXTRA_VALUE and DIFFICULTY_BASE_VALUE to calculate how many secondary counters in the ALIEN_ATTACK_COUNTERS array
-// we can decrement. The more counters = the higher probability one of them will count down to zero = higher probability an alien attacks.
-1524: 2A 1A 42      ld   hl,($421A)          // load H with DIFFICULTY_BASE_VALUE and L with DIFFICULTY_EXTRA_VALUE
-1527: 7C            ld   a,h                 // A = DIFFICULTY_BASE_VALUE value
-1528: FE 02         cp   $02
-152A: 30 01         jr   nc,$152D            // if DIFFICULTY_BASE_VALUE >=2, goto $152D
-152C: AF            xor  a
-152D: 85            add  a,l                 // Add DIFFICULTY_EXTRA_VALUE to DIFFICULTY_BASE_VALUE 
-152E: E6 0F         and  $0F                 // Ensure value is between 0 and 15
-1530: 3C            inc  a                   // Add 1 to ensure it's between 1..16 
-1531: 47            ld   b,a                 // B now contains number of counters to decrement
+          // Use DIFFICULTY_EXTRA_VALUE and DIFFICULTY_BASE_VALUE to calculate how many secondary counters in the ALIEN_ATTACK_COUNTERS array
+          // we can decrement. The more counters = the higher probability one of them will count down to zero = higher probability an alien attacks.
+          1524: 2A 1A 42      ld   hl,($421A)          // load H with DIFFICULTY_BASE_VALUE and L with DIFFICULTY_EXTRA_VALUE
+          1527: 7C            ld   a,h                 // A = DIFFICULTY_BASE_VALUE value
+          1528: FE 02         cp   $02
+          152A: 30 01         jr   nc,$152D            // if DIFFICULTY_BASE_VALUE >=2, goto $152D
+          152C: AF            xor  a
+          152D: 85            add  a,l                 // Add DIFFICULTY_EXTRA_VALUE to DIFFICULTY_BASE_VALUE 
+          152E: E6 0F         and  $0F                 // Ensure value is between 0 and 15
+          1530: 3C            inc  a                   // Add 1 to ensure it's between 1..16 
+          1531: 47            ld   b,a                 // B now contains number of counters to decrement
 
-// Decrement ALIEN_ATTACK_MASTER_COUNTER. When it hits zero, we can decrement secondary counters in the ALIEN_ATTACK_MASTER_COUNTERS array.
-1532: 21 4A 42      ld   hl,$424A            // load HL with address of ALIEN_ATTACK_MASTER_COUNTER
-1535: 11 E3 15      ld   de,$15E3            // load DE with address of ALIEN_ATTACK_COUNTER_DEFAULT_VALUES
-1538: 35            dec  (hl)                // decrement ALIEN_ATTACK_MASTER_COUNTER 
-1539: 28 05         jr   z,$1540             // if its hit zero, goto $1540 to decrement [B] counters 
-153B: AF            xor  a
-153C: 32 28 42      ld   ($4228),a           // reset CAN_ALIEN_ATTACK flag. No alien will attack.
-153F: C9            ret
+          // Decrement ALIEN_ATTACK_MASTER_COUNTER. When it hits zero, we can decrement secondary counters in the ALIEN_ATTACK_MASTER_COUNTERS array.
+          1532: 21 4A 42      ld   hl,$424A            // load HL with address of ALIEN_ATTACK_MASTER_COUNTER
+          1535: 11 E3 15      ld   de,$15E3            // load DE with address of ALIEN_ATTACK_COUNTER_DEFAULT_VALUES
+          1538: 35            dec  (hl)                // decrement ALIEN_ATTACK_MASTER_COUNTER 
+          1539: 28 05         jr   z,$1540             // if its hit zero, goto $1540 to decrement [B] counters 
+          153B: AF            xor  a
+          153C: 32 28 42      ld   ($4228),a           // reset CAN_ALIEN_ATTACK flag. No alien will attack.
+          153F: C9            ret
 
-// When we get here, ALIEN_ATTACK_MASTER_COUNTER is zero. 
-// B specifies how many secondary counters in the ALIEN_ATTACK_COUNTERS array we can decrement. (Max value of 16)
-// DE points to a default value to reset the ALIEN_ATTACK_MASTER_COUNTER back to. 
-1540: 0E 00         ld   c,$00
-1542: 1A            ld   a,(de)              // read default value from table @ $15E3      
-1543: 77            ld   (hl),a              // Reset ALIEN_ATTACK_MASTER_COUNTER to its default value
+          // When we get here, ALIEN_ATTACK_MASTER_COUNTER is zero. 
+          // B specifies how many secondary counters in the ALIEN_ATTACK_COUNTERS array we can decrement. (Max value of 16)
+          // DE points to a default value to reset the ALIEN_ATTACK_MASTER_COUNTER back to. 
+          1540: 0E 00         ld   c,$00
+          1542: 1A            ld   a,(de)              // read default value from table @ $15E3      
+          1543: 77            ld   (hl),a              // Reset ALIEN_ATTACK_MASTER_COUNTER to its default value
 
-// Decrement B counters in the ALIEN_ATTACK_COUNTERS array. 
-// If any of the counters hit zero, reset the counter to its default value and set the CAN_ALIEN_ATTACK flag to 1.
-1544: 23            inc  hl                  // bump HL to next secondary counter 
-1545: 13            inc  de                  // bump DE to address containing default value to reset secondary counter to when zero 
-1546: 35            dec  (hl)                // decrement secondary counter  
-1547: CC DF 15      call z,$15DF             // if the secondary counter reaches zero, reset the counter and increment C. Alien will attack!
-154A: 10 F8         djnz $1544               // repeat until B==0
+          // Decrement B counters in the ALIEN_ATTACK_COUNTERS array. 
+          // If any of the counters hit zero, reset the counter to its default value and set the CAN_ALIEN_ATTACK flag to 1.
+          1544: 23            inc  hl                  // bump HL to next secondary counter 
+          1545: 13            inc  de                  // bump DE to address containing default value to reset secondary counter to when zero 
+          1546: 35            dec  (hl)                // decrement secondary counter  
+          1547: CC DF 15      call z,$15DF             // if the secondary counter reaches zero, reset the counter and increment C. Alien will attack!
+          154A: 10 F8         djnz $1544               // repeat until B==0
 
-// if C is set to a nonzero value then that means that a secondary counter has reached zero. Its time for an alien to attack. 
-154C: 79            ld   a,c
-154D: A7            and  a                   // test if A is zero 
-154E: C8            ret  z                   // exit if so
-154F: 3E 01         ld   a,$01 
-1551: 32 28 42      ld   ($4228),a           // set CAN_ALIEN_ATTACK flag. Alien will break off from the swarm
-1554: C9            ret
+          // if C is set to a nonzero value then that means that a secondary counter has reached zero. Its time for an alien to attack. 
+          154C: 79            ld   a,c
+          154D: A7            and  a                   // test if A is zero 
+          154E: C8            ret  z                   // exit if so
+          154F: 3E 01         ld   a,$01 
+          1551: 32 28 42      ld   ($4228),a           // set CAN_ALIEN_ATTACK flag. Alien will break off from the swarm
+          1554: C9            ret
 
+
+
+          // A= *DE//
+          // *HL = A//
+          // C++
+          15DF: 1A            ld   a,(de)
+          15E0: 77            ld   (hl),a
+          15E1: 0C            inc  c
+          15E2: C9            ret
+
+
+          // Default values for the corresponding entries in the ALIEN_ATTACK_COUNTERS array.
+          // e.g. $424A's default value is 5, $424B's default value is $2F, $424C's default is $43...
+          // When any counter hits zero, it is reset to its default value.
+          ALIEN_ATTACK_COUNTER_DEFAULT_VALUES: 
+          15E3:  05 2F 43 77 71 6D 67 65 4F 49 43 3D 3B 35 2B 29
 
 
 //
@@ -2199,94 +2204,98 @@ CHECK_IF_ALIEN_CAN_ATTACK:
 //
 //
 
-UPDATE_ATTACK_COUNTERS:
-1555: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
-1558: 0F            rrca                     // move flag into carry
-1559: D0            ret  nc                  // return if player has not spawned
-155A: 3A EF 41      ld   a,($41EF)           // read HAVE_ALIENS_IN_TOP_ROW 
-155D: 0F            rrca                     // move flag into carry
-155E: D0            ret  nc                  // return if we have no flagships
-155F: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT 
-1562: 0F            rrca                     // move flag into carry
-1563: D8            ret  c                   // return if a flagship has been hit
-1564: 3A 06 40      ld   a,($4006)           // read IS_GAME_IN_PLAY
-1567: 0F            rrca                     // move flag into carry
-1568: 30 3D         jr   nc,$15A7            // if game is not in play, goto $15A7      
+          UPDATE_ATTACK_COUNTERS:
+          1555: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
+          1558: 0F            rrca                     // move flag into carry
+          1559: D0            ret  nc                  // return if player has not spawned
+          155A: 3A EF 41      ld   a,($41EF)           // read HAVE_ALIENS_IN_TOP_ROW 
+          155D: 0F            rrca                     // move flag into carry
+          155E: D0            ret  nc                  // return if we have no flagships
+          155F: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT 
+          1562: 0F            rrca                     // move flag into carry
+          1563: D8            ret  c                   // return if a flagship has been hit
+          1564: 3A 06 40      ld   a,($4006)           // read IS_GAME_IN_PLAY
+          1567: 0F            rrca                     // move flag into carry
+          1568: 30 3D         jr   nc,$15A7            // if game is not in play, goto $15A7      
 
-// wait until FLAGSHIP_ATTACK_MASTER_COUNTER_1 counts down to zero.
-156A: 21 45 42      ld   hl,$4245            // load HL with address of FLAGSHIP_ATTACK_MASTER_COUNTER_1
-156D: 35            dec  (hl)                // decrement counter
-156E: C0            ret  nz                  // exit if counter is not zero
-156F: 36 3C         ld   (hl),$3C            // reset counter
+          // wait until FLAGSHIP_ATTACK_MASTER_COUNTER_1 counts down to zero.
+          156A: 21 45 42      ld   hl,$4245            // load HL with address of FLAGSHIP_ATTACK_MASTER_COUNTER_1
+          156D: 35            dec  (hl)                // decrement counter
+          156E: C0            ret  nz                  // exit if counter is not zero
+          156F: 36 3C         ld   (hl),$3C            // reset counter
 
-// if we have no blue or purple aliens, we don't need to bother with the FLAGSHIP_ATTACK_MASTER_COUNTER_2 countdown. 
-1571: 3A 21 42      ld   a,($4221)           // read HAVE_NO_BLUE_OR_PURPLE_ALIENS 
-1574: 0F            rrca                     // move flag into carry
-1575: 38 2C         jr   c,$15A3             // if there's no blue or purple aliens left, goto $15A3
+          // if we have no blue or purple aliens, we don't need to bother with the FLAGSHIP_ATTACK_MASTER_COUNTER_2 countdown. 
+          1571: 3A 21 42      ld   a,($4221)           // read HAVE_NO_BLUE_OR_PURPLE_ALIENS 
+          1574: 0F            rrca                     // move flag into carry
+          1575: 38 2C         jr   c,$15A3             // if there's no blue or purple aliens left, goto $15A3
 
-// otherwise, wait until FLAGSHIP_ATTACK_MASTER_COUNTER_2 counts down to 0.
-1577: 23            inc  hl                  // bump HL to FLAGSHIP_ATTACK_MASTER_COUNTER_2
-1578: 35            dec  (hl)                // decrement counter
-1579: C0            ret  nz                  // return if its not counteed down to zero.
-157A: 34            inc  (hl)                // set FLAGSHIP_ATTACK_MASTER_COUNTER_2 to 1
+          ///
+          15A3: 3E 02         ld   a,$02
+          15A5: 18 ED         jr   $1594
+          ///
 
-// count how many "extra" flagships we have carried over from previous waves (maximum of 2)
-157B: 2A 77 41      ld   hl,($4177)          // point to usually empty flagship entry in ALIEN_SWARM_FLAGS. 
-157E: 7C            ld   a,h                 
-157F: 85            add  a,l                 // A now = number of *extra* flagships we have                 
-1580: E6 03         and  $03                 // ensure that number is between 0..3. (it should be between 0..2 anyway)
-1582: 4F            ld   c,a                 // save count of extra flagships in C
+          // otherwise, wait until FLAGSHIP_ATTACK_MASTER_COUNTER_2 counts down to 0.
+          1577: 23            inc  hl                  // bump HL to FLAGSHIP_ATTACK_MASTER_COUNTER_2
+          1578: 35            dec  (hl)                // decrement counter
+          1579: C0            ret  nz                  // return if its not counteed down to zero.
+          157A: 34            inc  (hl)                // set FLAGSHIP_ATTACK_MASTER_COUNTER_2 to 1
 
-// use difficulty settings and count of extra flagships to compute countdown before flagship attack
-1583: 2A 1A 42      ld   hl,($421A)          // load H with DIFFICULTY_BASE_VALUE and L with DIFFICULTY_EXTRA_VALUE
-1586: 7C            ld   a,h
-1587: 85            add  a,l                 // Add DIFFICULTY_BASE_VALUE to DIFFICULTY_EXTRA_VALUE
-1588: C8            ret  z                   // exit if both DIFFICULTY_BASE_VALUE and DIFFICULTY_EXTRA_VALUE are 0
+        // count how many "extra" flagships we have carried over from previous waves (maximum of 2)
+        157B: 2A 77 41      ld   hl,($4177)          // point to usually empty flagship entry in ALIEN_SWARM_FLAGS. 
+        157E: 7C            ld   a,h                 
+        157F: 85            add  a,l                 // A now = number of *extra* flagships we have                 
+        1580: E6 03         and  $03                 // ensure that number is between 0..3. (it should be between 0..2 anyway)
+        1582: 4F            ld   c,a                 // save count of extra flagships in C
 
-1589: 0F            rrca                     // divide A..                     
-158A: 0F            rrca                     // by 4
-158B: E6 03         and  $03                 // clamp A to 3 maximum.
-158D: 2F            cpl                      // A = 255-A.
-158E: C6 0A         add  a,$0A               // ensure that A is between $06 and $09
-1590: 91            sub  c                   // subtract count of extra flagships
-1591: 32 46 42      ld   ($4246),a           // set FLAGSHIP_ATTACK_MASTER_COUNTER_2
+        // use difficulty settings and count of extra flagships to compute countdown before flagship attack
+        1583: 2A 1A 42      ld   hl,($421A)          // load H with DIFFICULTY_BASE_VALUE and L with DIFFICULTY_EXTRA_VALUE
+        1586: 7C            ld   a,h
+        1587: 85            add  a,l                 // Add DIFFICULTY_BASE_VALUE to DIFFICULTY_EXTRA_VALUE
+        1588: C8            ret  z                   // exit if both DIFFICULTY_BASE_VALUE and DIFFICULTY_EXTRA_VALUE are 0
 
-// set timer for when flagship will definitely attack.
-1594: 07            rlca
-1595: 07            rlca
-1596: 32 2F 42      ld   ($422F),a           // set FLAGSHIP_ATTACK_SECONDARY_COUNTER
+        1589: 0F            rrca                     // divide A..                     
+        158A: 0F            rrca                     // by 4
+        158B: E6 03         and  $03                 // clamp A to 3 maximum.
+        158D: 2F            cpl                      // A = 255-A.
+        158E: C6 0A         add  a,$0A               // ensure that A is between $06 and $09
+        1590: 91            sub  c                   // subtract count of extra flagships
+        1591: 32 46 42      ld   ($4246),a           // set FLAGSHIP_ATTACK_MASTER_COUNTER_2
 
-1599: 07            rlca
-159A: 32 4A 42      ld   ($424A),a           // set ALIEN_ATTACK_MASTER_COUNTER
+        // set timer for when flagship will definitely attack.
+        1594: 07            rlca
+        1595: 07            rlca
+        1596: 32 2F 42      ld   ($422F),a           // set FLAGSHIP_ATTACK_SECONDARY_COUNTER
 
-// enable timer for flagship to attack.
-159D: 3E 01         ld   a,$01
-159F: 32 2E 42      ld   ($422E),a           // set ENABLE_FLAGSHIP_ATTACK_SECONDARY_COUNTER
-15A2: C9            ret
+        1599: 07            rlca
+        159A: 32 4A 42      ld   ($424A),a           // set ALIEN_ATTACK_MASTER_COUNTER
 
-15A3: 3E 02         ld   a,$02
-15A5: 18 ED         jr   $1594
+        // enable timer for flagship to attack.
+        159D: 3E 01         ld   a,$01
+        159F: 32 2E 42      ld   ($422E),a           // set ENABLE_FLAGSHIP_ATTACK_SECONDARY_COUNTER
+        15A2: C9            ret
 
 
-// Called when game is not in play
-15A7: 21 45 42      ld   hl,$4245            // load HL with address of FLAGSHIP_ATTACK_MASTER_COUNTER_1
-15AA: 35            dec  (hl)               
-15AB: C0            ret  nz
-15AC: 36 3C         ld   (hl),$3C 
-15AE: 23            inc  hl                  // load HL with address of FLAGSHIP_ATTACK_MASTER_COUNTER_2
-15AF: 35            dec  (hl)
-15B0: C0            ret  nz
-15B1: 36 05         ld   (hl),$05
 
-15B3: 3E 5A         ld   a,$5A
-15B5: 32 2F 42      ld   ($422F),a           // set FLAGSHIP_ATTACK_SECONDARY_COUNTER
 
-15B8: 3E 2D         ld   a,$2D
-15BA: 32 4A 42      ld   ($424A),a           // set ALIEN_ATTACK_MASTER_COUNTER
+        // Called when game is not in play. // do we need this?
+        15A7: 21 45 42      ld   hl,$4245            // load HL with address of FLAGSHIP_ATTACK_MASTER_COUNTER_1
+        15AA: 35            dec  (hl)               
+        15AB: C0            ret  nz
+        15AC: 36 3C         ld   (hl),$3C 
+        15AE: 23            inc  hl                  // load HL with address of FLAGSHIP_ATTACK_MASTER_COUNTER_2
+        15AF: 35            dec  (hl)
+        15B0: C0            ret  nz
+        15B1: 36 05         ld   (hl),$05
 
-15BD: 3E 01         ld   a,$01
-15BF: 32 2E 42      ld   ($422E),a           // set ENABLE_FLAGSHIP_ATTACK_SECONDARY_COUNTER
-15C2: C9            ret
+        15B3: 3E 5A         ld   a,$5A
+        15B5: 32 2F 42      ld   ($422F),a           // set FLAGSHIP_ATTACK_SECONDARY_COUNTER
+
+        15B8: 3E 2D         ld   a,$2D
+        15BA: 32 4A 42      ld   ($424A),a           // set ALIEN_ATTACK_MASTER_COUNTER
+
+        15BD: 3E 01         ld   a,$01
+        15BF: 32 2E 42      ld   ($422E),a           // set ENABLE_FLAGSHIP_ATTACK_SECONDARY_COUNTER
+        15C2: C9            ret
 
 
 //
@@ -2296,253 +2305,224 @@ UPDATE_ATTACK_COUNTERS:
 //
 
 
-CHECK_IF_FLAGSHIP_CAN_ATTACK:
-15C3: 21 2E 42      ld   hl,$422E            // read ENABLE_FLAGSHIP_ATTACK_SECONDARY_COUNTER
-15C6: CB 46         bit  0,(hl)              // test flag
-15C8: C8            ret  z                   // return if not allowed to count down
+            CHECK_IF_FLAGSHIP_CAN_ATTACK:
+            15C3: 21 2E 42      ld   hl,$422E            // read ENABLE_FLAGSHIP_ATTACK_SECONDARY_COUNTER
+            15C6: CB 46         bit  0,(hl)              // test flag
+            15C8: C8            ret  z                   // return if not allowed to count down
 
-// wait until FLAGSHIP_ATTACK_SECONDARY_COUNTER counts down to zero.
-15C9: 23            inc  hl                  // bump HL to FLAGSHIP_ATTACK_SECONDARY_COUNTER
-15CA: 35            dec  (hl)                // decrement counter
-15CB: C0            ret  nz                  // return if counter hasn't reached zero
+            // wait until FLAGSHIP_ATTACK_SECONDARY_COUNTER counts down to zero.
+            15C9: 23            inc  hl                  // bump HL to FLAGSHIP_ATTACK_SECONDARY_COUNTER
+            15CA: 35            dec  (hl)                // decrement counter
+            15CB: C0            ret  nz                  // return if counter hasn't reached zero
 
-15CC: 2B            dec  hl                  // bump HL to ENABLE_FLAGSHIP_ATTACK_SECONDARY_COUNTER flag 
-15CD: 36 00         ld   (hl),$00            // reset flag
-15CF: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
-15D2: 0F            rrca                     // move flag into carry
-15D3: D0            ret  nc                  // return if player has not spawned
+            15CC: 2B            dec  hl                  // bump HL to ENABLE_FLAGSHIP_ATTACK_SECONDARY_COUNTER flag 
+            15CD: 36 00         ld   (hl),$00            // reset flag
+            15CF: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
+            15D2: 0F            rrca                     // move flag into carry
+            15D3: D0            ret  nc                  // return if player has not spawned
 
-// check if we have any flagship
-15D4: 3A EF 41      ld   a,($41EF)           // read HAVE_ALIENS_IN_TOP_ROW flag
-15D7: 0F            rrca                     // move flag bit into carry
-15D8: D0            ret  nc                  // return if no flagships
+            // check if we have any flagship
+            15D4: 3A EF 41      ld   a,($41EF)           // read HAVE_ALIENS_IN_TOP_ROW flag
+            15D7: 0F            rrca                     // move flag bit into carry
+            15D8: D0            ret  nc                  // return if no flagships
 
-// yes, we have flagships, set CAN_FLAGSHIP_OR_RED_ALIENS_ATTACK flag
-15D9: 3E 01         ld   a,$01
-15DB: 32 29 42      ld   ($4229),a           // set CAN_FLAGSHIP_OR_RED_ALIENS_ATTACK
-15DE: C9            ret
-
-
-// A= *DE//
-// *HL = A//
-// C++
-15DF: 1A            ld   a,(de)
-15E0: 77            ld   (hl),a
-15E1: 0C            inc  c
-15E2: C9            ret
-
-
-// Default values for the corresponding entries in the ALIEN_ATTACK_COUNTERS array.
-// e.g. $424A's default value is 5, $424B's default value is $2F, $424C's default is $43...
-// When any counter hits zero, it is reset to its default value.
-ALIEN_ATTACK_COUNTER_DEFAULT_VALUES: 
-15E3:  05 2F 43 77 71 6D 67 65 4F 49 43 3D 3B 35 2B 29
-
-
-//
-// This routine calculates how far away from the player inflight aliens can be before they can start shooting at you.
-// 
-// The minimum shooting distance increases as more aliens are killed, making the aliens shoot more often.
-//  
-// See also: $0E54
-
-HANDLE_CALC_INFLIGHT_ALIEN_SHOOTING_DISTANCE:
-15F4: 21 E8 41      ld   hl,$41E8            // load HL with address of HAVE_ALIENS_IN_ROW_FLAGS
-15F7: 06 04         ld   b,$04               // we're testing potentially 4 pairs of rows.
-15F9: 3A 1B 42      ld   a,($421B)           // read DIFFICULTY_BASE_VALUE
-15FC: A7            and  a                   // test if zero
-15FD: 20 16         jr   nz,$1615            // if non-zero, which it always is, goto $1615
-
-// These two lines of code appear never to be called. This must be for an EASY difficulty level we've not seen.
-15FF: 1E 01         ld   e,$01               // multiplier = 1
-1601: 16 84         ld   d,$84               // exact X coordinate  
-
-1603: CB 46         bit  0,(hl)              // test for alien presence
-1605: 20 09         jr   nz,$1610            // if alien is present, goto $1610
-
-1607: 23            inc  hl                  // bump HL to flag for next row 
-1608: CB 46         bit  0,(hl)              // test flag 
-160A: 20 04         jr   nz,$1610            // if flag is set, goto $1610
-
-160C: 23            inc  hl                  // bump to next entry in HAVE_ALIENS_IN_ROW_FLAGS
-160D: 1C            inc  e                   // increment multiplier (see $0E54 for clarification on how its used)
-160E: 10 F3         djnz $1603
-
-1610: ED 53 13 42   ld   ($4213),de          // set INFLIGHT_ALIEN_SHOOT_EXACT_X to D, INFLIGHT_ALIEN_SHOOT_RANGE_MUL to E
-1614: C9            ret
-
-1615: 1E 02         ld   e,$02               // multiplier = 2
-1617: 16 9D         ld   d,$9D               // exact X coordinate 
-1619: 18 E8         jr   $1603
-
-// TODO: I can't find anything calling this. Is this debug code left over?
-161B: 1E 03         ld   e,$03
-161D: 16 B6         ld   d,$B6
-161F: 18 E2         jr   $1603
+            // yes, we have flagships, set CAN_FLAGSHIP_OR_RED_ALIENS_ATTACK flag
+            15D9: 3E 01         ld   a,$01
+            15DB: 32 29 42      ld   ($4229),a           // set CAN_FLAGSHIP_OR_RED_ALIENS_ATTACK
+            15DE: C9            ret
 
 
 
-HANDLE_LEVEL_COMPLETE:
-1637: 21 22 42      ld   hl,$4222            // load HL with address of LEVEL_COMPLETE
-163A: CB 46         bit  0,(hl)              // test flag 
-163C: C8            ret  z                   // return if level is not complete
 
-// OK, level is complete. Wait until NEXT_LEVEL_DELAY_COUNTER to reach 0. 
-163D: 23            inc  hl                  // bump HL to point to NEXT_LEVEL_DELAY_COUNTER
-163E: 35            dec  (hl)                // decrement count
-163F: C0            ret  nz                  // return if count is !=0
 
-1640: 2B            dec  hl                  // bump HL to point to LEVEL_COMPLETE again.
-1641: 36 00         ld   (hl),$00            // clear LEVEL_COMPLETE flag.
+            //
+            // This routine calculates how far away from the player inflight aliens can be before they can start shooting at you.
+            // 
+            // The minimum shooting distance increases as more aliens are killed, making the aliens shoot more often.
+            //  
+            // See also: $0E54
 
-1643: 11 1B 05      ld   de,$051B            // load DE with address of PACKED_DEFAULT_SWARM_DEFINITION
-1646: CD 46 06      call $0646               // call UNPACK_ALIEN_SWARM 
-1649: AF            xor  a
-164A: 32 1A 42      ld   ($421A),a           // reset DIFFICULTY_EXTRA_VALUE
-164D: 32 5F 42      ld   ($425F),a           // reset TIMING_VARIABLE
-1650: 21 01 00      ld   hl,$0001
-1653: 22 0E 42      ld   ($420E),hl          // set SWARM_SCROLL_VALUE
+            HANDLE_CALC_INFLIGHT_ALIEN_SHOOTING_DISTANCE:
+            15F4: 21 E8 41      ld   hl,$41E8            // load HL with address of HAVE_ALIENS_IN_ROW_FLAGS
+            15F7: 06 04         ld   b,$04               // we're testing potentially 4 pairs of rows.
+            15F9: 3A 1B 42      ld   a,($421B)           // read DIFFICULTY_BASE_VALUE
+            15FC: A7            and  a                   // test if zero
+            15FD: 20 16         jr   nz,$1615            // if non-zero, which it always is, goto $1615
 
-// increase game difficulty level, if we can.
-1656: 2A 1B 42      ld   hl,($421B)          // load H with PLAYER_LEVEL and L with DIFFICULTY_BASE_VALUE
-1659: 24            inc  h                   // increment player level 
-165A: 7D            ld   a,l                 // load A with DIFFICULTY_BASE_VALUE
-165B: FE 07         cp   $07                 // are we at max difficulty?
-165D: 28 03         jr   z,$1662             // yes, goto $1662
-165F: 30 22         jr   nc,$1683            // edge case: we're above max difficulty! So clamp difficulty level to 7.
-1661: 3C            inc  a                   // otherwise, increment DIFFICULTY_BASE_VALUE
-1662: 6F            ld   l,a
-1663: 22 1B 42      ld   ($421B),hl          // update PLAYER_LEVEL and DIFFICULTY_BASE_VALUE
+            // These two lines of code appear never to be called. This must be for an EASY difficulty level we've not seen.
+            15FF: 1E 01         ld   e,$01               // multiplier = 1
+            1601: 16 84         ld   d,$84               // exact X coordinate  
 
-1666: 11 00 07      ld   de,$0700            // command: BOTTOM_OF_SCREEN_INFO_COMMAND, parameter: 0 (DISPLAY_LEVEL_FLAGS)
-1669: CD F2 08      call $08F2               // call QUEUE_COMMAND. 
+            1603: CB 46         bit  0,(hl)              // test for alien presence
+            1605: 20 09         jr   nz,$1610            // if alien is present, goto $1610
 
-// How many flagships survived from the last round? If so, they need to be added into the swarm before the level starts.
-166C: 3A 1E 42      ld   a,($421E)           // get value of FLAGSHIP_SURVIVOR_COUNT into A
-166F: A7            and  a                   // Did any flagships survive from the last round?
-1670: C8            ret  z                   // Return if no flagships survived.
-1671: 21 77 41      ld   hl,$4177            // load HL with address of free slot in flagship row of ALIEN_SWARM_FLAGS
-1674: 36 01         ld   (hl),$01            // create a flagship!
-1676: 3D            dec  a                   //   
-1677: 32 1E 42      ld   ($421E),a           // set value of FLAGSHIP_SURVIVOR_COUNT
-167A: C8            ret  z                   // return if zero. 
-167B: 23            inc  hl                  // bump HL to address of next free slot in flagship row 
-167C: 36 01         ld   (hl),$01            // create a flagship!
-167E: AF            xor  a                
-167F: 32 1E 42      ld   ($421E),a           // clear value of FLAGSHIP_SURVIVOR_COUNT
-1682: C9            ret
+            1607: 23            inc  hl                  // bump HL to flag for next row 
+            1608: CB 46         bit  0,(hl)              // test flag 
+            160A: 20 04         jr   nz,$1610            // if flag is set, goto $1610
+
+            160C: 23            inc  hl                  // bump to next entry in HAVE_ALIENS_IN_ROW_FLAGS
+            160D: 1C            inc  e                   // increment multiplier (see $0E54 for clarification on how its used)
+            160E: 10 F3         djnz $1603
+
+            1610: ED 53 13 42   ld   ($4213),de          // set INFLIGHT_ALIEN_SHOOT_EXACT_X to D, INFLIGHT_ALIEN_SHOOT_RANGE_MUL to E
+            1614: C9            ret
+
+            1615: 1E 02         ld   e,$02               // multiplier = 2
+            1617: 16 9D         ld   d,$9D               // exact X coordinate 
+            1619: 18 E8         jr   $1603
+
+            // TODO: I can't find anything calling this. Is this debug code left over?
+            161B: 1E 03         ld   e,$03
+            161D: 16 B6         ld   d,$B6
+            161F: 18 E2         jr   $1603
 
 
 
-CLAMP_DIFFICULTY_LEVEL:
-1683: 3E 07         ld   a,$07               // maximum value for DIFFICULTY_BASE_VALUE
-1685: C3 62 16      jp   $1662               // set DIFFICULTY_BASE_VALUE 
+                HANDLE_LEVEL_COMPLETE:
+                1637: 21 22 42      ld   hl,$4222            // load HL with address of LEVEL_COMPLETE
+                163A: CB 46         bit  0,(hl)              // test flag 
+                163C: C8            ret  z                   // return if level is not complete
+
+                // OK, level is complete. Wait until NEXT_LEVEL_DELAY_COUNTER to reach 0. 
+                163D: 23            inc  hl                  // bump HL to point to NEXT_LEVEL_DELAY_COUNTER
+                163E: 35            dec  (hl)                // decrement count
+                163F: C0            ret  nz                  // return if count is !=0
+
+                1640: 2B            dec  hl                  // bump HL to point to LEVEL_COMPLETE again.
+                1641: 36 00         ld   (hl),$00            // clear LEVEL_COMPLETE flag.
+
+                1643: 11 1B 05      ld   de,$051B            // load DE with address of PACKED_DEFAULT_SWARM_DEFINITION
+                1646: CD 46 06      call $0646               // call UNPACK_ALIEN_SWARM 
+                1649: AF            xor  a
+                164A: 32 1A 42      ld   ($421A),a           // reset DIFFICULTY_EXTRA_VALUE
+                164D: 32 5F 42      ld   ($425F),a           // reset TIMING_VARIABLE
+                1650: 21 01 00      ld   hl,$0001
+                1653: 22 0E 42      ld   ($420E),hl          // set SWARM_SCROLL_VALUE
+
+                // increase game difficulty level, if we can.
+                1656: 2A 1B 42      ld   hl,($421B)          // load H with PLAYER_LEVEL and L with DIFFICULTY_BASE_VALUE
+                1659: 24            inc  h                   // increment player level 
+                165A: 7D            ld   a,l                 // load A with DIFFICULTY_BASE_VALUE
+                165B: FE 07         cp   $07                 // are we at max difficulty?
+                165D: 28 03         jr   z,$1662             // yes, goto $1662
+                165F: 30 22         jr   nc,$1683            // edge case: we're above max difficulty! So clamp difficulty level to 7.
+                1661: 3C            inc  a                   // otherwise, increment DIFFICULTY_BASE_VALUE
+                1662: 6F            ld   l,a
+                1663: 22 1B 42      ld   ($421B),hl          // update PLAYER_LEVEL and DIFFICULTY_BASE_VALUE
+
+                1666: 11 00 07      ld   de,$0700            // command: BOTTOM_OF_SCREEN_INFO_COMMAND, parameter: 0 (DISPLAY_LEVEL_FLAGS)
+                1669: CD F2 08      call $08F2               // call QUEUE_COMMAND. 
+
+                // How many flagships survived from the last round? If so, they need to be added into the swarm before the level starts.
+                166C: 3A 1E 42      ld   a,($421E)           // get value of FLAGSHIP_SURVIVOR_COUNT into A
+                166F: A7            and  a                   // Did any flagships survive from the last round?
+                1670: C8            ret  z                   // Return if no flagships survived.
+                1671: 21 77 41      ld   hl,$4177            // load HL with address of free slot in flagship row of ALIEN_SWARM_FLAGS
+                1674: 36 01         ld   (hl),$01            // create a flagship!
+                1676: 3D            dec  a                   //   
+                1677: 32 1E 42      ld   ($421E),a           // set value of FLAGSHIP_SURVIVOR_COUNT
+                167A: C8            ret  z                   // return if zero. 
+                167B: 23            inc  hl                  // bump HL to address of next free slot in flagship row 
+                167C: 36 01         ld   (hl),$01            // create a flagship!
+                167E: AF            xor  a                
+                167F: 32 1E 42      ld   ($421E),a           // clear value of FLAGSHIP_SURVIVOR_COUNT
+                1682: C9            ret
+
+
+
+                CLAMP_DIFFICULTY_LEVEL:
+                1683: 3E 07         ld   a,$07               // maximum value for DIFFICULTY_BASE_VALUE
+                1685: C3 62 16      jp   $1662               // set DIFFICULTY_BASE_VALUE 
 
 
 //
 // When you shoot a flagship, the swarm goes into shock for a short period of time. No aliens will break off to attack you.
 //
 
-HANDLE_SHOCKED_SWARM:
-1688: 21 2B 42      ld   hl,$422B            // load HL with address of IS_FLAGSHIP_HIT flag     
-168B: CB 46         bit  0,(hl)              // test flag
-168D: C8            ret  z                   // return if flagship has not been hit
-168E: 3A 24 42      ld   a,($4224)           // read HAVE_AGGRESSIVE_ALIENS flag
-1691: A7            and  a                   // test flag
-1692: 20 0B         jr   nz,$169F            // if flag is set, goto $169F 
-1694: 3A 21 42      ld   a,($4221)           // read HAVE_NO_BLUE_OR_PURPLE_ALIENS
-1697: A7            and  a                   // test flag
-1698: 20 05         jr   nz,$169F            // if flag is set, goto $169F
-169A: 3A 26 42      ld   a,($4226)           // read HAVE_NO_INFLIGHT_ALIENS
-169D: 0F            rrca                     // move flag into carry
-169E: D0            ret  nc                  // return if some aliens are inflight
-169F: 23            inc  hl                  // bump HL to address of ALIENS_IN_SHOCK_COUNTER
-16A0: 35            dec  (hl)                // decrement counter. When it hits zero, aliens will snap out of it!
-16A1: C0            ret  nz                  // exit routine if counter non-zero
-16A2: 2B            dec  hl                  // bump HL to address of IS_FLAGSHIP_HIT
-16A3: 36 00         ld   (hl),$00            // clear flag. Aliens can break off from the swarm to attack again.
-16A5: C9            ret
-
-//
-// Looks like this might be legacy code imported from an older game// it writes to a port that does nothing
-//
-
-16A6: 3A 07 40      ld   a,($4007)            // read IS_GAME_OVER flag
-16A9: 0F            rrca                      // move bit 0 into carry
-16AA: D8            ret  c                    // if carry set, return
-16AB: 21 DF 41      ld   hl,$41DF
-16AE: 7E            ld   a,(hl)
-16AF: A7            and  a
-16B0: C8            ret  z
-16B1: 0F            rrca
-16B2: 0F            rrca
-16B3: 32 04 68      ld   ($6804),a            // Does nothing - this port is not connected
-16B6: 35            dec  (hl)
-16B7: C9            ret
+              HANDLE_SHOCKED_SWARM:
+              1688: 21 2B 42      ld   hl,$422B            // load HL with address of IS_FLAGSHIP_HIT flag     
+              168B: CB 46         bit  0,(hl)              // test flag
+              168D: C8            ret  z                   // return if flagship has not been hit
+              168E: 3A 24 42      ld   a,($4224)           // read HAVE_AGGRESSIVE_ALIENS flag
+              1691: A7            and  a                   // test flag
+              1692: 20 0B         jr   nz,$169F            // if flag is set, goto $169F 
+              1694: 3A 21 42      ld   a,($4221)           // read HAVE_NO_BLUE_OR_PURPLE_ALIENS
+              1697: A7            and  a                   // test flag
+              1698: 20 05         jr   nz,$169F            // if flag is set, goto $169F
+              169A: 3A 26 42      ld   a,($4226)           // read HAVE_NO_INFLIGHT_ALIENS
+              169D: 0F            rrca                     // move flag into carry
+              169E: D0            ret  nc                  // return if some aliens are inflight
+              169F: 23            inc  hl                  // bump HL to address of ALIENS_IN_SHOCK_COUNTER
+              16A0: 35            dec  (hl)                // decrement counter. When it hits zero, aliens will snap out of it!
+              16A1: C0            ret  nz                  // exit routine if counter non-zero
+              16A2: 2B            dec  hl                  // bump HL to address of IS_FLAGSHIP_HIT
+              16A3: 36 00         ld   (hl),$00            // clear flag. Aliens can break off from the swarm to attack again.
+              16A5: C9            ret
 
 
-//
-// You may have noticed that when you're close to obliterating the swarm, that the background swarm noises
-// get fewer and fewer, until there's no background noise, just the sound of attacking aliens and your bullets.
-// This is the routine that handles the background noises. But this isn't the most important thing the routine does. 
-// 
-// Tucked away here is more important code, which affects the aliens aggressiveness. If you have 3 aliens or less
-// in the swarm (inflight aliens don't count), the aliens are enraged and will be far more aggressive.
-// Any aliens that take flight to attack you (inflight aliens) will never return to the swarm and keep attacking
-// until either you or they are dead.
-//
-// If you wish to artificially enforce aggressiveness, pause the game and input the following into the MAME debugger:
-//
-// maincpu.mb@16e3=c9
-// maincpu.mb@16e7=c9
-// maincpu.pb@4224=1       // note the .pb, not .mb
-//
-// This will make the aliens attack you constantly - even when you start a new level.
 
-HANDLE_ALIEN_AGGRESSIVENESS:
-16B8: 3A 07 40      ld   a,($4007)           // read IS_GAME_OVER flag
-16BB: 0F            rrca                     // move flag into carry
-16BC: D8            ret  c                   // return if GAME OVER   
-16BD: 21 23 41      ld   hl,$4123            // load HL with address of very first alien in ALIEN_SWARM_FLAGS
-16C0: 11 06 00      ld   de,$0006            // DE is an offset to add to HL after processing a row of aliens
-16C3: 4B            ld   c,e                 // Conveniently, E is also number of rows of aliens in swarm! (6) 
-16C4: 3E 01         ld   a,$01               // A is going to be used to total the number of aliens in the swarm 
-16C6: 06 0A         ld   b,$0A               // 10 aliens maximum per row
-16C8: 86            add  a,(hl)              
-16C9: 2C            inc  l                   // bump HL to point to next alien in ALIEN_SWARM_FLAGS
-16CA: 10 FC         djnz $16C8               // repeat until all aliens in the row have been done
-16CC: 19            add  hl,de               // make HL point to first alien in row above 
-16CD: 0D            dec  c                   // do rows until C==0
-16CE: C2 C6 16      jp   nz,$16C6
+                            //
+              // You may have noticed that when you're close to obliterating the swarm, that the background swarm noises
+              // get fewer and fewer, until there's no background noise, just the sound of attacking aliens and your bullets.
+              // This is the routine that handles the background noises. But this isn't the most important thing the routine does. 
+              // 
+              // Tucked away here is more important code, which affects the aliens aggressiveness. If you have 3 aliens or less
+              // in the swarm (inflight aliens don't count), the aliens are enraged and will be far more aggressive.
+              // Any aliens that take flight to attack you (inflight aliens) will never return to the swarm and keep attacking
+              // until either you or they are dead.
+              //
+              // If you wish to artificially enforce aggressiveness, pause the game and input the following into the MAME debugger:
+              //
+              // maincpu.mb@16e3=c9
+              // maincpu.mb@16e7=c9
+              // maincpu.pb@4224=1       // note the .pb, not .mb
+              //
+              // This will make the aliens attack you constantly - even when you start a new level.
 
-// When we get here, A = total number of aliens left alive in the swarm + 1
-16D1: 21 00 68      ld   hl,$6800            // load HL with address of !SOUND  reset background F1 port
-16D4: 06 03         ld   b,$03               // number of ports to write to maximum 
-16D6: 3D            dec  a                   // decrement total by 1 
-16D7: 28 14         jr   z,$16ED             // if total is zero, goto $16ED 
+                HANDLE_ALIEN_AGGRESSIVENESS:
+                16B8: 3A 07 40      ld   a,($4007)           // read IS_GAME_OVER flag
+                16BB: 0F            rrca                     // move flag into carry
+                16BC: D8            ret  c                   // return if GAME OVER   
+                16BD: 21 23 41      ld   hl,$4123            // load HL with address of very first alien in ALIEN_SWARM_FLAGS
+                16C0: 11 06 00      ld   de,$0006            // DE is an offset to add to HL after processing a row of aliens
+                16C3: 4B            ld   c,e                 // Conveniently, E is also number of rows of aliens in swarm! (6) 
+                16C4: 3E 01         ld   a,$01               // A is going to be used to total the number of aliens in the swarm 
+                16C6: 06 0A         ld   b,$0A               // 10 aliens maximum per row
+                16C8: 86            add  a,(hl)              
+                16C9: 2C            inc  l                   // bump HL to point to next alien in ALIEN_SWARM_FLAGS
+                16CA: 10 FC         djnz $16C8               // repeat until all aliens in the row have been done
+                16CC: 19            add  hl,de               // make HL point to first alien in row above 
+                16CD: 0D            dec  c                   // do rows until C==0
+                16CE: C2 C6 16      jp   nz,$16C6
 
-// This piece of code writes 1 to !SOUND  reset background F1 to F3 
-16D9: 36 01         ld   (hl),$01            // 
-16DB: 2C            inc  l
-16DC: 10 F8         djnz $16D6
+                // When we get here, A = total number of aliens left alive in the swarm + 1
+                16D1: 21 00 68      ld   hl,$6800            // load HL with address of !SOUND  reset background F1 port
+                16D4: 06 03         ld   b,$03               // number of ports to write to maximum 
+                16D6: 3D            dec  a                   // decrement total by 1 
+                16D7: 28 14         jr   z,$16ED             // if total is zero, goto $16ED 
 
-16DE: FE 02         cp   $02                 //                  
-16E0: 38 05         jr   c,$16E7             // 
-16E2: AF            xor  a
-16E3: 32 24 42      ld   ($4224),a           // clear HAVE_AGGRESSIVE_ALIENS flag
-16E6: C9            ret
+                // This piece of code writes 1 to !SOUND  reset background F1 to F3 
+                16D9: 36 01         ld   (hl),$01            // 
+                16DB: 2C            inc  l
+                16DC: 10 F8         djnz $16D6
 
-// This piece of code is only called when there are 3 aliens or less in the swarm.
-// It makes the aliens extremely aggressive!
-16E7: 3E 01         ld   a,$01
-16E9: 32 24 42      ld   ($4224),a           // set HAVE_AGGRESSIVE_ALIENS flag
-16EC: C9            ret
+                16DE: FE 02         cp   $02                 //                  
+                16E0: 38 05         jr   c,$16E7             // 
+                16E2: AF            xor  a
+                16E3: 32 24 42      ld   ($4224),a           // clear HAVE_AGGRESSIVE_ALIENS flag
+                16E6: C9            ret
 
-// This piece of code writes 0 to !SOUND  reset background F1 to F3
-16ED: 36 00         ld   (hl),$00
-16EF: 2C            inc  l
-16F0: 10 FB         djnz $16ED
-16F2: C3 DE 16      jp   $16DE
+                // This piece of code is only called when there are 3 aliens or less in the swarm.
+                // It makes the aliens extremely aggressive!
+                16E7: 3E 01         ld   a,$01
+                16E9: 32 24 42      ld   ($4224),a           // set HAVE_AGGRESSIVE_ALIENS flag
+                16EC: C9            ret
+
+                // This piece of code writes 0 to !SOUND  reset background F1 to F3
+                16ED: 36 00         ld   (hl),$00
+                16EF: 2C            inc  l
+                16F0: 10 FB         djnz $16ED
+                16F2: C3 DE 16      jp   $16DE
 
 
 
