@@ -69,6 +69,7 @@ FORMATION: {
 	IllegalOffsetLeft:	.byte -4
 	IllegalOffsetRight: .byte 4
 
+	FlagshipEnemyIDs:	.byte 1, 8, 9, 10
 
 
 
@@ -127,7 +128,7 @@ FORMATION: {
 
 		* = * "Offset"
 
-Offset:
+		Offset:
 
 				.byte          0, 1, 2, 3	// 0-3
 				.byte       3, 0, 1, 2, 3, 0 // 4-9
@@ -546,12 +547,12 @@ Offset:
 
 			stx ZP.CurrentID
 
-			lda Occupied, x
-			beq EndLoop
+			//lda Occupied, x
+			//beq EndLoop
 
 			MoveIt:
 
-				ldx ZP.CurrentID
+			//	ldx ZP.CurrentID
 
 				lda Stop
 				bne Okay
@@ -620,6 +621,8 @@ Offset:
 			Okay:
 
 				ldx ZP.CurrentID
+				lda Occupied, x
+				beq EndLoop
 
 				jsr DrawEnemy
 

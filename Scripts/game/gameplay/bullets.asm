@@ -25,7 +25,7 @@ BULLETS: {
 	.label SPEED_MSB = 4
 	.label SPEED_LSB = 220
 	.label CooldownTime = 3
-	.label SpriteYOffset = 8
+	.label SpriteYOffset = 0
 
 	.label BulletSpriteID = 17
 	.label BulletSpritePointer = 58
@@ -339,6 +339,10 @@ BULLETS: {
 			sta SpriteY_MSB, x
 
 			jsr CheckSpriteCollisions
+
+			lda BulletToDie
+			bne EndLoop
+
 			ldx ZP.StoredXReg
 
 
@@ -361,12 +365,10 @@ BULLETS: {
 			lda CharY, x
 			cmp #253
 			beq BulletDead
-
-			
 			
 			jsr UpdateSprite
 			jsr CheckFormationCollision
-
+			
 			
 			
 			jmp EndLoop
@@ -625,10 +627,10 @@ BULLETS: {
 		GoingLeft:	
 
 			pla
-			cmp #3
+			cmp #4
 			bcc Missed
 
-			cmp #15
+			cmp #14
 			bcs EndLoop
 
 			jmp NoOffsetCheck

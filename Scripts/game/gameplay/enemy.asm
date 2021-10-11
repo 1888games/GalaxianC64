@@ -86,8 +86,11 @@
 	// X = ZP.EnemyID
 	ProcessEnemy: {
 
+		cmp #FLAGSHIP_SWARM
+		bcc DontExplode
+
 		cmp #PLAN_EXPLODE
-		bne DontExplode
+		bne Finish
 
 		jmp Explode
 		

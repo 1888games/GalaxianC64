@@ -50,6 +50,7 @@ MAIN: {
 
  	* = $8000
 
+
 	#import "game/system/disk.asm"
 	#import "game/system/score.asm"
 	#import "game/gameplay/bombs.asm"
@@ -518,6 +519,18 @@ MAIN: {
 		Playing:	
 
 			jsr PLEXOR.Sort
+
+			lda IRQ.Frame
+			clc
+			adc #1
+			cmp #5
+			bcc Okay
+
+			lda #0
+
+		Okay:
+
+			sta IRQ.Frame
 
 			lda IRQ.SidTimer
 			cmp #1

@@ -584,47 +584,47 @@ COLOUR_ATTRIBUTE_TABLE_3:
 00010000.  00000010.  2   blue
 00000000.  00000000.  0   blue
 
-INFLIGHT_ALIEN_PACKS_BAGS:
-0D06: DD 36 17 00   ld   (ix+$17),$00        // clear INFLIGHT_ALIEN.SortieCount 
-0D0A: 3E 01         ld   a,$01
-0D0C: 32 C2 41      ld   ($41C2),a           // set ENABLE_ALIEN_ATTACK_SOUND to 1.
-0D0F: CD 47 11      call $1147               // call SET_INFLIGHT_ALIEN_START_POSITION
-0D12: DD 5E 07      ld   e,(ix+$07)          // set command parameter to INFLIGHT_ALIEN.IndexInSwarm
-0D15: 16 01         ld   d,$01               // command: DELETE_ALIEN_COMMAND
-0D17: CD F2 08      call $08F2               // call QUEUE_COMMAND
-0D1A: 7B            ld   a,e                 // load A with INFLIGHT_ALIEN.IndexInSwarm
-0D1B: E6 70         and  $70                 // keep the row start, remove the column number
-0D1D: 21 D1 1D      ld   hl,$1DD1
-0D20: 0F            rrca                     // divide the row offset...
-0D21: 0F            rrca
-0D22: 0F            rrca                     // .. by 8.
-0D23: 5F            ld   e,a
-0D24: 16 00         ld   d,$00               // Extend A into DE
-0D26: 19            add  hl,de               // HL = $1DD1 + (row number of alien /8)
-0D27: 7E            ld   a,(hl)
-0D28: DD 77 16      ld   (ix+$16),a          // set INFLIGHT_ALIEN.Colour
+                  INFLIGHT_ALIEN_PACKS_BAGS:
+                  0D06: DD 36 17 00   ld   (ix+$17),$00        // clear INFLIGHT_ALIEN.SortieCount 
+                  0D0A: 3E 01         ld   a,$01
+                  0D0C: 32 C2 41      ld   ($41C2),a           // set ENABLE_ALIEN_ATTACK_SOUND to 1.
+                  0D0F: CD 47 11      call $1147               // call SET_INFLIGHT_ALIEN_START_POSITION
+                  0D12: DD 5E 07      ld   e,(ix+$07)          // set command parameter to INFLIGHT_ALIEN.IndexInSwarm
+                  0D15: 16 01         ld   d,$01               // command: DELETE_ALIEN_COMMAND
+                  0D17: CD F2 08      call $08F2               // call QUEUE_COMMAND
+                  0D1A: 7B            ld   a,e                 // load A with INFLIGHT_ALIEN.IndexInSwarm
+                  0D1B: E6 70         and  $70                 // keep the row start, remove the column number
+                  0D1D: 21 D1 1D      ld   hl,$1DD1
+                  0D20: 0F            rrca                     // divide the row offset...
+                  0D21: 0F            rrca
+                  0D22: 0F            rrca                     // .. by 8.
+                  0D23: 5F            ld   e,a
+                  0D24: 16 00         ld   d,$00               // Extend A into DE
+                  0D26: 19            add  hl,de               // HL = $1DD1 + (row number of alien /8)
+                  0D27: 7E            ld   a,(hl)
+                  0D28: DD 77 16      ld   (ix+$16),a          // set INFLIGHT_ALIEN.Colour
 
-0D2B: 23            inc  hl
-0D2C: 7E            ld   a,(hl)
-0D2D: DD 77 18      ld   (ix+$18),a          // set INFLIGHT_ALIEN.Speed
+                  0D2B: 23            inc  hl
+                  0D2C: 7E            ld   a,(hl)
+                  0D2D: DD 77 18      ld   (ix+$18),a          // set INFLIGHT_ALIEN.Speed
 
-0D30: 7B            ld   a,e
-0D31: FE 0E         cp   $0E                 // flagship?
-0D33: 28 23         jr   z,$0D58             // yes, goto $0D58
+                  0D30: 7B            ld   a,e
+                  0D31: FE 0E         cp   $0E                 // flagship?
+                  0D33: 28 23         jr   z,$0D58             // yes, goto $0D58
 
-0D35: DD 36 0F 00   ld   (ix+$0f),$00        // set INFLIGHT_ALIEN.AnimFrameStartCode
-0D39: DD 36 10 03   ld   (ix+$10),$03        // set INFLIGHT_ALIEN.TempCounter1 to speed of animation (higher number = slower)
-0D3D: DD 36 11 0C   ld   (ix+$11),$0C        // set INFLIGHT_ALIEN.TempCounter2 to total number of animation frames 
-0D41: DD 36 13 00   ld   (ix+$13),$00        // set INFLIGHT_ALIEN.ArcTableLsb
-0D45: DD 34 02      inc  (ix+$02)            // set INFLIGHT_ALIEN.StageOfLife to INFLIGHT_ALIEN_FLIES_IN_ARC
+                  0D35: DD 36 0F 00   ld   (ix+$0f),$00        // set INFLIGHT_ALIEN.AnimFrameStartCode
+                  0D39: DD 36 10 03   ld   (ix+$10),$03        // set INFLIGHT_ALIEN.TempCounter1 to speed of animation (higher number = slower)
+                  0D3D: DD 36 11 0C   ld   (ix+$11),$0C        // set INFLIGHT_ALIEN.TempCounter2 to total number of animation frames 
+                  0D41: DD 36 13 00   ld   (ix+$13),$00        // set INFLIGHT_ALIEN.ArcTableLsb
+                  0D45: DD 34 02      inc  (ix+$02)            // set INFLIGHT_ALIEN.StageOfLife to INFLIGHT_ALIEN_FLIES_IN_ARC
 
-0D48: DD CB 06 46   bit  0,(ix+$06)          // test INFLIGHT_ALIEN.ArcClockwise
-0D4C: 20 05         jr   nz,$0D53            // if alien will be facing right when it breaks away from swarm, goto $0D53
-0D4E: DD 36 05 0C   ld   (ix+$05),$0C        // set INFLIGHT_ALIEN.AnimationFrame
-0D52: C9            ret
+                  0D48: DD CB 06 46   bit  0,(ix+$06)          // test INFLIGHT_ALIEN.ArcClockwise
+                  0D4C: 20 05         jr   nz,$0D53            // if alien will be facing right when it breaks away from swarm, goto $0D53
+                  0D4E: DD 36 05 0C   ld   (ix+$05),$0C        // set INFLIGHT_ALIEN.AnimationFrame
+                  0D52: C9            ret
 
-0D53: DD 36 05 F4   ld   (ix+$05),$F4        // set INFLIGHT_ALIEN.AnimationFrame
-0D57: C9            ret
+                  0D53: DD 36 05 F4   ld   (ix+$05),$F4        // set INFLIGHT_ALIEN.AnimationFrame
+                  0D57: C9            ret
 
 // This code is called for flagships. We need to count how many escorts we have.
 0D58: DD 36 0F 18   ld   (ix+$0f),$18        // set INFLIGHT_ALIEN.AnimFrameStartCode
@@ -640,153 +640,153 @@ INFLIGHT_ALIEN_PACKS_BAGS:
 
 
 
-//
-// This function is used to animate an inflight alien flying in a 90 degree arc. 
-// It is called when an alien is breaking off from the swarm to attack the player, 
-// or when it is completing the last 90 degrees of a 360 degree loop the loop. 
-// As soon as the arc is complete, the alien's stage of life is set to
-// INFLIGHT_ALIEN_READY_TO_ATTACK.
-//
-// Expects:
-// IX = pointer to INFLIGHT_ALIEN that is breaking away from swarm.
-//
+            //
+            // This function is used to animate an inflight alien flying in a 90 degree arc. 
+            // It is called when an alien is breaking off from the swarm to attack the player, 
+            // or when it is completing the last 90 degrees of a 360 degree loop the loop. 
+            // As soon as the arc is complete, the alien's stage of life is set to
+            // INFLIGHT_ALIEN_READY_TO_ATTACK.
+            //
+            // Expects:
+            // IX = pointer to INFLIGHT_ALIEN that is breaking away from swarm.
+            //
 
-INFLIGHT_ALIEN_FLIES_IN_ARC:
-0D71: DD 6E 13      ld   l,(ix+$13)          // read INFLIGHT_ALIEN.ArcTableLsb
-0D74: 26 1E         ld   h,$1E               // Now HL points to an entry in INFLIGHT_ALIEN_ARC_TABLE at $1E00. 
-0D76: DD 7E 03      ld   a,(ix+$03)          // read INFLIGHT_ALIEN.X 
-0D79: 86            add  a,(hl)              // add in X delta from table
-0D7A: DD 77 03      ld   (ix+$03),a          // update INFLIGHT_ALIEN.X
-0D7D: 2C            inc  l                   // bump HL to Y coordinate in table 
-0D7E: DD CB 06 46   bit  0,(ix+$06)          // test INFLIGHT_ALIEN.ArcClockwise
-0D82: 20 24         jr   nz,$0DA8            // if alien is facing right, goto $0DA8
+                    INFLIGHT_ALIEN_FLIES_IN_ARC:
+                    0D71: DD 6E 13      ld   l,(ix+$13)          // read INFLIGHT_ALIEN.ArcTableLsb
+                    0D74: 26 1E         ld   h,$1E               // Now HL points to an entry in INFLIGHT_ALIEN_ARC_TABLE at $1E00. 
+                    0D76: DD 7E 03      ld   a,(ix+$03)          // read INFLIGHT_ALIEN.X 
+                    0D79: 86            add  a,(hl)              // add in X delta from table
+                    0D7A: DD 77 03      ld   (ix+$03),a          // update INFLIGHT_ALIEN.X
+                    0D7D: 2C            inc  l                   // bump HL to Y coordinate in table 
+                    0D7E: DD CB 06 46   bit  0,(ix+$06)          // test INFLIGHT_ALIEN.ArcClockwise
+                    0D82: 20 24         jr   nz,$0DA8            // if alien is facing right, goto $0DA8
 
-// alien that is leaving swarm to attack player will arc up and left.
-// HL = pointer to table defining arc (see $1E00 for table layout)
-0D84: DD 7E 04      ld   a,(ix+$04)          // load A with INFLIGHT_ALIEN.Y 
-0D87: 86            add  a,(hl)              // add in Y delta from table                       
-0D88: DD 77 04      ld   (ix+$04),a          // update INFLIGHT_ALIEN.Y 
-0D8B: C6 07         add  a,$07
-0D8D: FE 0E         cp   $0E                 // is the alien off-screen?
-0D8F: 38 3B         jr   c,$0DCC             // if A< #$0E, its gone off screen, so make alien return to swarm from top of screen.
-0D91: 2C            inc  l                   // bump HL to point to next X,Y coordinate pair in table
-0D92: DD 75 13      ld   (ix+$13),l          // and update INFLIGHT_ALIEN.ArcTableLsb
-// Tempcounter1 = delay before changing animation frame
-// Tempcounter2 = number of animation frames left to do 
-0D95: DD 35 10      dec  (ix+$10)            // decrement INFLIGHT_ALIEN.TempCounter1
-0D98: C0            ret  nz
-0D99: DD 36 10 04   ld   (ix+$10),$04        // reset INFLIGHT_ALIEN.TempCounter1
-0D9D: DD 35 05      dec  (ix+$05)            // update INFLIGHT_ALIEN.AnimationFrame to rotate the alien left
-0DA0: DD 35 11      dec  (ix+$11)            // decrement INFLIGHT_ALIEN.TempCounter2 
-0DA3: C0            ret  nz                  // if we've not done all of the animation frames, exit
+                    // alien that is leaving swarm to attack player will arc up and left.
+                    // HL = pointer to table defining arc (see $1E00 for table layout)
+                    0D84: DD 7E 04      ld   a,(ix+$04)          // load A with INFLIGHT_ALIEN.Y 
+                    0D87: 86            add  a,(hl)              // add in Y delta from table                       
+                    0D88: DD 77 04      ld   (ix+$04),a          // update INFLIGHT_ALIEN.Y 
+                    0D8B: C6 07         add  a,$07
+                    0D8D: FE 0E         cp   $0E                 // is the alien off-screen?
+                    0D8F: 38 3B         jr   c,$0DCC             // if A< #$0E, its gone off screen, so make alien return to swarm from top of screen.
+                    0D91: 2C            inc  l                   // bump HL to point to next X,Y coordinate pair in table
+                    0D92: DD 75 13      ld   (ix+$13),l          // and update INFLIGHT_ALIEN.ArcTableLsb
+                    // Tempcounter1 = delay before changing animation frame
+                    // Tempcounter2 = number of animation frames left to do 
+                    0D95: DD 35 10      dec  (ix+$10)            // decrement INFLIGHT_ALIEN.TempCounter1
+                    0D98: C0            ret  nz
+                    0D99: DD 36 10 04   ld   (ix+$10),$04        // reset INFLIGHT_ALIEN.TempCounter1
+                    0D9D: DD 35 05      dec  (ix+$05)            // update INFLIGHT_ALIEN.AnimationFrame to rotate the alien left
+                    0DA0: DD 35 11      dec  (ix+$11)            // decrement INFLIGHT_ALIEN.TempCounter2 
+                    0DA3: C0            ret  nz                  // if we've not done all of the animation frames, exit
 
-// OK, we've done all of the animation frames. The alien's ready to attack the player.
-0DA4: DD 34 02      inc  (ix+$02)            // set stage of alien's life to INFLIGHT_ALIEN_READY_TO_ATTACK
-0DA7: C9            ret
+                    // OK, we've done all of the animation frames. The alien's ready to attack the player.
+                    0DA4: DD 34 02      inc  (ix+$02)            // set stage of alien's life to INFLIGHT_ALIEN_READY_TO_ATTACK
+                    0DA7: C9            ret
 
-// alien that is leaving swarm to attack player is arcing up and right
-// HL = pointer to table defining arc
-// IX = pointer to INFLIGHT_ALIEN structure
-0DA8: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y 
-0DAB: 96            sub  (hl)                // read Y delta from table and subtract from INFLIGHT_ALIEN.Y 
-0DAC: DD 77 04      ld   (ix+$04),a          // update INFLIGHT_ALIEN.Y 
-0DAF: C6 07         add  a,$07
-0DB1: FE 0E         cp   $0E                 // is the alien off-screen?
-0DB3: 38 17         jr   c,$0DCC             // if A < #$0E, its gone off screen, so make alien return to swarm from top of screen. 
-0DB5: 2C            inc  l                   // bump HL to point to next X,Y coordinate pair in table
-0DB6: DD 75 13      ld   (ix+$13),l          // and update INFLIGHT_ALIEN.ArcTableLsb
-// Tempcounter1 = delay before changing animation frame
-// Tempcounter2 = number of animation frames left to do 
-0DB9: DD 35 10      dec  (ix+$10)            // decrement INFLIGHT_ALIEN.TempCounter1
-0DBC: C0            ret  nz
-0DBD: DD 36 10 04   ld   (ix+$10),$04        // reset INFLIGHT_ALIEN.TempCounter1
-0DC1: DD 34 05      inc  (ix+$05)            // update INFLIGHT_ALIEN.AnimationFrame to rotate the alien right
-0DC4: DD 35 11      dec  (ix+$11)            // decrement INFLIGHT_ALIEN.TempCounter2
-0DC7: C0            ret  nz                  // if we've not done all of the animation frames, exit
+                    // alien that is leaving swarm to attack player is arcing up and right
+                    // HL = pointer to table defining arc
+                    // IX = pointer to INFLIGHT_ALIEN structure
+                    0DA8: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y 
+                    0DAB: 96            sub  (hl)                // read Y delta from table and subtract from INFLIGHT_ALIEN.Y 
+                    0DAC: DD 77 04      ld   (ix+$04),a          // update INFLIGHT_ALIEN.Y 
+                    0DAF: C6 07         add  a,$07
+                    0DB1: FE 0E         cp   $0E                 // is the alien off-screen?
+                    0DB3: 38 17         jr   c,$0DCC             // if A < #$0E, its gone off screen, so make alien return to swarm from top of screen. 
+                    0DB5: 2C            inc  l                   // bump HL to point to next X,Y coordinate pair in table
+                    0DB6: DD 75 13      ld   (ix+$13),l          // and update INFLIGHT_ALIEN.ArcTableLsb
+                    // Tempcounter1 = delay before changing animation frame
+                    // Tempcounter2 = number of animation frames left to do 
+                    0DB9: DD 35 10      dec  (ix+$10)            // decrement INFLIGHT_ALIEN.TempCounter1
+                    0DBC: C0            ret  nz
+                    0DBD: DD 36 10 04   ld   (ix+$10),$04        // reset INFLIGHT_ALIEN.TempCounter1
+                    0DC1: DD 34 05      inc  (ix+$05)            // update INFLIGHT_ALIEN.AnimationFrame to rotate the alien right
+                    0DC4: DD 35 11      dec  (ix+$11)            // decrement INFLIGHT_ALIEN.TempCounter2
+                    0DC7: C0            ret  nz                  // if we've not done all of the animation frames, exit
 
-// OK, we've done all of the animation frames. The alien's ready to attack the player.
-0DC8: DD 34 02      inc  (ix+$02)            // move to next stage of alien's life
-0DCB: C9            ret                 
+                    // OK, we've done all of the animation frames. The alien's ready to attack the player.
+                    0DC8: DD 34 02      inc  (ix+$02)            // move to next stage of alien's life
+                    0DCB: C9            ret                 
 
-// if we get here, an alien leaving the swarm has gone offscreen. It will return to the swarm from the top of the screen.
-0DCC: DD 36 02 05   ld   (ix+$02),$05        // set INFLIGHT_ALIEN.StageOfLife 
-0DD0: C9            ret
-
-
-
-//
-// An alien that has just completed an arc animation (see docs @ $0D71 and $101F) is now ready to attack the player. 
-//
-// Expects:
-// IX = pointer to INFLIGHT_ALIEN that will attack
-//
-
-INFLIGHT_ALIEN_READY_TO_ATTACK:
-0DD1: DD 34 03      inc  (ix+$03)            // increment INFLIGHT_ALIEN.X
-0DD4: DD 7E 07      ld   a,(ix+$07)          // read INFLIGHT_ALIEN.IndexInSwarm
-0DD7: E6 70         and  $70                 // keep the row, remove the column
-0DD9: FE 60         cp   $60                 // is this a red alien?
-0DDB: 28 43         jr   z,$0E20             // yes, goto $0E20
-
-INFLIGHT_ALIEN_DEFINE_FLIGHTPATH:
-0DDD: 3A 02 42      ld   a,($4202)           // read PLAYER_Y 
-0DE0: 47            ld   b,a
-0DE1: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y 
-0DE4: 90            sub  b                   // A = INFLIGHT_ALIEN.Y  - PLAYER_Y
-0DE5: 38 28         jr   c,$0E0F             // if alien is to right of player, goto $0E0F
-
-// alien is to left of player
-// A = signed number representing distance in pixels between alien Y and player Y. 
-0DE7: 1F            rra                      // divide distance by 2     
-0DE8: C6 10         add  a,$10               // add $10 (16 decimal) to product
-// clamp A between $30 and $70
-0DEA: FE 30         cp   $30                 // compare to 48 (decimal)
-0DEC: 30 02         jr   nc,$0DF0            // if A>=48 goto $0DF0
-0DEE: 3E 30         ld   a,$30
-0DF0: FE 70         cp   $70                 // compare to 112 (decimal)  NB: 112 is half the screen height in pixels
-0DF2: 38 02         jr   c,$0DF6
-0DF4: 3E 70         ld   a,$70
-
-// PivotYValue is a Y coordinate to pivot around. You could think of it like the "origin" Y coordinate. 
-// PivotYValueAdd is a delta (offset) to add to PivotYValue to produce the correct Y coordinate of the alien.
-//
-// PivotYValueAdd will increment if the player is to the left of the alien when it leaves the swarm,
-// or decrement if the player is to the right. 
-
-0DF6: DD 77 19      ld   (ix+$19),a          // set INFLIGHT_ALIEN.PivotYValueAdd
-0DF9: DD 96 04      sub  (ix+$04)            // subtract INFLIGHT_ALIEN.Y 
-0DFC: ED 44         neg
-0DFE: DD 77 09      ld   (ix+$09),a          // set INFLIGHT_ALIEN.PivotYValue. Now PivotYValue + PivotYValueAdd = INFLIGHT_ALIEN.Y
-0E01: AF            xor  a
-0E02: DD 77 1A      ld   (ix+$1a),a
-0E05: DD 77 1B      ld   (ix+$1b),a
-0E08: DD 77 1C      ld   (ix+$1c),a
-
-0E0B: DD 34 02      inc  (ix+$02)             // set stage of life to INFLIGHT_ALIEN_ATTACKING_PLAYER or INFLIGHT_ALIEN_ATTACKING_PLAYER_AGGRESSIVELY
-0E0E: C9            ret
-
-// alien is to right of player
-// A = signed number representing distance in pixels between alien and player. 
-0E0F: 1F            rra                       // perform a shift right, with sign bit preserved
-0E10: D6 10         sub  $10
-// clamp A between -48 and -112 decimal
-0E12: FE D0         cp   $D0                  // compare to -48 (decimal)
-0E14: 38 02         jr   c,$0E18
-0E16: 3E D0         ld   a,$D0             
-0E18: FE 90         cp   $90                  // compare to -112 (decimal)  NB: 112 is half the screen height in pixels
-0E1A: 30 DA         jr   nc,$0DF6
-0E1C: 3E 90         ld   a,$90
-0E1E: 18 D6         jr   $0DF6
+                    // if we get here, an alien leaving the swarm has gone offscreen. It will return to the swarm from the top of the screen.
+                    0DCC: DD 36 02 05   ld   (ix+$02),$05        // set INFLIGHT_ALIEN.StageOfLife 
+                    0DD0: C9            ret
 
 
-0E20: 3A D0 42      ld   a,($42D0)           // address of INFLIGHT_ALIENS[1].IsActive
-0E23: 0F            rrca                     // move flag into carry
-0E24: 30 B7         jr   nc,$0DDD            // if not set then we are not part of a convoy, goto INFLIGHT_ALIEN_DEFINE_FLIGHTPATH
 
-// make the alien accompany the flagship as part of a convoy. The PivotYValueAdd of the alien is the same as the flagship,
-// so it will fly the same path.
-0E26: 3A E9 42      ld   a,($42E9)           // read flagship INFLIGHT_ALIENS[1].PivotYValueAdd  
-0E29: 18 CB         jr   $0DF6
+                    //
+                    // An alien that has just completed an arc animation (see docs @ $0D71 and $101F) is now ready to attack the player. 
+                    //
+                    // Expects:
+                    // IX = pointer to INFLIGHT_ALIEN that will attack
+                    //
+
+                    INFLIGHT_ALIEN_READY_TO_ATTACK:
+                    0DD1: DD 34 03      inc  (ix+$03)            // increment INFLIGHT_ALIEN.X
+                    0DD4: DD 7E 07      ld   a,(ix+$07)          // read INFLIGHT_ALIEN.IndexInSwarm
+                    0DD7: E6 70         and  $70                 // keep the row, remove the column
+                    0DD9: FE 60         cp   $60                 // is this a red alien?
+                    0DDB: 28 43         jr   z,$0E20             // yes, goto $0E20
+
+                    INFLIGHT_ALIEN_DEFINE_FLIGHTPATH:
+                    0DDD: 3A 02 42      ld   a,($4202)           // read PLAYER_Y 
+                    0DE0: 47            ld   b,a
+                    0DE1: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y 
+                    0DE4: 90            sub  b                   // A = INFLIGHT_ALIEN.Y  - PLAYER_Y
+                    0DE5: 38 28         jr   c,$0E0F             // if alien is to right of player, goto $0E0F
+
+                    // alien is to left of player
+                    // A = signed number representing distance in pixels between alien Y and player Y. 
+                    0DE7: 1F            rra                      // divide distance by 2     
+                    0DE8: C6 10         add  a,$10               // add $10 (16 decimal) to product
+                    // clamp A between $30 and $70
+                    0DEA: FE 30         cp   $30                 // compare to 48 (decimal)
+                    0DEC: 30 02         jr   nc,$0DF0            // if A>=48 goto $0DF0
+                    0DEE: 3E 30         ld   a,$30
+                    0DF0: FE 70         cp   $70                 // compare to 112 (decimal)  NB: 112 is half the screen height in pixels
+                    0DF2: 38 02         jr   c,$0DF6
+                    0DF4: 3E 70         ld   a,$70
+
+                    // PivotYValue is a Y coordinate to pivot around. You could think of it like the "origin" Y coordinate. 
+                    // PivotYValueAdd is a delta (offset) to add to PivotYValue to produce the correct Y coordinate of the alien.
+                    //
+                    // PivotYValueAdd will increment if the player is to the left of the alien when it leaves the swarm,
+                    // or decrement if the player is to the right. 
+
+                    0DF6: DD 77 19      ld   (ix+$19),a          // set INFLIGHT_ALIEN.PivotYValueAdd
+                    0DF9: DD 96 04      sub  (ix+$04)            // subtract INFLIGHT_ALIEN.Y 
+                    0DFC: ED 44         neg
+                    0DFE: DD 77 09      ld   (ix+$09),a          // set INFLIGHT_ALIEN.PivotYValue. Now PivotYValue + PivotYValueAdd = INFLIGHT_ALIEN.Y
+                    0E01: AF            xor  a
+                    0E02: DD 77 1A      ld   (ix+$1a),a
+                    0E05: DD 77 1B      ld   (ix+$1b),a
+                    0E08: DD 77 1C      ld   (ix+$1c),a
+
+                    0E0B: DD 34 02      inc  (ix+$02)             // set stage of life to INFLIGHT_ALIEN_ATTACKING_PLAYER or INFLIGHT_ALIEN_ATTACKING_PLAYER_AGGRESSIVELY
+                    0E0E: C9            ret
+
+                    // alien is to right of player
+                    // A = signed number representing distance in pixels between alien and player. 
+                    0E0F: 1F            rra                       // perform a shift right, with sign bit preserved
+                    0E10: D6 10         sub  $10
+                    // clamp A between -48 and -112 decimal
+                    0E12: FE D0         cp   $D0                  // compare to -48 (decimal)
+                    0E14: 38 02         jr   c,$0E18
+                    0E16: 3E D0         ld   a,$D0             
+                    0E18: FE 90         cp   $90                  // compare to -112 (decimal)  NB: 112 is half the screen height in pixels
+                    0E1A: 30 DA         jr   nc,$0DF6
+                    0E1C: 3E 90         ld   a,$90
+                    0E1E: 18 D6         jr   $0DF6
+
+
+                    0E20: 3A D0 42      ld   a,($42D0)           // address of INFLIGHT_ALIENS[1].IsActive
+                    0E23: 0F            rrca                     // move flag into carry
+                    0E24: 30 B7         jr   nc,$0DDD            // if not set then we are not part of a convoy, goto INFLIGHT_ALIEN_DEFINE_FLIGHTPATH
+
+                    // make the alien accompany the flagship as part of a convoy. The PivotYValueAdd of the alien is the same as the flagship,
+                    // so it will fly the same path.
+                    0E26: 3A E9 42      ld   a,($42E9)           // read flagship INFLIGHT_ALIENS[1].PivotYValueAdd  
+                    0E29: 18 CB         jr   $0DF6
 
 
 //
@@ -1403,11 +1403,6 @@ SET_INFLIGHT_ALIEN_START_POSITION:
 // Expects:
 // IX = pointer to INFLIGHT_ALIEN structure
 // 
-
-//
-// To monitor the input parameters type the following into the MAME debugger:
-// bp 117E,1,{printf "IX=%04X:   H=%01X L=%01X D=%01X E=%01X", IX,H,L,D,E// g}
-//
 
 UPDATE_INFLIGHT_ALIEN_YADD:
 116B: DD 7E 18      ld   a,(ix+$18)          // read INFLIGHT_ALIEN.Speed

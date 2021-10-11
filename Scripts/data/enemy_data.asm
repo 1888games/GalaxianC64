@@ -9,7 +9,7 @@
 .label MAX_CHALLENGE_SPEED = 50
 		
 
-	EnemyTypeFrameStart:		.byte 52, 74, 34, 122, 17 , 106, 17, 17
+	EnemyTypeFrameStart:		.byte 17, 33, 33, 33, 33
 	Colours:					.byte YELLOW, YELLOW, YELLOW, CYAN, WHITE, WHITE
 	ExplosionFrames:			.byte 50, 51, 52, 53
 	ExplosionColours:			.byte WHITE, YELLOW, YELLOW, YELLOW, YELLOW, WHITE

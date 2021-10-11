@@ -186,39 +186,39 @@
 	 		jmp XOkay
 
 
-		CalculateXSpeed:
+		 CalculateXSpeed:
 
-			lda MoveX
-			asl
-			asl
-			asl
-			asl
-			clc
-			adc MoveY
-			tay
+		// 	lda MoveX
+		// 	asl
+		// 	asl
+		// 	asl
+		// 	asl
+		// 	clc
+		// 	adc MoveY
+		// 	tay
 
-			lda PixelLookup, y
-			sta PixelSpeedX, x
+		// 	lda PixelLookup, y
+		// 	sta PixelSpeedX, x
 
-			lda FractionLookup, y
-			sta FractionSpeedX, x
+		// 	lda FractionLookup, y
+		// 	sta FractionSpeedX, x
 
-		CalculateYSpeed:
+		// CalculateYSpeed:
 
-			lda MoveY
-			asl
-			asl
-			asl
-			asl
-			clc
-			adc MoveX
-			tay
+		// 	lda MoveY
+		// 	asl
+		// 	asl
+		// 	asl
+		// 	asl
+		// 	clc
+		// 	adc MoveX
+		// 	tay
 
-			lda PixelLookup, y
-			sta PixelSpeedY, x
+		// 	lda PixelLookup, y
+		// 	sta PixelSpeedY, x
 
-			lda FractionLookup, y
-			sta FractionSpeedY, x
+		// 	lda FractionLookup, y
+		// 	sta FractionSpeedY, x
 
 		lda MoveX
 		asl

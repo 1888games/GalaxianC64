@@ -86,6 +86,7 @@
 .label LOOP_THE_LOOP = 11
 .label COMPLETE_LOOP = 12
 .label UNKNOWN_1091 = 13
+.label FLAGSHIP_SWARM = 14
 .label PLAN_EXPLODE = 15
 
 

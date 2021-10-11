@@ -12,6 +12,8 @@ IRQ: {
 
 	MultiIRQLines:	.byte 40, 1
 	SidTimer:		.byte 5
+	Frame:			.byte 0
+
 	
 	DisableCIA: {
 
@@ -198,6 +200,8 @@ IRQ: {
 
 			ldy SidTimer
 			bmi NoSkip
+
+		IsNTSC:
 			
 			dey
 			sty SidTimer

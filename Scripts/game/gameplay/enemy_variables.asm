@@ -33,6 +33,18 @@
 	ArcClockwise:			.fill MAX_ENEMIES, 0
 	SortieCount:			.fill MAX_ENEMIES, 0
 	Speed:					.fill MAX_ENEMIES, 0
+	Type:					.fill MAX_ENEMIES, 0
+	AnimFrameStartCode:		.fill MAX_ENEMIES, 0
+	TempCounter1:			.fill MAX_ENEMIES, 0
+	TempCounter2:			.fill MAX_ENEMIES, 0
+	ArcTableLSB:			.fill MAX_ENEMIES, 0
+	PivotXValueAdd:			.fill MAX_ENEMIES, 0
+	PivotXValue:			.fill MAX_ENEMIES, 0
+	Inflight_S19:			.fill MAX_ENEMIES, 0
+	Inflight_S1A:			.fill MAX_ENEMIES, 0
+	Inflight_S1B:			.fill MAX_ENEMIES, 0
+	Inflight_S1C:			.fill MAX_ENEMIES, 0
+
 
 
 	Quadrant:			.byte 0

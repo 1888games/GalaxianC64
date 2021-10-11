@@ -1,14 +1,15 @@
 BOMBS: {
 
 	* = * "Bombs"
-	// Enemies - Sprites 0-7
 
 	// Explosion = 0
+	// Enemies - Sprites 1-7
 	// Flagship = 1
 	// Escorts = 2 & 3
 	// Individuals 4 - 7
+	// Flagships 8-10
 
-	// Bombs - Sprites 8-16
+	// Bombs - Sprites 11-16
 
 	// Our bullet = 17
 	// Ship - Sprites 18-19

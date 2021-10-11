@@ -52,7 +52,8 @@
 	LevelComplete:				.byte 0
 	TimingVariable:				.byte 0
 
-	AliensAttackRightFlank:		.byte 0
+	AliensAttackRightFlank:		.byte 1
+	FlagshipEscortCount:		.byte 0
 
 	AliensInColumn:			.fill 10, 0
 
@@ -83,6 +84,7 @@
 		sta AliensInShockCounter
 		sta LevelComplete
 		sta FlagshipSurvivorCount
+		sta FlagshipEscortCount
 
 
 		lda #48
@@ -605,7 +607,7 @@
 
 	SingleRight: {
 
-		.break
+		//.break
 
 		// x = Slot
 

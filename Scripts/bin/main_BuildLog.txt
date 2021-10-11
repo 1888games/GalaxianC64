@@ -9,54 +9,54 @@ Memory Map
 ----------
 Default-segment:
   *$0002-$0024 Temp vars zero page
-  *$0025-$0035 LPAX
-  *$0036-$0049 SpriteX
-  *$004a-$00ad SpriteY
-  *$00ae-$00dc SpriteCopyY
+  *$0025-$003a LPAX
+  *$003b-$004e SpriteX
+  *$004f-$00b2 SpriteY
+  *$00b3-$00ca SpriteCopyY
   $0801-$080d Basic
   $080e-$080d Basic End
   $0810-$0832 Hi score_Data
   $0880-$08c1 Modules
-  $08c2-$09dc IRQ
-  $09dd-$0a28 Utility
-  $0a29-$0a45 Input
-  $0a46-$0ae3 Joystick
-  $0ae4-$0e81 SHIP
-  $0e82-$0efd CheckDead
-  $0efe-$123f Bullets
-  $1240-$1374 Formation
-  $1375-$1476 Enemies Left
-  $1477-$1dcf Offset
-  $1dd0-$20c0 Maploader
-  $20c1-$20c0 WaveMovement
-  $20c1-$20c0 XPaths
-  $20c1-$20c0 YPaths
-  $20c1-$20d8 WaveStartPos
-  $20d9-$2146 StagesIndex
-  $2147-$21ba StagesIndexLookup
-  $21bb-$29ff Challenge Paths 4-8
+  $08c2-$09dd IRQ
+  $09de-$0a29 Utility
+  $0a2a-$0a46 Input
+  $0a47-$0ae4 Joystick
+  $0ae5-$0e83 SHIP
+  $0e84-$0eff CheckDead
+  $0f00-$1246 Bullets
+  $1247-$137b Formation
+  $137c-$1481 Enemies Left
+  $1482-$1dd8 Offset
+  $1dd9-$20c9 Maploader
+  $20ca-$20c9 WaveMovement
+  $20ca-$20c9 XPaths
+  $20ca-$20c9 YPaths
+  $20ca-$20e1 WaveStartPos
+  $20e2-$214f StagesIndex
+  $2150-$21c3 StagesIndexLookup
+  $21c4-$29ff Challenge Paths 4-8
   $2a00-$2a88 VicSpriteTable
   $2a89-$2d7a IRQ
-  $2d7b-$2df1 Enemy
-  $2df2-$2e41 Enemy Variables
-  $2e42-$2e69 Plan
-  $2e6a-$2e92 Extra
-  $2e93-$2e97 Enemies In Wave
-  $2e98-$2eba Enemy Ship ID
-  $2ebb-$3088 Enemies
-  $3089-$32a6 Spawn
-  $32a7-$39fc Pathfinding
-  $39fd-$3d2f Stage
-  $3d30-$3db3 Check Complete
-  $3db4-$3e29 Check Spawn
-  $3e2a-$401c ---String Data
-  $401d-$4152 ---Text
-  $4153-$4c12 Enemy Data
-  $4c13-$4ca9 Title
-  $4caa-$4e37 Check Left Finish
+  $2d7b-$2df5 Enemy
+  $2df6-$2e45 Enemy Variables
+  $2e46-$2e6d Plan
+  $2e6e-$2eee Extra
+  $2eef-$2ef3 Enemies In Wave
+  $2ef4-$2f16 Enemy Ship ID
+  $2f17-$30e4 Enemies
+  $30e5-$3302 Spawn
+  $3303-$3a28 Pathfinding
+  $3a29-$3d5b Stage
+  $3d5c-$3ddf Check Complete
+  $3de0-$3e55 Check Spawn
+  $3e56-$4048 ---String Data
+  $4049-$417e ---Text
+  $417f-$4c3b Enemy Data
+  $4c3c-$4cd2 Title
+  $4cd3-$4e60 Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6e93 Main
+  $6c00-$6ea2 Main
   $7400-$7503 Game Map
   $7504-$7797 Game Tiles
   $7800-$78ff Game Colours
@@ -75,8 +75,8 @@ Default-segment:
   $941a-$9852 -Sound
   $9853-$989d Attacks
   $989e-$9c73 Attackers
-  $9c74-$9f48 Chargers
-  $9f49-$9fb5 Flight
+  $9c74-$9f4c Chargers
+  $9f4d-$a236 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$cfbf Sprites
   $f000-$f7ff Charset
