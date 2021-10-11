@@ -647,7 +647,7 @@ Offset:
 
 		jsr CalculateEnemiesLeft
 
-		inc $d020
+		//inc $d020
 
 		lda #0
 		sta ZP.Temp4
@@ -719,14 +719,14 @@ Offset:
 
 			lda DrawIteration
 			cmp #1
-			beq Start
+			//beq Start
 
 
 
 		Finish:
 
 	
-		dec $d020
+		//dec $d020
 
 		rts
 	}

@@ -684,6 +684,9 @@
 		lda #PACKS_BAGS
 		sta ENEMY.Plan, y
 
+		txa
+		sta ENEMY.Slot, y
+
 		rts
 	}
 

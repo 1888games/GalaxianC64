@@ -45,7 +45,7 @@ STAGE: {
 
 	ExtraEnemyIDs:		.byte 0, 0, 0, 0
 
-	SpriteAddresses:	.fillword 6, SPRITE_SOURCE + (i * (16 *  64))
+	//SpriteAddresses:	.fillword 6, SPRITE_SOURCE + (i * (16 *  64))
 	TransformSpriteIDs:	.byte 1, 3, 4
 	ChallengeSpriteIDs: .byte 0, 0, 0, 1, 2, 3, 4, 5
 	SoftlockProtect:	.byte 0, 0
@@ -388,8 +388,7 @@ STAGE: {
 		lda TransformTypes, x
 		sta TransformType
 
-		jsr CopySpriteData
-
+	
 		jsr UpdateTransformType
 
 		lda #1
@@ -432,75 +431,7 @@ STAGE: {
 
 	}
 
-	CopySpriteData: {
-
-
-
-		lda STAGE.StageIndex
-		cmp #3
-		bcc NormalStage
-
-		ChallengeStage:
-
-			ldx STAGE.CurrentPlayer
-			lda STAGE.ChallengeStage, x
-			tax
-			lda ChallengeSpriteIDs, x
-			asl
-			tax
-			jmp SetupAddresses
-
-		NormalStage:
-
-			ldx STAGE.TransformType
-			lda TransformSpriteIDs, x
-			asl
-			tax
-
-		SetupAddresses:
-
-			lda SpriteAddresses, x
-			sta ZP.RightPathAddressX
-
-			lda SpriteAddresses + 1, x
-			sta ZP.RightPathAddressX + 1
-
-			lda #<$C440
-			sta ZP.LeftPathAddressY
-
-			lda #>$C440
-			sta ZP.LeftPathAddressY + 1
-
-
-		CopyData:
-
-			ldx #0
-			ldy #0
-
-		Loop:
-
-			lda (ZP.RightPathAddressX), y
-			sta (ZP.LeftPathAddressY), y
-
-			iny
-			bne Loop
-
-			inx
-			cpx #4
-			beq Done
-
-			inc ZP.RightPathAddressX + 1
-			inc ZP.LeftPathAddressY + 1
-
-			jmp Loop
-
-
-		Done:
-
-
-
-		rts
-	}
+	
 
 	GetWaveData: {
 

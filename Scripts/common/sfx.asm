@@ -155,7 +155,7 @@ sfx_hit2: .import binary "../../Assets/goattracker/hit2.sfx"
 sfx_hit3: .import binary "../../Assets/goattracker/hit3.sfx"
 sfx_hit4: .import binary "../../Assets/goattracker/hit4.sfx"
 sfx_dive: .import binary "../../Assets/goattracker/dive.sfx"
-sfx_fire: .import binary "../../Assets/goattracker/fire4.sfx"
+sfx_fire: .import binary "../../Assets/goattracker/fire.sfx"
 
 sfx_ch1: .import binary "../../Assets/goattracker/c1.sfx"
 sfx_ch2: .import binary "../../Assets/goattracker/c2.sfx"

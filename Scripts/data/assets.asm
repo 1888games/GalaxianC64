@@ -1,12 +1,11 @@
 
 * = $c400 "Sprites" //Start at frame #16
- 	.import binary "../../assets/spritepad/galaxian - sprites.bin"
+ 	.import binary "../../assets/spritepad/galaxian2 - sprites.bin"
 
 
 
 
-* = $a800 "Sprites Source" //Start at frame #16
- 	SPRITE_SOURCE: .import binary "../../assets/spritepad/galaga_ch - sprites.bin"
+
 
 
 * = $7800 "Game Colours" 

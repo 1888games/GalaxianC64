@@ -332,8 +332,21 @@ CIRC_CMD_QUEUE_END              EQU $40FF
 // 4140:  00 00 00 01 01 01 01 01 01 01 01 01 01 00 00 00  
 // 4150:  00 00 00 00 01 01 01 01 01 01 01 01 00 00 00 00  
 // 4160:  00 00 00 00 00 01 01 01 01 01 01 00 00 00 00 00  
-// 4170:  00 00 00 00 00 00 01 00 00 01 00 00 00 00 00 00     
-//
+// 4170:  00 00 00 00 00 00 01 00 00 01 00 00 00 00 00 00
+
+112
+96
+
+01110000   00001110.       
+01100000   00001100.  
+01010000.  00001010.  10. flagship
+01000000.  00001000.  8.  red
+00110000.  00000110.  6.  purple
+00100000.  00000100.  4   blue
+00010000.  00000010.  2   blue
+00000000.  00000000.  0   blue
+
+//1
 // This is the representation of the swarm in memory! 01 means "an alien is here" and 00 means "nothing here".
 // The memory representation is upside down *and* flipped horizontally.  
 //

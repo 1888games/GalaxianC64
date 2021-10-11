@@ -22,13 +22,13 @@ BULLETS: {
 	PlayerShooting:	.byte 0
 	PlayerLookup:	.byte 0, 0, 1, 1
 
-	.label SPEED_MSB = 5
-	.label SPEED_LSB = 150
+	.label SPEED_MSB = 4
+	.label SPEED_LSB = 220
 	.label CooldownTime = 3
-	.label SpriteYOffset = 12
+	.label SpriteYOffset = 8
 
 	.label BulletSpriteID = 17
-	.label BulletSpritePointer = 148
+	.label BulletSpritePointer = 58
 
 	ActiveBullets:		.byte 0, 0
 

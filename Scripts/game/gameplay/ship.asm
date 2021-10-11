@@ -3,7 +3,7 @@ SHIP: {
 	* = * "SHIP"
 
 	.label SPRITE_POINTER = 16
-	.label SHIP_Y = 245
+	.label SHIP_Y = 252
 
 	.label MIN_SHIP_X = 24
 	.label MAX_SHIP_X = 232
@@ -15,7 +15,7 @@ SHIP: {
 
 	//.label SHIP_START_X = 32
 
-	.label SPEED_LSB = 200
+	.label SPEED_LSB = 55
 	.label SPEED_MSB = 1
 
 	Active:			.byte 0, 0

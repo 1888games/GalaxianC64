@@ -1,0 +1,18 @@
+parsing
+Got 15 errors and 0 warnings while executing:
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 21:7) Error: Unknown symbol 'ENEMY'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 23:7) Error: Unknown symbol 'SFX_DIVE'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 23:3) Error: Macro command 'sfx' not defined
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 27:8) Error: Unknown symbol 'ENEMY'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 30:8) Error: Unknown symbol 'FORMATION'
+  ...
+
+ PacksBags: {
+
+  lda #0
+  sta ENEMY.SortieCount, x
+      ^
+
+Error: Unknown symbol 'ENEMY'
+
+

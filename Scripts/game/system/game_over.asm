@@ -161,8 +161,6 @@ END_GAME: {
 			lda #1
 			jsr HI_SCORE.Show
 		
-
-
 			rts
 
 		TitleScreen:

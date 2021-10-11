@@ -26,34 +26,34 @@ Default-segment:
   $0efe-$123f Bullets
   $1240-$1374 Formation
   $1375-$1476 Enemies Left
-  $1477-$1dd7 Offset
-  $1dd8-$20c8 Maploader
-  $20c9-$20c8 WaveMovement
-  $20c9-$20c8 XPaths
-  $20c9-$20c8 YPaths
-  $20c9-$20e0 WaveStartPos
-  $20e1-$214e StagesIndex
-  $214f-$21c2 StagesIndexLookup
-  $21c3-$29ff Challenge Paths 4-8
+  $1477-$1dcf Offset
+  $1dd0-$20c0 Maploader
+  $20c1-$20c0 WaveMovement
+  $20c1-$20c0 XPaths
+  $20c1-$20c0 YPaths
+  $20c1-$20d8 WaveStartPos
+  $20d9-$2146 StagesIndex
+  $2147-$21ba StagesIndexLookup
+  $21bb-$29ff Challenge Paths 4-8
   $2a00-$2a88 VicSpriteTable
   $2a89-$2d7a IRQ
   $2d7b-$2df1 Enemy
   $2df2-$2e41 Enemy Variables
   $2e42-$2e69 Plan
-  $2e6a-$2e82 Extra
-  $2e83-$2e87 Enemies In Wave
-  $2e88-$2eaa Enemy Ship ID
-  $2eab-$3078 Enemies
-  $3079-$3296 Spawn
-  $3297-$39ec Pathfinding
-  $39ed-$3d76 Stage
-  $3d77-$3dfa Check Complete
-  $3dfb-$3e70 Check Spawn
-  $3e71-$4063 ---String Data
-  $4064-$4199 ---Text
-  $419a-$4c59 Enemy Data
-  $4c5a-$4cf0 Title
-  $4cf1-$4e7e Check Left Finish
+  $2e6a-$2e92 Extra
+  $2e93-$2e97 Enemies In Wave
+  $2e98-$2eba Enemy Ship ID
+  $2ebb-$3088 Enemies
+  $3089-$32a6 Spawn
+  $32a7-$39fc Pathfinding
+  $39fd-$3d2f Stage
+  $3d30-$3db3 Check Complete
+  $3db4-$3e29 Check Spawn
+  $3e2a-$401c ---String Data
+  $401d-$4152 ---Text
+  $4153-$4c12 Enemy Data
+  $4c13-$4ca9 Title
+  $4caa-$4e37 Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6e93 Main
@@ -72,14 +72,13 @@ Default-segment:
   $921b-$921c GAME OVER
   $921d-$9241 
   $9242-$9419 DisplayGameOver
-  $941a-$9850 -Sound
-  $9851-$989b Attacks
-  $989c-$9c71 Attackers
-  $9c72-$9f42 Chargers
-  $9f43-$9f6e Flight
+  $941a-$9852 -Sound
+  $9853-$989d Attacks
+  $989e-$9c73 Attackers
+  $9c74-$9f48 Chargers
+  $9f49-$9fb5 Flight
   $a500-$a6ff Game ZP Backup
-  $a800-$bfff Sprites Source
-  $c400-$e57f Sprites
+  $c400-$cfbf Sprites
   $f000-$f7ff Charset
   $f800-$f7ff Unnamed
   $f800-$f829 High Scores
