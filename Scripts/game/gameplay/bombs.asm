@@ -7,22 +7,22 @@ BOMBS: {
 	// Flagship = 1
 	// Escorts = 2 & 3
 	// Individuals 4 - 7
-	// Flagships 8-10
 
-	// Bombs - Sprites 11-16
+
+	// Bombs - Sprites 8-16
 
 	// Our bullet = 17
 	// Ship - Sprites 18-19
 
 	.label BombStartID = 8
-	.label Pointer =69
-	.label BombEndID = BombStartID + 6
+	.label Pointer =49
+	.label BombEndID = BombStartID + 9
 	.label ReloadTime = 15
 
 	Active: 		.fill MAX_ENEMIES + MAX_BOMBS, 0
 
 	PixelSpeedX:	.fill MAX_ENEMIES + MAX_BOMBS, 0
-	PixelSpeedY:	.fill MAX_ENEMIES + MAX_BOMBS, 0
+	PixelSpeedY:	.fill MAX_ENEMIES + MAX_BOMBS, 1
 	FractionSpeedX:	.fill MAX_ENEMIES + MAX_BOMBS, 0
 	FractionSpeedY:	.fill MAX_ENEMIES + MAX_BOMBS, 0
 
@@ -100,8 +100,7 @@ BOMBS: {
 		
 			jsr SetupSprite
 			jsr CalculateDistanceToPlayer
-			jsr CalculateRequiredSpeed
-
+	
 			inc ActiveBombs
 
 			ldx ZP.EnemyID
@@ -116,12 +115,16 @@ BOMBS: {
 	SetupSprite: {
 
 		lda SpriteY, x
+		sec
+		sbc #8
 		sta SpriteY, y
 
 		lda #1
 		sta Active, y
 
 		lda SpriteX, x
+		clc
+		adc #4
 		sta SpriteX, y
 
 		lda #0
@@ -134,117 +137,120 @@ BOMBS: {
 		lda #Pointer
 		sta SpritePointer, y
 
+		sty ZP.CurrentID
+
 
 		rts	
 	}
 
 	CalculateDistanceToPlayer: {
 
-		.label TargetX = ZP.Amount
+		lda #-16
+		sec 
+		sbc SpriteY, x
+		sta ZP.D
 
-		lda SHIP.PreviousX
-		sta TargetX
+		lda SHIP.PosX_MSB
+		sec
+		sbc SpriteX, x
+		bcs DontNegate
 
-		lda SHIP.TwoPlayer
-		beq PutBombIDIntoX
 
-		jsr RANDOM.Get
-		and #%00000001
-		beq PutBombIDIntoX
+	Negate:
 
-		lda SHIP.PosX_MSB + 1
-		sta TargetX
+		eor #%11111111
+		clc
+		adc #1
 
-		PutBombIDIntoX:
-			tya
-			tax
+		jsr ComputeBulletDelta
 
-		CalculateDistance:
+		ldy ZP.CurrentID
+		sta FractionSpeedX, y
 
-			lda #MaxY
-			sec
-			sbc SpriteY, x
-			sta MoveY
-			eor #%11111111
-			sta MoveYReverse
+		
+		lda #1
+		sta PixelSpeedX, y
 
-		CalculateXTarget:
+		rts
 
-			jsr RANDOM.Get
-			and #%00011111
-			sec
-			sbc #16
-			clc
-			adc TargetX
+	DontNegate:
 
-		CheckDirection:
+		jsr ComputeBulletDelta
 
-			sec
-			sbc SpriteX, x
-			bcs AimRight
+		ldy ZP.CurrentID
+		sta FractionSpeedX, y
 
-		AimLeft:
-
-			cmp #195
-			bcs NoWrap
-
-			lda #195
 	
-			jmp NoWrap
-
-		AimRight:
-
-			cmp #60
-			bcc NoWrap
-
-			lda #60
-			
-		NoWrap:
-
-			sta MoveX
-			eor #%11111111
-			sta MoveXReverse
-
-			
-		CheckAngleOfShot:
-
-			lda MoveX
-			bpl GoingRight
-
-		GoingLeft:
-
-			lda MoveXReverse
-			cmp MoveY
-			bcc NoAdjustX
-
-			lda MoveYReverse
-			sta MoveX
-			jmp NoAdjustX
-
-		GoingRight:
-
-			lda MoveX
-			cmp MoveY
-			bcc NoAdjustX
-
-			lda MoveY
-			sta MoveX
-
-		NoAdjustX:
-
-			lda SpriteX, x
-			clc
-			adc MoveX
-			sta TargetSpriteX, x
-
-
-			lda #MaxY
-			sta TargetSpriteY, x
+		lda #0
+		sta PixelSpeedX, y
 
 		rts
 	}
 
 
+	ComputeBulletDelta: {
+
+		jsr CalculateTangent
+		jsr RANDOM.Get
+		and #%00011111
+		clc
+		adc ZP.C
+		clc
+		adc #6
+		bpl Finish
+
+		lda #127
+
+		Finish:
+
+
+
+		rts
+	}
+
+	// 0048: 0E 00         ld   c,$00
+	// 004A: 06 08         ld   b,$08
+	// 004C: BA            cp   d
+	// 004D: 38 01         jr   c,$0050
+	// 004F: 92            sub  d
+	// 0050: 3F            ccf
+	// 0051: CB 11         rl   c
+	// 0053: CB 1A         rr   d
+	// 0055: 10 F5         djnz $004C
+	// 0057: C9            ret
+		
+
+	CalculateTangent: {
+
+		ldy #0
+		sty ZP.C
+
+		ldy #8
+
+		Loop:
+
+			cmp ZP.D
+			bcs Skip
+
+			sec
+			sbc ZP.D
+
+		Skip:
+
+			rol
+			eor #%00000001
+			ror
+
+			rol ZP.C
+			ror ZP.D
+
+			dey
+			bne Loop
+
+		rts
+			
+
+	}
 
 	 CalculateRequiredSpeed: {
 
@@ -330,16 +336,9 @@ BOMBS: {
 	 	cmp #20
 	 	bcc Reached
 	
-	 	CheckMoveX:
+			lda PixelSpeedX, x
+			bne MoveLeft
 
-			lda TargetSpriteX, x
-			sec
-			sbc SpriteX, x
-			beq MoveYNow
-
-		MoveXNow:
-
-			bmi MoveLeft
 
 		MoveRight:
 
@@ -350,16 +349,8 @@ BOMBS: {
 
 			lda SpriteX, x
 			adc #0
-			clc
-			adc PixelSpeedX, x
 			sta SpriteX, x
 
-			cmp TargetSpriteX, x
-			bcc MoveYNow
-			beq MoveYNow
-
-			lda TargetSpriteX, x
-			sta SpriteX, x
 			jmp MoveYNow
 
 		MoveLeft:
@@ -371,28 +362,16 @@ BOMBS: {
 
 			lda SpriteX, x
 			sbc #0
-			sec
-			sbc PixelSpeedX, x
 			sta SpriteX, x
-
-			cmp TargetSpriteX, x
-			bcs MoveYNow
-			
-			lda TargetSpriteX, x
-			sta SpriteX, x
-			
 
 		MoveYNow:
 
 			lda SpriteY, x
-			cmp #MaxY
-			bcc MoveDown
-
-			cmp #20
-			bcs MoveDown
-
-			lda #MaxY
+			clc
+			adc #2
 			sta SpriteY, x
+				
+			rts
 
 		Reached:
 
@@ -404,49 +383,6 @@ BOMBS: {
 			sta SpriteY, x
 
 			dec ActiveBombs
-
-
-			jmp Done
-
-	
-		MoveDown:
-
-			lda SpriteY, x
-			sta ZP.Amount
-
-			lda SpriteY_LSB, x
-			clc
-			adc FractionSpeedY, x
-			sta SpriteY_LSB, x
-
-			lda SpriteY, x
-			adc #0
-			clc
-			adc PixelSpeedY, x
-			sta SpriteY,x 
-
-			CheckWrapped:
-
-				bmi NoErrorCheck
-
-				lda ZP.Amount
-				bpl NoErrorCheck
-
-				jmp Reached
-
-			NoErrorCheck:
-
-				cmp #MaxY
-				bcc Done
-
-			Reached2:
-				
-				lda TargetSpriteY,x 
-				sta SpriteY,x 
-
-				jmp Reached
-
-
 
 		Done:
 
@@ -555,6 +491,7 @@ BOMBS: {
 
 	FrameUpdate: {
 
+		Again:
 
 		ldx #BombStartID
 
@@ -582,151 +519,22 @@ BOMBS: {
 
 		Finish:
 
+			lda ENEMY.Repeated
+			cmp #1
+			bne DontRepeat
+
+			inc ENEMY.Repeated
+			jmp Again
+
+		DontRepeat:
 
 	 	rts
 	 }
 
 
 	
-	CheckEnemyFire: {
 
-		lda BombsLeft, x
-		beq Finish
+	
 
-		lda ShotTimer, x
-		beq ReadyToFire
-
-		dec ShotTimer, x
-		rts
-
-		ReadyToFire:
-
-			lda SpriteY, x
-			cmp #120
-			bcs Finish
-
-			dec BombsLeft, x
-			lda #ReloadTime
-			sta ShotTimer, x
-
-			jsr Fire
-
-
-		Finish:
-
-
-		rts
-	}	
-
-
-	LoadOnLaunch: {
-
-		lda #0
-		sta BombsLeft, x
-
-		
-
-		lda STAGE.CurrentStage
-		cmp #3
-		bcc ZeroOrOne
-
-		cmp #7
-		bcc One
-
-		cmp #15
-		bcs Two
-
-		OneOrTwo:
-
-			jsr RANDOM.Get
-			and #%00000001
-			clc
-			adc #1
-			jmp StoreBombs
-
-		One:
-
-			lda #1
-			jmp StoreBombs
-
-		Two:
-
-			lda #2
-			jmp StoreBombs
-
-		ZeroOrOne:
-
-			jsr RANDOM.Get
-			and #%00000001
-			jmp StoreBombs
-
-
-		StoreBombs:
-
-			sta BombsLeft, x
-
-			jsr RANDOM.Get
-			and #%00001111
-			clc
-			adc #12
-			sta ShotTimer, x
-
-
-		NoBombs:
-
-
-		Finish:
-
-		rts
-	}
-
-
-	Add: {
-
-		lda STAGE.Every
-		sta STAGE.EveryCounter
-
-		lda STAGE.Bullets
-		sta BombsLeft, x
-
-		lda ENEMY.Side, x
-		tay
-		lda STAGE.CurrentWaveIDs, y
-
-		CalculateDelay:
-
-			cmp #PATH_BOTTOM_SINGLE
-			bcc SmallDelay
-
-			cmp #PATH_BOTTOM_DOUBLE_IN + 1
-			bcs SmallDelay
-
-		LargeDelay:
-
-			lda #20
-			sta ShotTimer, x 
-
-			jmp AddRandom
-
-		SmallDelay:
-
-			jsr RANDOM.Get
-			and #%00001111
-			clc 
-			adc #12
-			sta ShotTimer, x
-
-		AddRandom:
-
-			jsr RANDOM.Get
-			and #%00001111
-			clc
-			adc ShotTimer, x
-			sta ShotTimer, x
-
-		rts
-
-
-	}
 
 }

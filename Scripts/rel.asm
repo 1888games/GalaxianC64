@@ -815,13 +815,13 @@ COLOUR_ATTRIBUTE_TABLE_3:
                 0E4B: D0            ret  nc                  // return if player has not spawned
                 0E4C: CD B0 11      call $11B0               // call CALCULATE_INFLIGHT_ALIEN_LOOKAT_ANIM_FRAME
 
-// alien won't shoot at you if a flagship has been hit
-0E4F: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT
-0E52: 0F            rrca                     // move flag into carry
-0E53: D8            ret  c                   // return if flagship was hit
+  // alien won't shoot at you if a flagship has been hit
+  0E4F: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT
+  0E52: 0F            rrca                     // move flag into carry
+  0E53: D8            ret  c                   // return if flagship was hit
 
-// Can this alien start shooting at you?
-//
+  // Can this alien start shooting at you?
+  //
 // code from $0E54-0E63 is akin to:
 //
 // byte yToCheck = INFLIGHT_ALIEN.X//
@@ -834,22 +834,22 @@ COLOUR_ATTRIBUTE_TABLE_3:
 // }
 //
 
-0E54: 2A 13 42      ld   hl,($4213)          // get INFLIGHT_ALIEN_SHOOT_EXACT_X into H and INFLIGHT_ALIEN_SHOOT_RANGE_MUL into L
-0E57: DD 7E 03      ld   a,(ix+$03)          // read INFLIGHT_ALIEN.X
+            0E54: 2A 13 42      ld   hl,($4213)          // get INFLIGHT_ALIEN_SHOOT_EXACT_X into H and INFLIGHT_ALIEN_SHOOT_RANGE_MUL into L
+            0E57: DD 7E 03      ld   a,(ix+$03)          // read INFLIGHT_ALIEN.X
 
-0E5A: BC            cp   h                   // compare A to INFLIGHT_ALIEN_SHOOT_EXACT_X 
-0E5B: CA E0 11      jp   z,$11E0             // if equal, jump to TRY_SPAWN_ENEMY_BULLET
-0E5E: C6 19         add  a,$19               // add $19 (25 decimal) to A
-0E60: 2D            dec  l                   // and try again...
-0E61: 20 F7         jr   nz,$0E5A            // until L is 0.
-0E63: C9            ret
+            0E5A: BC            cp   h                   // compare A to INFLIGHT_ALIEN_SHOOT_EXACT_X 
+            0E5B: CA E0 11      jp   z,$11E0             // if equal, jump to TRY_SPAWN_ENEMY_BULLET
+            0E5E: C6 19         add  a,$19               // add $19 (25 decimal) to A
+            0E60: 2D            dec  l                   // and try again...
+            0E61: 20 F7         jr   nz,$0E5A            // until L is 0.
+            0E63: C9            ret
 
 
-// If only one of these INCs are called (see $0E45), INFLIGHT_ALIEN.StageOfLife will be set to INFLIGHT_ALIEN_NEAR_BOTTOM_OF_SCREEN.
-// If both these INCs are called (see $0E3E), set INFLIGHT_ALIEN.StageOfLife to INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN. 
-0E64: DD 34 02      inc  (ix+$02)      
-0E67: DD 34 02      inc  (ix+$02)
-0E6A: C9            ret
+            // If only one of these INCs are called (see $0E45), INFLIGHT_ALIEN.StageOfLife will be set to INFLIGHT_ALIEN_NEAR_BOTTOM_OF_SCREEN.
+            // If both these INCs are called (see $0E3E), set INFLIGHT_ALIEN.StageOfLife to INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN. 
+            0E64: DD 34 02      inc  (ix+$02)      
+            0E67: DD 34 02      inc  (ix+$02)
+            0E6A: C9            ret
 
 
               //
@@ -997,51 +997,51 @@ INFLIGHT_ALIEN_COUNT_FLAGSHIP_ESCORTS:
 
 
 
-//
-// An alien has either flown off the side or the bottom of the screen, and is returning to the swarm.
-// 
-// Expects:
-// IX = pointer to INFLIGHT_ALIEN structure           
-//
+              //
+              // An alien has either flown off the side or the bottom of the screen, and is returning to the swarm.
+              // 
+              // Expects:
+              // IX = pointer to INFLIGHT_ALIEN structure           
+              //
 
-INFLIGHT_ALIEN_RETURNING_TO_SWARM:
-0F07: DD 46 03      ld   b,(ix+$03)          // keep copy of INFLIGHT_ALIEN.X in B as SET_INFLIGHT_ALIEN_START_POSITION changes it 
-0F0A: 04            inc  b                   
-0F0B: CD 47 11      call $1147               // call SET_INFLIGHT_ALIEN_START_POSITION to determine where alien needs to go  
+              INFLIGHT_ALIEN_RETURNING_TO_SWARM:
+              0F07: DD 46 03      ld   b,(ix+$03)          // keep copy of INFLIGHT_ALIEN.X in B as SET_INFLIGHT_ALIEN_START_POSITION changes it 
+              0F0A: 04            inc  b                   
+              0F0B: CD 47 11      call $1147               // call SET_INFLIGHT_ALIEN_START_POSITION to determine where alien needs to go  
 
-// INFLIGHT_ALIEN.Y  and INFLIGHT_ALIEN.X have been changed by SET_INFLIGHT_ALIEN_START_POSITION
-0F0E: DD 7E 03      ld   a,(ix+$03)          // A = destination INFLIGHT_ALIEN.X
-0F11: DD 70 03      ld   (ix+$03),b          // restore INFLIGHT_ALIEN.X back to what it was before
-0F14: 90            sub  b                   // OK, how far away is this alien from where it wants to be?
-0F15: 28 14         jr   z,$0F2B             // distance is zero, it's got where it wants to be, goto INFLIGHT_ALIEN_BACK_IN_SWARM
-0F17: FE 19         cp   $19                 // 25 pixels away?
-0F19: D0            ret  nc                  // if distance is more than $19 (25 decimal), not near enough to destination, so exit
-0F1A: E6 01         and  $01                 // is distance an odd number?
-0F1C: C0            ret  nz                  // yes, so exit
+              // INFLIGHT_ALIEN.Y  and INFLIGHT_ALIEN.X have been changed by SET_INFLIGHT_ALIEN_START_POSITION
+              0F0E: DD 7E 03      ld   a,(ix+$03)          // A = destination INFLIGHT_ALIEN.X
+              0F11: DD 70 03      ld   (ix+$03),b          // restore INFLIGHT_ALIEN.X back to what it was before
+              0F14: 90            sub  b                   // OK, how far away is this alien from where it wants to be?
+              0F15: 28 14         jr   z,$0F2B             // distance is zero, it's got where it wants to be, goto INFLIGHT_ALIEN_BACK_IN_SWARM
+              0F17: FE 19         cp   $19                 // 25 pixels away?
+              0F19: D0            ret  nc                  // if distance is more than $19 (25 decimal), not near enough to destination, so exit
+              0F1A: E6 01         and  $01                 // is distance an odd number?
+              0F1C: C0            ret  nz                  // yes, so exit
 
-// Alien is less than 25 pixels away from its destination back in the swarm.
-// We now need to determine what way to rotate the sprite so that it returns to the swarm upside-down, bat-style. 
-0F1D: DD CB 06 46   bit  0,(ix+$06)          // read INFLIGHT_ALIEN.ArcClockwise
-0F21: 20 04         jr   nz,$0F27             
+              // Alien is less than 25 pixels away from its destination back in the swarm.
+              // We now need to determine what way to rotate the sprite so that it returns to the swarm upside-down, bat-style. 
+              0F1D: DD CB 06 46   bit  0,(ix+$06)          // read INFLIGHT_ALIEN.ArcClockwise
+              0F21: 20 04         jr   nz,$0F27             
 
-0F23: DD 34 05      inc  (ix+$05)            // update INFLIGHT_ALIEN.AnimationFrame to rotate the alien right
-0F26: C9            ret
+              0F23: DD 34 05      inc  (ix+$05)            // update INFLIGHT_ALIEN.AnimationFrame to rotate the alien right
+              0F26: C9            ret
 
-0F27: DD 35 05      dec  (ix+$05)            // update INFLIGHT_ALIEN.AnimationFrame to rotate the alien left
-0F2A: C9            ret
+              0F27: DD 35 05      dec  (ix+$05)            // update INFLIGHT_ALIEN.AnimationFrame to rotate the alien left
+              0F2A: C9            ret
 
-// alien has returned to swarm. Remove sprite and substitute sprite with characters.
-INFLIGHT_ALIEN_BACK_IN_SWARM:
-0F2B: DD 36 00 00   ld   (ix+$00),$00        // set INFLIGHT_ALIEN.IsActive to 0 - will hide sprite (see $0C98)
-0F2F: 26 41         ld   h,$41               // MSB of ALIEN_SWARM_FLAGS address 
-0F31: DD 6E 07      ld   l,(ix+$07)          // Now HL = pointer to address in ALIEN_SWARM_FLAGS where alien belongs
-0F34: 16 00         ld   d,$00               // command: DRAW_ALIEN_COMMAND
-0F36: 36 01         ld   (hl),$01            // mark flag in ALIEN_SWARM_FLAGS as "occupied". Our alien's back in the swarm!
-0F38: 5D            ld   e,l                 // E = index of alien in swarm
-0F39: C3 F2 08      jp   $08F2               // jump to QUEUE COMMAND. Alien will be drawn in its place in the swarm.
+              // alien has returned to swarm. Remove sprite and substitute sprite with characters.
+              INFLIGHT_ALIEN_BACK_IN_SWARM:
+              0F2B: DD 36 00 00   ld   (ix+$00),$00        // set INFLIGHT_ALIEN.IsActive to 0 - will hide sprite (see $0C98)
+              0F2F: 26 41         ld   h,$41               // MSB of ALIEN_SWARM_FLAGS address 
+              0F31: DD 6E 07      ld   l,(ix+$07)          // Now HL = pointer to address in ALIEN_SWARM_FLAGS where alien belongs
+              0F34: 16 00         ld   d,$00               // command: DRAW_ALIEN_COMMAND
+              0F36: 36 01         ld   (hl),$01            // mark flag in ALIEN_SWARM_FLAGS as "occupied". Our alien's back in the swarm!
+              0F38: 5D            ld   e,l                 // E = index of alien in swarm
+              0F39: C3 F2 08      jp   $08F2               // jump to QUEUE COMMAND. Alien will be drawn in its place in the swarm.
 
 
-//
+              //
 // Called when aliens are aggressive and refuse to return to the swarm.
 //
 // This routine makes the alien fly from the top of the screen for [TempCounter1] pixels vertically.
@@ -1469,47 +1469,49 @@ INFLIGHT_ALIEN_CONVOY_CHARGER_DO_SCROLL:
                   11DF: C9            ret
 
 
-//
-// Try to spawn an enemy bullet. 
-//
-// Expects:
-// IX = pointer to INFLIGHT_ALIEN struct
-//
-// Cheat:
-// If you want to stop the aliens from firing, type the following into the MAME debugger:
-// maincpu.mb@11E0 = C9 
+                  //
+                  // Try to spawn an enemy bullet. 
+                  //
+                  // Expects:
+                  // IX = pointer to INFLIGHT_ALIEN struct
+                  //
+                  // Cheat:
+                  // If you want to stop the aliens from firing, type the following into the MAME debugger:
+                  // maincpu.mb@11E0 = C9 
 
-TRY_SPAWN_ENEMY_BULLET:
-11E0: 11 05 00      ld   de,$0005            // sizeof(ENEMY_BULLET)
-11E3: 21 60 42      ld   hl,$4260            // load HL with address of ENEMY_BULLETS_START
-11E6: 06 0E         ld   b,$0E               // there are 14 elements in the ENEMY_BULLETS_START array
-11E8: CB 46         bit  0,(hl)              // test if bullet is active
-11EA: 28 04         jr   z,$11F0             // if its not active, then we can use this slot to spawn an enemy bullet, goto $11F0
-11EC: 19            add  hl,de               // otherwise bump HL to point to next enemy bullet in the array
-11ED: 10 F9         djnz $11E8               // repeat until B==0
-11EF: C9            ret
+                  TRY_SPAWN_ENEMY_BULLET:
+                  11E0: 11 05 00      ld   de,$0005            // sizeof(ENEMY_BULLET)
+                  11E3: 21 60 42      ld   hl,$4260            // load HL with address of ENEMY_BULLETS_START
+                  11E6: 06 0E         ld   b,$0E               // there are 14 elements in the ENEMY_BULLETS_START array
+                  11E8: CB 46         bit  0,(hl)              // test if bullet is active
+                  11EA: 28 04         jr   z,$11F0             // if its not active, then we can use this slot to spawn an enemy bullet, goto $11F0
+                  11EC: 19            add  hl,de               // otherwise bump HL to point to next enemy bullet in the array
+                  11ED: 10 F9         djnz $11E8               // repeat until B==0
+                  11EF: C9            ret
 
 
-//
-// Spawn an enemy bullet.
-//
-// Expects:
-// IX = pointer to INFLIGHT_ALIEN structure. Identifies the alien firing the bullet.
-// HL = pointer to ENEMY_BULLET structure. Contains info about the spawned bullet. 
-//
+                //
+                // Spawn an enemy bullet.
+                //
+                // Expects:
+                // IX = pointer to INFLIGHT_ALIEN structure. Identifies the alien firing the bullet.
+                // HL = pointer to ENEMY_BULLET structure. Contains info about the spawned bullet. 
+                //
 
-SPAWN_ENEMY_BULLET:
-11F0: 36 01         ld   (hl),$01            // set ENEMY_BULLET.IsActive to 1 (true)
-11F2: 23            inc  hl                  // bump HL to point to ENEMY_BULLET.X
-11F3: DD 7E 03      ld   a,(ix+$03)          // read INFLIGHT_ALIEN.X coordinate
-11F6: 77            ld   (hl),a              // set X coordinate of bullet to be same as alien
-11F7: 3E F0         ld   a,$F0               // load A with -16 (decimal)
-11F9: 96            sub  (hl)                // A = X coordinate of bullet + 16 
-11FA: 57            ld   d,a
-11FB: 23            inc  hl
-11FC: 23            inc  hl                  // bump HL to point to ENEMY_BULLET.YH
-11FD: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y  coordinate
-1200: 77            ld   (hl),a              // set Y coordinate of bullet to be same as alien
+                SPAWN_ENEMY_BULLET:
+                11F0: 36 01         ld   (hl),$01            // set ENEMY_BULLET.IsActive to 1 (true)
+                11F2: 23            inc  hl                  // bump HL to point to ENEMY_BULLET.X
+                11F3: DD 7E 03      ld   a,(ix+$03)          // read INFLIGHT_ALIEN.X coordinate
+                11F6: 77            ld   (hl),a              // set X coordinate of bullet to be same as alien
+                11F7: 3E F0         ld   a,$F0               // load A with -16 (decimal)
+                11F9: 96            sub  (hl)                // A = X coordinate of bullet + 16 
+                11FA: 57            ld   d,a
+                11FB: 23            inc  hl
+                11FC: 23            inc  hl                  // bump HL to point to ENEMY_BULLET.YH
+                11FD: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y  coordinate
+                1200: 77            ld   (hl),a              // set Y coordinate of bullet to be same as alien
+
+
 1201: 23            inc  hl                  // bump HL to point to ENEMY_BULLET.YDelta
 1202: 3A 02 42      ld   a,($4202)           // read PLAYER_Y   
 1205: DD 96 04      sub  (ix+$04)            // subtract from INFLIGHT_ALIEN.Y  coordinate       
@@ -2072,42 +2074,42 @@ INIT_FLAGSHIP_ATTACK_FROM_RIGHT_FLANK:
 
 
 
-//
-// Increase game difficulty as the level goes on.
-//
+          //
+          // Increase game difficulty as the level goes on.
+          //
 
-HANDLE_LEVEL_DIFFICULTY:
-14F3: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
-14F6: 0F            rrca                     // move flag into carry
-14F7: D0            ret  nc                  // return if player has not spawned
-14F8: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT
-14FB: 0F            rrca                     // move flag into carry
-14FC: D8            ret  c                   // return if flagship has been hit
+          HANDLE_LEVEL_DIFFICULTY:
+          14F3: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
+          14F6: 0F            rrca                     // move flag into carry
+          14F7: D0            ret  nc                  // return if player has not spawned
+          14F8: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT
+          14FB: 0F            rrca                     // move flag into carry
+          14FC: D8            ret  c                   // return if flagship has been hit
 
-// wait until DIFFICULTY_COUNTER_1 counts down to zero.
-14FD: 21 18 42      ld   hl,$4218            // load HL with address of DIFFICULTY_COUNTER_1
-1500: 35            dec  (hl)                // decrement counter
-1501: C0            ret  nz
-1502: 36 3C         ld   (hl),$3C            // reset counter
+          // wait until DIFFICULTY_COUNTER_1 counts down to zero.
+          14FD: 21 18 42      ld   hl,$4218            // load HL with address of DIFFICULTY_COUNTER_1
+          1500: 35            dec  (hl)                // decrement counter
+          1501: C0            ret  nz
+          1502: 36 3C         ld   (hl),$3C            // reset counter
 
-// DIFFICULTY_COUNTER_1 has reached zero and reset. Decrement DIFFICULTY_COUNTER_2.
-1504: 23            inc  hl                  // bump HL to DIFFICULTY_COUNTER_2
-1505: 35            dec  (hl)                // decrement counter
-1506: C0            ret  nz
-1507: 36 14         ld   (hl),$14            // reset counter 
+          // DIFFICULTY_COUNTER_1 has reached zero and reset. Decrement DIFFICULTY_COUNTER_2.
+          1504: 23            inc  hl                  // bump HL to DIFFICULTY_COUNTER_2
+          1505: 35            dec  (hl)                // decrement counter
+          1506: C0            ret  nz
+          1507: 36 14         ld   (hl),$14            // reset counter 
 
-// DIFFICULTY_COUNTER_2 has reached zero. Now up the difficulty level, if we can.
-1509: 23            inc  hl                  // bump HL to $421A (DIFFICULTY_EXTRA_VALUE)
-150A: 7E            ld   a,(hl)              // read DIFFICULTY_EXTRA_VALUE
-150B: FE 07         cp   $07                 // has it reached its maximum value of 7?
-150D: C8            ret  z                   // return if so
-150E: 30 02         jr   nc,$1512            // if A >= 7 , goto $1512
+          // DIFFICULTY_COUNTER_2 has reached zero. Now up the difficulty level, if we can.
+          1509: 23            inc  hl                  // bump HL to $421A (DIFFICULTY_EXTRA_VALUE)
+          150A: 7E            ld   a,(hl)              // read DIFFICULTY_EXTRA_VALUE
+          150B: FE 07         cp   $07                 // has it reached its maximum value of 7?
+          150D: C8            ret  z                   // return if so
+          150E: 30 02         jr   nc,$1512            // if A >= 7 , goto $1512
 
-1510: 34            inc  (hl)                // increment DIFFICULTY_EXTRA_VALUE  
-1511: C9            ret
+          1510: 34            inc  (hl)                // increment DIFFICULTY_EXTRA_VALUE  
+          1511: C9            ret
 
-1512: 36 07         ld   (hl),$07            // clamp DIFFICULTY_EXTRA_VALUE to 7
-1514: C9            ret
+          1512: 36 07         ld   (hl),$07            // clamp DIFFICULTY_EXTRA_VALUE to 7
+          1514: C9            ret
 
 
     //

@@ -404,7 +404,7 @@
 
 		UpdateCount:
 
-			dec EnemiesAlive
+			//dec EnemiesAlive
 			lda EnemiesAlive
 			bne StillEnemiesToDock
 
@@ -523,7 +523,7 @@
 
 			jsr FORMATION.EnemyKilled
 
-			dec EnemiesAlive
+			//dec EnemiesAlive
 			lda EnemiesAlive
 			bne StillEnemiesToDock2
 
@@ -1185,7 +1185,7 @@
 			cmp #FORMATION_SPREAD
 			beq StillEnemiesToDock3
 
-			dec EnemiesAlive
+			//dec EnemiesAlive
 			lda EnemiesAlive
 			bne StillEnemiesToDock3
 
@@ -1511,7 +1511,7 @@
 			cmp #40
 			bcs NoShot
 
-			jsr BOMBS.LoadOnLaunch
+			//jsr BOMBS.LoadOnLaunch
 
 		NoShot:
 

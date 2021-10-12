@@ -542,7 +542,7 @@ MAIN: {
 			jsr STAGE.FrameUpdate
 			jsr ENEMY.FrameUpdate
 			jsr CHARGER.FrameUpdate
-			//jsr BOMBS.FrameUpdate
+			jsr BOMBS.FrameUpdate
 			//jsr LIVES.FrameUpdate
 			//jsr ATTACKS.FrameUpdate
 			jsr SHIP.FrameUpdate

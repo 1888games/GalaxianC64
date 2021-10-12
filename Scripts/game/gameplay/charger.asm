@@ -21,6 +21,8 @@
 
 							.byte 04, 39, 56, 99, 94, 91, 86, 84
 							.byte 66, 61, 56, 51, 49, 44, 36, 34
+
+	* = * "Have Alien"
 	
 	HaveAliensInTopRow:		.byte 0
 	HaveAliensIn2ndRow:		.byte 0
@@ -65,6 +67,15 @@
 		lda #0
 		sta ExtraFlagships
 
+		lda #50
+		sta DifficultyCounter1
+
+		lda #7
+		sta DifficultyCounter2
+
+		lda #1
+		sta DifficultyBaseValue
+
 		rts
 	}
 
@@ -85,6 +96,7 @@
 		sta LevelComplete
 		sta FlagshipSurvivorCount
 		sta FlagshipEscortCount
+		sta DifficultyExtraValue
 
 
 		lda #48
@@ -93,6 +105,7 @@
 		jsr ResetFlagshipSecondary
 	
 		ldx #1
+
 
 		Loop:
 
@@ -105,6 +118,8 @@
 
 		rts
 	}
+
+
 
 	ResetFlagshipSecondary: {
 
@@ -134,6 +149,8 @@
 		GameStuff:
 
 			jsr HandleSingleAlienAttack
+			jsr HandleLevelDifficulty
+			jsr SetAlienAttackFlank
 
 			jsr CheckIfAlienCanAttack
 			jsr UpdateFlagshipCounters
@@ -147,6 +164,84 @@
 
 		rts
 	}
+
+	SetAlienAttackFlank: {
+
+		lda FORMATION.ScrollValue
+		bpl ScrolledRight
+
+		ScrolledLeft:	
+
+			lda #0
+			sec
+			sbc FORMATION.ScrollValue
+			sta ZP.Amount
+
+			lda FORMATION.ScrollExtentLeft
+			lsr
+			sec
+			sbc ZP.Amount
+			bcs RandomOkay
+
+			lda #1
+			sta AliensAttackRightFlank
+			rts
+
+		ScrolledRight:
+
+			lda FORMATION.ScrollExtentRight
+			lsr
+			sec
+			sbc FORMATION.ScrollValue
+			bcs RandomOkay
+
+			lda #0
+			sta AliensAttackRightFlank
+			rts
+
+
+		RandomOkay:
+
+			jsr RANDOM.Get
+			and #%00000001
+			sta AliensAttackRightFlank
+
+		rts
+	}
+
+	HandleLevelDifficulty: {
+
+		lda SHIP.Active
+		beq Finish
+
+		lda FlagshipHit
+		bne Finish
+
+		dec DifficultyCounter1
+		bne Finish
+
+		lda #50
+		sta DifficultyCounter1
+
+		dec DifficultyCounter2
+		bne Finish
+
+		lda #7
+		sta DifficultyCounter2
+
+		lda DifficultyExtraValue
+		cmp #7
+		beq Finish
+
+		inc DifficultyExtraValue
+
+		Finish:
+
+
+
+		rts
+	}
+
 
 
 	HandleLevelComplete: {
@@ -269,7 +364,7 @@
 			lda #1
 			sta InflightAlienShootRangeMult
 
-			lda #130
+			lda #132
 			sta InflightAlienShootExactY
 
 		Loop:
@@ -294,8 +389,10 @@
 			lda #2
 			sta InflightAlienShootRangeMult
 
-			lda #150
+			lda #165
 			sta InflightAlienShootExactY
+
+			jmp Loop
 
 
 		Finish:
@@ -520,7 +617,7 @@
 			cmp #2
 			bcs CalculateCounters
 
-			lda #0
+			//lda #0
 
 		CalculateCounters:
 
@@ -579,6 +676,8 @@
 			lda ENEMY.Plan, x
 			beq Found
 
+		
+			dex
 			dey
 			bne Loop
 

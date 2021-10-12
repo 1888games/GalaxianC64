@@ -1,5 +1,5 @@
 parsing
-Got 120 errors and 0 warnings while executing:
+Got 121 errors and 0 warnings while executing:
   (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/collision.asm 20:7) Error: Unknown symbol 'ExplosionTimer'
   (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/collision.asm 23:7) Error: Unknown symbol 'ExplosionTimer'
   (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/collision.asm 30:9) Error: Unknown symbol 'FORMATION'

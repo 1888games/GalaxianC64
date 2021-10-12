@@ -37,7 +37,7 @@ SHIP: {
 	ExplodeTimer:		.byte 0, 0
 	ExplodeProgress:	.byte 0, 0
 
-	ExplosionFrames:	.byte 70, 71, 72, 73
+	ExplosionFrames:	.byte 54, 55, 56, 57
 
 	Captured:			.byte 0
 	Recaptured:			.byte 0
@@ -246,7 +246,6 @@ SHIP: {
 
 	KillMainShip: {
 
-		rts
 
 		lda Captured
 		beq NotCaptured

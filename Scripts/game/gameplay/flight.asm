@@ -389,25 +389,40 @@
 		CheckLookAt:
 
 			lda SHIP.Active
-			beq CheckRepeat
+			beq Shooting
 
 			jsr CalculateLookAtFrame
 
-		CheckRepeat:
+		Shooting:	
 
-			lda IRQ.Frame
-			sec
-			sbc MAIN.MachineType
-			adc ZP.Amount
-			bpl DontRepeat
+			lda CHARGER.FlagshipHit
+			bne NoShoot
 
-			inc ZP.Amount
+		CanShoot:
 
-			//jmp Repeat
+			ldy CHARGER.InflightAlienShootRangeMult
 
-		DontRepeat:
+			lda SpriteY, x
+
+		RangeLoop:
+	
+			cmp CHARGER.InflightAlienShootExactY
+			beq TrySpawn
+
+			clc
+			adc #25
+			dey
+			bne RangeLoop
+
+			rts
 
 
+		TrySpawn:
+
+			jsr BOMBS.Fire
+
+
+		NoShoot:
 
 		rts
 	}
@@ -793,7 +808,7 @@
 
 		lda FORMATION.Drawn, y
 		beq Exit
-		
+
 		lda #PLAN_INACTIVE
 		sta ENEMY.Plan, x
 
@@ -806,29 +821,15 @@
 	}
 
 
-	SetInflightAlienStartPosition: {
 
 
-
-
-
-		rts
-	}
-
-
-	BackInSwarm: {
-
-
-
-		rts
-	}
 
 	ContinuingAttackFromTop: {
 
-		.break
-		lsr
-
+		lda #RETURNING_TO_SWARM
+		sta ENEMY.Plan, x
 		rts
+		
 	}
 
 

@@ -21,62 +21,65 @@ Default-segment:
   $09de-$0a29 Utility
   $0a2a-$0a46 Input
   $0a47-$0ae4 Joystick
-  $0ae5-$0e83 SHIP
-  $0e84-$0eff CheckDead
-  $0f00-$1246 Bullets
-  $1247-$13ab Formation
-  $13ac-$14b1 Enemies Left
-  $14b2-$1e10 Offset
-  $1e11-$2101 Maploader
-  $2102-$2101 WaveMovement
-  $2102-$2101 XPaths
-  $2102-$2101 YPaths
-  $2102-$2119 WaveStartPos
-  $211a-$2187 StagesIndex
-  $2188-$21fb StagesIndexLookup
-  $21fc-$2aff Challenge Paths 4-8
+  $0ae5-$0e82 SHIP
+  $0e83-$0efe CheckDead
+  $0eff-$1245 Bullets
+  $1246-$13ab Formation
+  $13ac-$14b3 Enemies Left
+  $14b4-$19fc Offset
+  $19fd-$1a20 Hmm
+  $1a21-$1e52 Unnamed
+  $1e53-$2143 Maploader
+  $2144-$2143 WaveMovement
+  $2144-$2143 XPaths
+  $2144-$2143 YPaths
+  $2144-$215b WaveStartPos
+  $215c-$21c9 StagesIndex
+  $21ca-$223d StagesIndexLookup
+  $223e-$2aff Challenge Paths 4-8
   $2b00-$2b88 VicSpriteTable
   $2b89-$2e7a IRQ
-  $2e7b-$2f0c Enemy
-  $2f0d-$2f5c Enemy Variables
-  $2f5d-$2f84 Plan
-  $2f85-$3006 Extra
-  $3007-$300b Enemies In Wave
-  $300c-$302e Enemy Ship ID
-  $302f-$31ff Enemies
-  $3200-$341d Spawn
-  $341e-$3b56 Pathfinding
-  $3b57-$3e89 Stage
-  $3e8a-$3f0d Check Complete
-  $3f0e-$3f83 Check Spawn
-  $3f84-$4176 ---String Data
-  $4177-$42ac ---Text
-  $42ad-$4d69 Enemy Data
-  $4d6a-$4e00 Title
-  $4e01-$4f8e Check Left Finish
+  $2e7b-$2f12 Enemy
+  $2f13-$2f62 Enemy Variables
+  $2f63-$2f8a Plan
+  $2f8b-$301c Extra
+  $301d-$3021 Enemies In Wave
+  $3022-$3044 Enemy Ship ID
+  $3045-$3215 Enemies
+  $3216-$3430 Spawn
+  $3431-$3b5d Pathfinding
+  $3b5e-$3e90 Stage
+  $3e91-$3f14 Check Complete
+  $3f15-$3f8a Check Spawn
+  $3f8b-$417d ---String Data
+  $417e-$42b3 ---Text
+  $42b4-$4d70 Enemy Data
+  $4d71-$4e07 Title
+  $4e08-$4f95 Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6ea2 Main
+  $6c00-$6ea5 Main
   $7400-$7503 Game Map
   $7504-$7797 Game Tiles
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
   $8158-$84ad Score
-  $84ae-$89f8 Bombs
-  $89f9-$8be0 Lives
-  $8be1-$8eb2 Pre-Stage
-  $8eb3-$8f04 -Random
-  $8f05-$8fae -Plot
-  $8faf-$921a STATS
-  $921b-$921c GAME OVER
-  $921d-$9241 
-  $9242-$9419 DisplayGameOver
-  $941a-$9852 -Sound
-  $9853-$989d Attacks
-  $989e-$9c73 Attackers
-  $9c74-$9f4f Chargers
-  $9f50-$a352 Flight
+  $84ae-$88f3 Bombs
+  $88f4-$8adb Lives
+  $8adc-$8db0 Pre-Stage
+  $8db1-$8e02 -Random
+  $8e03-$8eac -Plot
+  $8ead-$9118 STATS
+  $9119-$911a GAME OVER
+  $911b-$913f 
+  $9140-$9317 DisplayGameOver
+  $9318-$9750 -Sound
+  $9751-$979b Attacks
+  $979c-$9b71 Attackers
+  $9b72-$9b98 Chargers
+  $9b99-$9ec5 Have Alien
+  $9ec6-$a2d6 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$cfbf Sprites
   $f000-$f7ff Charset

@@ -50,6 +50,7 @@
 	FrameUpdate: {
 
 		ldx #0
+		stx EnemiesAlive
 
 		Loop:
 
@@ -57,6 +58,8 @@
 		
 			lda Plan, x
 			beq EndLoop
+
+			inc EnemiesAlive
 
 			ldy #0
 			sty Repeated

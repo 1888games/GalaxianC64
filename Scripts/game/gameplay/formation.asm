@@ -46,6 +46,7 @@ FORMATION: {
 	Stop:			.byte 0
 	Stopping:		.byte 0
 	Starting:		.byte 0
+	ScrollValue:	.byte 0
 
 
 	DrawIteration:	.byte 0
@@ -69,6 +70,8 @@ FORMATION: {
 
 	IllegalOffsetLeft:	.byte -4
 	IllegalOffsetRight: .byte 4
+	ScrollExtentRight:	.byte 26
+	ScrollExtentLeft:	.byte 26
 
 	FlagshipEnemyIDs:	.byte 1, 8, 9, 10
 
@@ -162,9 +165,9 @@ FORMATION: {
 	Relative_Row:	.fill 4, 0
 					.fill 6, 1
 					.fill 8, 2
-					.fill 8, 3
-					.fill 8, 4
-					.fill 8, 5
+					.fill 10, 3
+					.fill 10, 4
+					.fill 10, 5
 
 	Relative_Column:	.byte   	   3, 4, 5, 6
 						.byte 	    2, 3, 4, 5, 6, 7
@@ -293,6 +296,7 @@ FORMATION: {
 		sta SwitchingDirection
 		sta Stopping
 		sta Starting
+		sta ScrollValue
 	
 
 		lda #1
@@ -664,8 +668,10 @@ FORMATION: {
 		Ready:
 
 		lda Mode
-		bne Finish
+		beq Start
 
+		jmp Finish
+		
 		Start:
 
 			inc ZP.Temp4
@@ -726,12 +732,47 @@ FORMATION: {
 			jsr ProcessIteration
 
 			lda DrawIteration
+			bne Exit
+
+			lda Stop
+			bne Exit
+
+			lda Direction
+			beq GoingLeft
+
+			GoingRight:
+
+				lda ScrollValue
+				clc
+				adc #2
+				sta ScrollValue
+
+				jmp Finish
+
+			GoingLeft:
+
+				lda ScrollValue
+				sec
+				sbc #2
+				sta ScrollValue
+
+			lda DrawIteration
 			cmp #1
 			//beq Start
 
-
-
 		Finish:
+
+			lda #0
+			sta TextColumn
+			sta TextRow
+
+			ldy #YELLOW
+
+			lda ScrollValue
+			ldx #0
+			jsr TEXT.DrawByteInDigits
+
+		Exit:
 
 	
 		//dec $d020
@@ -840,6 +881,8 @@ FORMATION: {
 
 			lda FORMATION.Occupied, y
 			beq CheckDive
+
+			* = * "Hmm"
 			
 			inc CHARGER.SwarmAliens
 			inc EnemiesLeftInStage
@@ -868,6 +911,8 @@ FORMATION: {
 
 				lda ENEMY.Plan, y
 				beq EndLoop
+
+				* = *
 
 				inc EnemiesLeftInStage
 				inc CHARGER.InflightAliens

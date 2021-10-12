@@ -113,6 +113,7 @@ PRE_STAGE: {
 		jsr SHIP.Initialise
 		jsr STAGE.NewGame
 		jsr ENEMY.NewGame
+		jsr CHARGER.NewGame
 		
 
 		NoShipDecrease:

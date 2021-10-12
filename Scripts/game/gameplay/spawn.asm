@@ -453,7 +453,7 @@
 
 		AddBombs:
 
-			jsr BOMBS.Add
+			//jsr BOMBS.Add
 
 		NoBombs:
 
