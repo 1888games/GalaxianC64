@@ -812,8 +812,6 @@ FORMATION: {
 
 			sty ZP.FormationID
 
-			jsr ATTACKS.CheckBeamBossHit
-
 			lda #PLAN_INACTIVE
 			sta Plan, x
 			sta NextPlan, x

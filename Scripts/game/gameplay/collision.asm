@@ -278,8 +278,7 @@
 			tax
 			sta ZP.Amount
 
-			jsr ATTACKS.AttackerKilled
-
+			
 			ldx ZP.Temp2
 			ldy ZP.Amount
 
@@ -307,9 +306,7 @@
 			cmp #ENEMY_FIGHTER
 			bcc NotFighter
 
-			lda #0
-			sta ATTACKS.AddFighterToWave
-
+		
 			lda FORMATION.Type, y
 
 		NotFighter:
@@ -318,8 +315,8 @@
 			bcs NotBoss
 
 			pha
-			lda ATTACKS.ConvoySize, y
-			sta ZP.Temp2
+			//lda ATTACKS.ConvoySize, y
+			//sta ZP.Temp2
 			pla
 
 		NotBoss:

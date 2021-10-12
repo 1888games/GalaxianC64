@@ -127,7 +127,6 @@ PRE_STAGE: {
 
 			jsr SHIP.NewStage
 			jsr FORMATION.Initialise
-			jsr ATTACKS.Reset
 			jsr CHARGER.Reset
 			jsr STAGE.GetStageData
 			

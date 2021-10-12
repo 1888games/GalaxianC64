@@ -38,8 +38,7 @@ BULLETS: {
 	Fire2: {
 
 		lda FORMATION.EnemiesLeftInStage
-		clc
-		adc ATTACKS.OrphanedFighterColumn
+
 		bne CanFire	
 
 			jmp AbortFire
@@ -151,8 +150,6 @@ BULLETS: {
 	Fire: {
 
 		lda FORMATION.EnemiesLeftInStage
-		clc
-		adc ATTACKS.OrphanedFighterColumn
 		bne CanFire	
 
 			jmp AbortFire
@@ -375,8 +372,7 @@ BULLETS: {
 
 		BulletDead:
 
-			jsr CheckOrphanedCollision
-
+			
 			lda #1
 			sta Cooldown
 
@@ -396,51 +392,7 @@ BULLETS: {
 	}
 
 
-	CheckOrphanedCollision: {
-
-		lda ATTACKS.OrphanedFighterColumn
-		beq Finish
-
-		sta ZP.Amount
-
-		lda CharX, x
-		sec
-		sbc ZP.Amount
-		cmp #2
-		bcs Finish
-
-		lda SpriteX + SHIP.MAIN_SHIP_POINTER + 1
-		sta ZP.Column
-
-		lda SpriteY + SHIP.MAIN_SHIP_POINTER + 1
-		sta ZP.Row
-
-		lda #10
-		//sta SpriteX + SHIP.MAIN_SHIP_POINTER + 1
-		sta SpriteY + SHIP.MAIN_SHIP_POINTER + 1
-
-		lda #255
-		sta ATTACKS.BeamBoss
-		sta ATTACKS.OrphanedFighterID
-
-		lda #0
-		sta ATTACKS.BeamStatus
-		sta ATTACKS.OrphanedFighterColumn
-		sta ATTACKS.AddFighterToWave
-
-		ldy #8
-		jsr SCORE.AddScore
-
-		ldy #2
-		jsr BONUS.ShowBonus
 	
-		Finish:
-
-
-		rts
-	}
-
-
 	KillBullet: {
 
 		lda #10

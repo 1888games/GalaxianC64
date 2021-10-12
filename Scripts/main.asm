@@ -66,7 +66,7 @@ MAIN: {
 	#import "common/sfx.asm"
 
 	#import "game/system/bonus.asm"
-	#import "game/gameplay/attacks.asm"
+
 	#import "game/gameplay/charger.asm"
 	#import "game/gameplay/flight.asm"
 
@@ -400,6 +400,7 @@ MAIN: {
 		sta VIC.BORDER_COLOR
 
 		lda #LIGHT_RED
+		lda #RED
 		sta VIC.EXTENDED_BG_COLOR_1
 		sta VIC.SPRITE_MULTICOLOR_1
 	 	lda #BLUE

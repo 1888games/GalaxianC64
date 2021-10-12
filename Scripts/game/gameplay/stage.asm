@@ -231,95 +231,6 @@ STAGE: {
 	}
 
 
-	CalculateExtraEnemies: {
-		//	
-	//	rts
-
-		lda #255
-		sta ExtraEnemyIDs
-		sta ExtraEnemyIDs + 1
-		sta ExtraEnemyIDs + 2
-		sta ExtraEnemyIDs + 3
-
-		lda StageIndex
-		cmp #3
-		bcs NoExtra
-
-		ldx CurrentPlayer
-		lda CurrentStage, x
-		cmp #3
-		bcc NoExtra
-
-		FourExtra:
-
-			cmp #9
-			bcc TwoExtra
-
-			lda #4
-			sec
-			sbc ATTACKS.AddFighterToWave
-			sta MaxExtraEnemies
-
-			jmp NoExtra
-
-		TwoExtra:
-
-			lda #2
-			sta MaxExtraEnemies
-
-		NoExtra:
-
-			lda MaxExtraEnemies
-			sta ExtraEnemies
-			clc
-			adc #8
-			sta ENEMY.EnemiesInWave
-
-		lda MaxExtraEnemies
-		beq DontCalculatePositions
-
-		ldx #0
-
-		Loop:
-
-			stx ZP.StoredXReg
-
-			jsr RANDOM.Get
-			and #%00000111
-			cmp ENEMY.EnemiesInWave
-			bcs Loop
-
-			ldy ZP.StoredXReg
-
-		ExistLoop:
-
-			cpy #0
-		
-			beq NoCheck
-
-			dey
-			cmp ExtraEnemyIDs, y
-			beq Loop
-
-			jmp ExistLoop
-
-		NoCheck:
-
-			sta ExtraEnemyIDs, x
-
-			inx
-			cpx MaxExtraEnemies
-			bcc Loop
-
-
-
-
-
-		DontCalculatePositions:
-
-
-		rts
-	}
 
 	ClearSprites: {
 
@@ -350,7 +261,6 @@ STAGE: {
 		sta SoftlockProtect + 1
 		sta SpawnedInWave
 		sta SpawnedInStage
-		sta ATTACKS.Active
 		sta KillCount
 		sta KillCount + 1
 		sta TransformsKilled
@@ -379,8 +289,6 @@ STAGE: {
 		lda StageIndexLookup + 1, x
 		sta ZP.StageWaveOrderAddress + 1
 
-
-		jsr CalculateExtraEnemies
 
 		jsr CalculateFiring
 
@@ -589,11 +497,6 @@ STAGE: {
 
 		IsNormal:
 
-			lda ENEMY.EnemiesInWave
-			clc
-			adc ATTACKS.AddFighterToWave
-			sta ENEMY.EnemiesInWave
-
 		ChallengingStage:
 
 			lda #50
@@ -691,11 +594,6 @@ STAGE: {
 
 		lda FORMATION.EnemiesLeftInStage
 		//sta SCREEN_RAM + 558
-		bne LevelNotComplete
-
-
-		lda ATTACKS.OrphanedFighterColumn
-		//sta SCREEN_RAM + 598
 		bne LevelNotComplete
 
 		lda SHIP.Recaptured
@@ -881,7 +779,7 @@ STAGE: {
 			lda #255
 			sta SoftlockTimer
 
-			jsr ENEMY.Spawn
+			//jsr ENEMY.Spawn
 
 			lda SpawnSide  
 			eor #%00000001

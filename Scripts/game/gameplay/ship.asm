@@ -908,10 +908,6 @@ SHIP: {
 
 	NotGameOver:
 
-	
-		lda ATTACKS.NumAttackers
-		bne Finish
-
 		lda DeadTimer
 		bpl CheckNow
 
