@@ -362,16 +362,8 @@
 
 		Off:
 
-			lda #10
-			sta SpriteY, x
-
 			lda #REACHED_BOTTOM_OF_SCREEN
 			sta ENEMY.Plan, x
-
-			lda ENEMY.Slot, x
-			tay
-			lda #1
-			sta FORMATION.Occupied, y
 			rts
 
 		NotOffScreen:
@@ -419,9 +411,12 @@
 		lda SHIP.PosX_MSB
 		sec
 		sbc SpriteX, x
-		bcc ShipToRight
+		bcs ShipToRight
 
 		ShipToLeft:
+
+			cmp #225
+			bcs NoAngle
 
 			cmp #128
 			bcs Okay
@@ -431,6 +426,9 @@
 
 		ShipToRight:
 
+			cmp #30
+			bcc NoAngle
+
 			cmp #128
 			bcc Okay
 
@@ -439,12 +437,24 @@
 		Okay:
 
 			sta ENEMY.MoveX
+			jmp CalcY
 
+
+		NoAngle:
+
+			lda #8
+			clc
+			adc ENEMY.BasePointer, x
+			sta SpritePointer, x
+
+			rts
+
+		CalcY:
 
 		lda #SHIP.SHIP_Y
 		sec
 		sbc SpriteY, x
-		bcc ShipBelow
+		bcs ShipBelow
 
 		ShipAbove:
 
@@ -464,7 +474,8 @@
 
 		Okay2:
 
-			sta ENEMY.MoveY
+
+		sta ENEMY.MoveY
 
 		jsr ENEMY.CalculateRequiredSpeed
 
@@ -580,17 +591,50 @@
 
 	NearBottomOfScreen: {
 
+		lda ZP.Counter
+		and #%00000001
+		clc
+		adc #1
 
-		.break
+		clc
+		adc SpriteY, x
+		sta SpriteY, x
 
-		rts
+		bcc NoFlyOut
+
+		FlyOut:
+
+			lda #REACHED_BOTTOM_OF_SCREEN
+			sta ENEMY.Plan, x
+			rts
+
+		NoFlyOut:
+
+			jsr Attack_Y_Add
+
+			lda ENEMY.PivotXValue, x
+			clc
+			adc ENEMY.PivotXValueAdd, x
+			sta SpriteX, x
+			
+			cmp #16
+			bcs NotOffScreen
+
+		Off:
+
+			lda #REACHED_BOTTOM_OF_SCREEN
+			sta ENEMY.Plan, x
+		
+		NotOffScreen:
+	
+			rts
 	}
 
 
 	ReachedBottomOfScreen: {
 
 
-
+		.break
 
 		rts
 	}

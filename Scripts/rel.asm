@@ -806,14 +806,14 @@ COLOUR_ATTRIBUTE_TABLE_3:
                   0E37: DD 77 04      ld   (ix+$04),a          // write to INFLIGHT_ALIEN.Y 
                   0E3A: C6 07         add  a,$07
                   0E3C: FE 0E         cp   $0E
-0E3E: 38 24         jr   c,$0E64             // if the alien has gone off the side of the screen, return to swarm
-0E40: DD 7E 03      ld   a,(ix+$03)          // load A with INFLIGHT_ALIEN.X
-0E43: C6 48         add  a,$48
-0E45: 38 20         jr   c,$0E67             // if the alien is nearing the bottom of the screen, speed it up!
-0E47: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
-0E4A: 0F            rrca                     // move flag into carry
-0E4B: D0            ret  nc                  // return if player has not spawned
-0E4C: CD B0 11      call $11B0               // call CALCULATE_INFLIGHT_ALIEN_LOOKAT_ANIM_FRAME
+                0E3E: 38 24         jr   c,$0E64             // if the alien has gone off the side of the screen, return to swarm
+                0E40: DD 7E 03      ld   a,(ix+$03)          // load A with INFLIGHT_ALIEN.X
+                0E43: C6 48         add  a,$48
+                0E45: 38 20         jr   c,$0E67             // if the alien is nearing the bottom of the screen, speed it up!
+                0E47: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
+                0E4A: 0F            rrca                     // move flag into carry
+                0E4B: D0            ret  nc                  // return if player has not spawned
+                0E4C: CD B0 11      call $11B0               // call CALCULATE_INFLIGHT_ALIEN_LOOKAT_ANIM_FRAME
 
 // alien won't shoot at you if a flagship has been hit
 0E4F: 3A 2B 42      ld   a,($422B)           // read IS_FLAGSHIP_HIT
@@ -852,40 +852,40 @@ COLOUR_ATTRIBUTE_TABLE_3:
 0E6A: C9            ret
 
 
-//
-// When an alien is close to the horizontal plane where the player resides, it speeds up to zoom by (or into) the player.
-//
-// Expects:
-// IX = pointer to INFLIGHT_ALIEN structure
-//
+  //
+  // When an alien is close to the horizontal plane where the player resides, it speeds up to zoom by (or into) the player.
+  //
+  // Expects:
+  // IX = pointer to INFLIGHT_ALIEN structure
+  //
 
-INFLIGHT_ALIEN_NEAR_BOTTOM_OF_SCREEN:
-0E6B: 3A 5F 42      ld   a,($425F)           // read TIMING_VARIABLE
-0E6E: E6 01         and  $01                 // ..now A is either 0 or 1.
-0E70: 3C            inc  a                   // ..now A is either 1 or 2. 
-0E71: DD 86 03      add  a,(ix+$03)          // Add either 1 or 2 pixels to INFLIGHT_ALIEN.X
-0E74: DD 77 03      ld   (ix+$03),a          // and update INFLIGHT_ALIEN.X
-0E77: D6 06         sub  $06
-0E79: FE 03         cp   $03                 // has alien gone off the bottom of the screen?
-0E7B: 38 18         jr   c,$0E95             // yes, goto $0E95
+  INFLIGHT_ALIEN_NEAR_BOTTOM_OF_SCREEN:
+  0E6B: 3A 5F 42      ld   a,($425F)           // read TIMING_VARIABLE
+  0E6E: E6 01         and  $01                 // ..now A is either 0 or 1.
+  0E70: 3C            inc  a                   // ..now A is either 1 or 2. 
+  0E71: DD 86 03      add  a,(ix+$03)          // Add either 1 or 2 pixels to INFLIGHT_ALIEN.X
+  0E74: DD 77 03      ld   (ix+$03),a          // and update INFLIGHT_ALIEN.X
+  0E77: D6 06         sub  $06
+  0E79: FE 03         cp   $03                 // has alien gone off the bottom of the screen?
+  0E7B: 38 18         jr   c,$0E95             // yes, goto $0E95
 
-0E7D: CD 6B 11      call $116B               // call UPDATE_INFLIGHT_ALIEN_YADD 
-0E80: DD 7E 19      ld   a,(ix+$19)          // read INFLIGHT_ALIEN.PivotYValueAdd        
-0E83: A7            and  a                   // set flags - we are interested if its a minus value
-0E84: FA 90 0E      jp   m,$0E90             // if the PivotYValueAdd is a negative value, goto $0E90
+  0E7D: CD 6B 11      call $116B               // call UPDATE_INFLIGHT_ALIEN_YADD 
+  0E80: DD 7E 19      ld   a,(ix+$19)          // read INFLIGHT_ALIEN.PivotYValueAdd        
+  0E83: A7            and  a                   // set flags - we are interested if its a minus value
+  0E84: FA 90 0E      jp   m,$0E90             // if the PivotYValueAdd is a negative value, goto $0E90
 
-0E87: DD 86 09      add  a,(ix+$09)          // add INFLIGHT_ALIEN.PivotYValue 
-0E8A: 38 09         jr   c,$0E95             // carry flag set if alien has gone off side of screen,  goto $0E95
+  0E87: DD 86 09      add  a,(ix+$09)          // add INFLIGHT_ALIEN.PivotYValue 
+  0E8A: 38 09         jr   c,$0E95             // carry flag set if alien has gone off side of screen,  goto $0E95
 
-0E8C: DD 77 04      ld   (ix+$04),a          // set INFLIGHT_ALIEN.Y 
-0E8F: C9            ret
+  0E8C: DD 77 04      ld   (ix+$04),a          // set INFLIGHT_ALIEN.Y 
+  0E8F: C9            ret
 
-0E90: DD 86 09      add  a,(ix+$09)          // add INFLIGHT_ALIEN.PivotYValue
-0E93: 38 F7         jr   c,$0E8C
+  0E90: DD 86 09      add  a,(ix+$09)          // add INFLIGHT_ALIEN.PivotYValue
+  0E93: 38 F7         jr   c,$0E8C
 
-// alien's went off the bottom or the side of the screen. 
-0E95: DD 34 02      inc  (ix+$02)            // now call INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN stage of life.
-0E98: C9            ret
+  // alien's went off the bottom or the side of the screen. 
+  0E95: DD 34 02      inc  (ix+$02)            // now call INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN stage of life.
+  0E98: C9            ret
 
 
 //
@@ -1429,44 +1429,44 @@ INFLIGHT_ALIEN_CONVOY_CHARGER_DO_SCROLL:
 
 
 
+                                    //
+                  // Calculate the animation frame that makes an attacking alien "look" directly at the player. 
+                  // 
+                  // Expects:
+                  // IX = pointer to INFLIGHT_ALIEN structure with valid X and Y fields.
                   //
-// Calculate the animation frame that makes an attacking alien "look" directly at the player. 
-// 
-// Expects:
-// IX = pointer to INFLIGHT_ALIEN structure with valid X and Y fields.
-//
-// Returns:
-//  INFLIGHT_ALIEN.AnimationFrame is updated
-//
+                  // Returns:
+                  //  INFLIGHT_ALIEN.AnimationFrame is updated
+                  //
 
-CALCULATE_INFLIGHT_ALIEN_LOOKAT_ANIM_FRAME:
-11B0: 3E F0         ld   a,$F0               //  
-11B2: DD 96 03      sub  (ix+$03)            // subtract from INFLIGHT_ALIEN.X
-11B5: 57            ld   d,a
-11B6: 3A 02 42      ld   a,($4202)           // read PLAYER_Y 
-11B9: DD 96 04      sub  (ix+$04)            // subtract from INFLIGHT_ALIEN.Y 
-11BC: 38 07         jr   c,$11C5             
-11BE: CD D0 11      call $11D0
-11C1: DD 77 05      ld   (ix+$05),a          // set INFLIGHT_ALIEN.AnimationFrame          
-11C4: C9            ret
+                  CALCULATE_INFLIGHT_ALIEN_LOOKAT_ANIM_FRAME:
+                  11B0: 3E F0         ld   a,$F0               //  
+                  11B2: DD 96 03      sub  (ix+$03)            // subtract from INFLIGHT_ALIEN.X
+                  11B5: 57            ld   d,a
+                  11B6: 3A 02 42      ld   a,($4202)           // read PLAYER_Y 
+                  11B9: DD 96 04      sub  (ix+$04)            // subtract from INFLIGHT_ALIEN.Y 
+                  11BC: 38 07         jr   c,$11C5             
+                  11BE: CD D0 11      call $11D0
+                  11C1: DD 77 05      ld   (ix+$05),a          // set INFLIGHT_ALIEN.AnimationFrame          
+                  11C4: C9            ret
 
-11C5: ED 44         neg
-11C7: CD D0 11      call $11D0
-11CA: ED 44         neg
-11CC: DD 77 05      ld   (ix+$05),a          // set INFLIGHT_ALIEN.AnimationFrame
-11CF: C9            ret
+                  11C5: ED 44         neg
+                  11C7: CD D0 11      call $11D0
+                  11CA: ED 44         neg
+                  11CC: DD 77 05      ld   (ix+$05),a          // set INFLIGHT_ALIEN.AnimationFrame
+                  11CF: C9            ret
 
 
-11D0: CD 48 00      call $0048               // call CALCULATE_TANGENT
-11D3: 79            ld   a,c
-11D4: A7            and  a
-11D5: F2 DA 11      jp   p,$11DA
-11D8: 3E 80         ld   a,$80
-11DA: 07            rlca
-11DB: 07            rlca
-11DC: 07            rlca
-11DD: E6 07         and  $07
-11DF: C9            ret
+                  11D0: CD 48 00      call $0048               // call CALCULATE_TANGENT
+                  11D3: 79            ld   a,c
+                  11D4: A7            and  a
+                  11D5: F2 DA 11      jp   p,$11DA
+                  11D8: 3E 80         ld   a,$80
+                  11DA: 07            rlca
+                  11DB: 07            rlca
+                  11DC: 07            rlca
+                  11DD: E6 07         and  $07
+                  11DF: C9            ret
 
 
 //

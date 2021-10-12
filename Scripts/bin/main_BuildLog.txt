@@ -45,15 +45,15 @@ Default-segment:
   $2ef4-$2f16 Enemy Ship ID
   $2f17-$30e4 Enemies
   $30e5-$3302 Spawn
-  $3303-$3a28 Pathfinding
-  $3a29-$3d5b Stage
-  $3d5c-$3ddf Check Complete
-  $3de0-$3e55 Check Spawn
-  $3e56-$4048 ---String Data
-  $4049-$417e ---Text
-  $417f-$4c3b Enemy Data
-  $4c3c-$4cd2 Title
-  $4cd3-$4e60 Check Left Finish
+  $3303-$3a3b Pathfinding
+  $3a3c-$3d6e Stage
+  $3d6f-$3df2 Check Complete
+  $3df3-$3e68 Check Spawn
+  $3e69-$405b ---String Data
+  $405c-$4191 ---Text
+  $4192-$4c4e Enemy Data
+  $4c4f-$4ce5 Title
+  $4ce6-$4e73 Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6ea2 Main
@@ -76,7 +76,7 @@ Default-segment:
   $9853-$989d Attacks
   $989e-$9c73 Attackers
   $9c74-$9f4c Chargers
-  $9f4d-$a279 Flight
+  $9f4d-$a2a9 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$cfbf Sprites
   $f000-$f7ff Charset

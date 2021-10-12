@@ -261,10 +261,33 @@
 
 		Finish:
 
-			sta Angle, x	
+			sta Angle, x
+
+			jmp AddIt
+
+			beq Done
+			bcc DecAngle
+
+		IncAngle:
+
+			inc Angle, x
+			jmp CalcFrame
+
+		DecAngle:
+
+			dec Angle, x
+
+		CalcFrame:
+
+			lda Angle, x
+
+		AddIt:
 			clc
 			adc BasePointer, x
 			sta SpritePointer, x
+
+
+		Done:
 
 
 		rts
