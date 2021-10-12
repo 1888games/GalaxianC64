@@ -2094,9 +2094,9 @@
   .label Reset=$9cc8 {
     .label Loop=$9cfe
   }
-  .label FlagshipReachedBottom=$a21c {
+  .label FlagshipReachedBottom=$a25f {
   }
-  .label ReturningToSwarm=$a21d {
+  .label ReturningToSwarm=$a260 {
   }
   .label DifficultyCounter2=$9c79
   .label DifficultyCounter1=$9c78
@@ -2186,23 +2186,23 @@
   .label FlagshipHit=$9c75
   .label FlagshipEscortCount=$9cb4
   .label AttackMasterCounter=$9c7b
-  .label CompleteLoop=$a235 {
+  .label CompleteLoop=$a278 {
   }
   .label SingleLeft=$9f1c {
     .label Loop=$9f1e
     .label CanChooseRed=$9f33
     .label EndLoop=$9f36
   }
-  .label BackInSwarm=$a230 {
+  .label BackInSwarm=$a273 {
   }
   .label AliensInShockCounter=$9cae
   .label HaveAliensIn2ndRow=$9c9c
   .label HaveAliensIn4thRow=$9c9e
-  .label ContinuingAttackFromTop=$a231 {
+  .label ContinuingAttackFromTop=$a274 {
   }
-  .label NearBottomOfScreen=$a21a {
+  .label NearBottomOfScreen=$a25d {
   }
-  .label AttackingAggressively=$a233 {
+  .label AttackingAggressively=$a276 {
   }
   .label SingleRight=$9efc {
     .label Loop=$9efe
@@ -2213,13 +2213,15 @@
   .label LevelComplete=$9cb1
   .label AttackSecondaryCounters=$9c7c
   .label AttackingPlayer=$a15f {
+    .label CheckRepeat=$a19d
     .label NotOffScreen=$a188
+    .label NearBottomOfScreen=$a18f
     .label Repeat=$a163
-    .label Finish=$a191
+    .label CheckLookAt=$a195
     .label Off=$a175
-    .label DontRepeat=$a1a1
+    .label DontRepeat=$a1ad
   }
-  .label Unknown_1091=$a236 {
+  .label Unknown_1091=$a279 {
   }
   .label AliensInColumn=$9cb5
   .label CalculateMinimumShootingDistance=$9da5 {
@@ -2229,13 +2231,21 @@
     .label Finish=$9dd5
   }
   .label HaveAliensInTopRow=$9c9b
-  .label Attack_Y_Add=$a1a2 {
-    .label NoDecH=$a1ca
-    .label NoForce=$a1dd
-    .label NoCarry=$a1cc
-    .label SpeedLoop=$a1bf
-    .label NoForce2=$a200
-    .label NoDecL=$a1f1
+  .label CalculateLookAtFrame=$a1ae {
+    .label Okay=$a1c5
+    .label Okay2=$a1de
+    .label ShipToLeft=$a1b6
+    .label ShipAbove=$a1cf
+    .label ShipBelow=$a1d8
+    .label ShipToRight=$a1bf
+  }
+  .label Attack_Y_Add=$a1e5 {
+    .label NoDecH=$a20d
+    .label NoForce=$a220
+    .label NoCarry=$a20f
+    .label SpeedLoop=$a202
+    .label NoForce2=$a243
+    .label NoDecL=$a234
   }
   .label TimingVariable=$9cb2
   .label CheckIfAlienCanAttack=$9e0d {
@@ -2248,11 +2258,11 @@
     .label Okay=$9d65
     .label Finish=$9d70
   }
-  .label FullSpeedCharge=$a232 {
+  .label FullSpeedCharge=$a275 {
   }
-  .label ReachedBottomOfScreen=$a21b {
+  .label ReachedBottomOfScreen=$a25e {
   }
-  .label LoopTheLoop=$a234 {
+  .label LoopTheLoop=$a277 {
   }
   .label CanAlienAttack=$9c7a
   .label NextLevelCounter=$9cb0

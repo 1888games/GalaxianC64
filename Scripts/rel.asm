@@ -798,14 +798,14 @@ COLOUR_ATTRIBUTE_TABLE_3:
 // IX = pointer to INFLIGHT_ALIEN structure
 //
 
-INFLIGHT_ALIEN_ATTACKING_PLAYER:
-0E2B: DD 34 03      inc  (ix+$03)            // increment INFLIGHT_ALIEN.X 
-0E2E: CD 6B 11      call $116B               // call UPDATE_INFLIGHT_ALIEN_YADD
-0E31: DD 7E 09      ld   a,(ix+$09)          // load A with INFLIGHT_ALIEN.PivotYValue
-0E34: DD 86 19      add  a,(ix+$19)          // add in INFLIGHT_ALIEN.PivotYValueAdd to produce a Y coordinate                                                   
-0E37: DD 77 04      ld   (ix+$04),a          // write to INFLIGHT_ALIEN.Y 
-0E3A: C6 07         add  a,$07
-0E3C: FE 0E         cp   $0E
+                  INFLIGHT_ALIEN_ATTACKING_PLAYER:
+                  0E2B: DD 34 03      inc  (ix+$03)            // increment INFLIGHT_ALIEN.X 
+                  0E2E: CD 6B 11      call $116B               // call UPDATE_INFLIGHT_ALIEN_YADD
+                  0E31: DD 7E 09      ld   a,(ix+$09)          // load A with INFLIGHT_ALIEN.PivotYValue
+                  0E34: DD 86 19      add  a,(ix+$19)          // add in INFLIGHT_ALIEN.PivotYValueAdd to produce a Y coordinate                                                   
+                  0E37: DD 77 04      ld   (ix+$04),a          // write to INFLIGHT_ALIEN.Y 
+                  0E3A: C6 07         add  a,$07
+                  0E3C: FE 0E         cp   $0E
 0E3E: 38 24         jr   c,$0E64             // if the alien has gone off the side of the screen, return to swarm
 0E40: DD 7E 03      ld   a,(ix+$03)          // load A with INFLIGHT_ALIEN.X
 0E43: C6 48         add  a,$48
@@ -1354,118 +1354,82 @@ INFLIGHT_ALIEN_CONVOY_CHARGER_DO_SCROLL:
 10E3: C9            ret
 
 
-//
-// When an alien breaks off from the swarm to attack the player, the characters it occupies in the swarm are deleted and an alien sprite is substituted.
-// This function calculates a starting X and Y coordinate for the sprite.
-//
-// This function is also used by INFLIGHT_ALIEN_RETURNING_TO_SWARM (see $0F07) to determine where in the swarm a returning alien should fly to. 
-//
-//
-// Expects:
-// IX to point to an INFLIGHT_ALIEN structure.
-//     (IX + 7) to be the index of the alien in the ALIEN_SWARM_FLAGS array.
-//
-// 
-
-SET_INFLIGHT_ALIEN_START_POSITION:
-1147: DD 7E 07      ld   a,(ix+$07)          // read INFLIGHT_ALIEN.IndexInSwarm
-114A: E6 70         and  $70                 // compute row that alien is in
-114C: 0F            rrca
-114D: 4F            ld   c,a
-114E: 0F            rrca
-114F: 81            add  a,c
-1150: ED 44         neg
-1152: C6 7C         add  a,$7C
-1154: DD 77 03      ld   (ix+$03),a          // set INFLIGHT_ALIEN.X
-
-1157: DD 7E 07      ld   a,(ix+$07)          // read INFLIGHT_ALIEN.IndexInSwarm
-115A: E6 0F         and  $0F                 // compute column that alien is in
-115C: 07            rlca
-115D: 07            rlca
-115E: 07            rlca
-115F: 07            rlca                     // multiply by 16..
-1160: C6 07         add  a,$07
-1162: 4F            ld   c,a
-1163: 3A 0E 42      ld   a,($420E)           // read SWARM_SCROLL_VALUE   
-1166: 81            add  a,c                    
-1167: DD 77 04      ld   (ix+$04),a          // set INFLIGHT_ALIEN.Y 
-116A: C9            ret
 
 
-//
-// This routine helps move an attacking INFLIGHT_ALIEN.
-//
-// I'll be honest, I don't know exactly how it works. I've had the guys from my work (Lambo & Phil) look at this with me,
-// and some of the guys from the https://www.facebook.com/groups/z80asm/ as well. When I figure it out, I'll document it.
-//
-// The key is in the mutation of IX+$19, INFLIGHT_ALIEN.PivotYValueAdd 
-// 
-// Expects:
-// IX = pointer to INFLIGHT_ALIEN structure
-// 
+                  //
+                  // This routine helps move an attacking INFLIGHT_ALIEN.
+                  //
+                  // I'll be honest, I don't know exactly how it works. I've had the guys from my work (Lambo & Phil) look at this with me,
+                  // and some of the guys from the https://www.facebook.com/groups/z80asm/ as well. When I figure it out, I'll document it.
+                  //
+                  // The key is in the mutation of IX+$19, INFLIGHT_ALIEN.PivotYValueAdd 
+                  // 
+                  // Expects:
+                  // IX = pointer to INFLIGHT_ALIEN structure
+                  // 
 
-UPDATE_INFLIGHT_ALIEN_YADD:
-116B: DD 7E 18      ld   a,(ix+$18)          // read INFLIGHT_ALIEN.Speed
-116E: E6 03         and  $03                 
-1170: 3C            inc  a                   // now A is between 1 and 4.
-1171: 47            ld   b,a
+                  UPDATE_INFLIGHT_ALIEN_YADD:
+                  116B: DD 7E 18      ld   a,(ix+$18)          // read INFLIGHT_ALIEN.Speed
+                  116E: E6 03         and  $03                 
+                  1170: 3C            inc  a                   // now A is between 1 and 4.
+                  1171: 47            ld   b,a
 
-1172: DD 66 19      ld   h,(ix+$19)          // read INFLIGHT_ALIEN.PivotYValueAdd
-1175: DD 6E 1A      ld   l,(ix+$1a)
-1178: DD 56 1B      ld   d,(ix+$1b)
-117B: DD 5E 1C      ld   e,(ix+$1c)
+                  1172: DD 66 19      ld   h,(ix+$19)          // read INFLIGHT_ALIEN.PivotYValueAdd
+                  1175: DD 6E 1A      ld   l,(ix+$1a)
+                  1178: DD 56 1B      ld   d,(ix+$1b)
+                  117B: DD 5E 1C      ld   e,(ix+$1c)
 
-117E: 7D            ld   a,l
+                  117E: 7D            ld   a,l
 
-// Part 1 - do H
-117F: 4C            ld   c,h                 // preserve H in C
-1180: 87            add  a,a           
-1181: 30 01         jr   nc,$1184
+                  // Part 1 - do H
+                  117F: 4C            ld   c,h                 // preserve H in C
+                  1180: 87            add  a,a           
+                  1181: 30 01         jr   nc,$1184
 
-1183: 25            dec  h
-1184: 82            add  a,d
-1185: 57            ld   d,a
-1186: 3E 00         ld   a,$00
-1188: 8C            adc  a,h
+                  1183: 25            dec  h
+                  1184: 82            add  a,d
+                  1185: 57            ld   d,a
+                  1186: 3E 00         ld   a,$00
+                  1188: 8C            adc  a,h
 
-// I *think* this is to ensure that the signed byte in H never loses its sign.
-// If it's positive it'll stay positive. If it's negative, it'll stay negative.
-1189: FE 80         cp   $80                 
-118B: 20 01         jr   nz,$118E
+                  // I *think* this is to ensure that the signed byte in H never loses its sign.
+                  // If it's positive it'll stay positive. If it's negative, it'll stay negative.
+                  1189: FE 80         cp   $80                 
+                  118B: 20 01         jr   nz,$118E
 
-118D: 79            ld   a,c
-118E: 67            ld   h,a
+                  118D: 79            ld   a,c
+                  118E: 67            ld   h,a
 
-// Part 2 - now do L
-118F: 4D            ld   c,l                 // preserve L in C  
-1190: ED 44         neg
-1192: 87            add  a,a
-1193: 30 01         jr   nc,$1196
+                  // Part 2 - now do L
+                  118F: 4D            ld   c,l                 // preserve L in C  
+                  1190: ED 44         neg
+                  1192: 87            add  a,a
+                  1193: 30 01         jr   nc,$1196
 
-1195: 2D            dec  l
+                  1195: 2D            dec  l
 
-1196: 83            add  a,e
-1197: 5F            ld   e,a
-1198: 3E 00         ld   a,$00
-119A: 8D            adc  a,l
-119B: FE 80         cp   $80
-119D: 20 01         jr   nz,$11A0
+                  1196: 83            add  a,e
+                  1197: 5F            ld   e,a
+                  1198: 3E 00         ld   a,$00
+                  119A: 8D            adc  a,l
+                  119B: FE 80         cp   $80
+                  119D: 20 01         jr   nz,$11A0
 
-119F: 79            ld   a,c
+                  119F: 79            ld   a,c
 
-11A0: 6F            ld   l,a                 // restore L from C
+                  11A0: 6F            ld   l,a                 // restore L from C
 
-11A1: 10 DB         djnz $117E
+                  11A1: 10 DB         djnz $117E
 
-11A3: DD 74 19      ld   (ix+$19),h
-11A6: DD 75 1A      ld   (ix+$1a),l
-11A9: DD 72 1B      ld   (ix+$1b),d
-11AC: DD 73 1C      ld   (ix+$1c),e
-11AF: C9            ret
+                  11A3: DD 74 19      ld   (ix+$19),h
+                  11A6: DD 75 1A      ld   (ix+$1a),l
+                  11A9: DD 72 1B      ld   (ix+$1b),d
+                  11AC: DD 73 1C      ld   (ix+$1c),e
+                  11AF: C9            ret
 
 
 
-//
+                  //
 // Calculate the animation frame that makes an attacking alien "look" directly at the player. 
 // 
 // Expects:

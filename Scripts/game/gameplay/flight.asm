@@ -365,7 +365,7 @@
 			lda #10
 			sta SpriteY, x
 
-			lda #PLAN_INACTIVE
+			lda #REACHED_BOTTOM_OF_SCREEN
 			sta ENEMY.Plan, x
 
 			lda ENEMY.Slot, x
@@ -377,12 +377,25 @@
 		NotOffScreen:
 
 			lda SpriteY, x
-			cmp #240
-			bcc Finish
+			clc
+			adc #72
+			bcc CheckLookAt
 
-			jmp Off
+		NearBottomOfScreen:
 
-		Finish:
+			lda #NEAR_BOTTOM_OF_SCREEN
+			sta ENEMY.Plan, x
+			rts
+			
+
+		CheckLookAt:
+
+			lda SHIP.Active
+			beq CheckRepeat
+
+			jsr CalculateLookAtFrame
+
+		CheckRepeat:
 
 			lda IRQ.Frame
 			sec
@@ -397,6 +410,63 @@
 		DontRepeat:
 
 
+
+		rts
+	}
+
+	CalculateLookAtFrame: {
+
+		lda SHIP.PosX_MSB
+		sec
+		sbc SpriteX, x
+		bcc ShipToRight
+
+		ShipToLeft:
+
+			cmp #128
+			bcs Okay
+
+			lda #128
+			jmp Okay
+
+		ShipToRight:
+
+			cmp #128
+			bcc Okay
+
+			lda #127
+
+		Okay:
+
+			sta ENEMY.MoveX
+
+
+		lda #SHIP.SHIP_Y
+		sec
+		sbc SpriteY, x
+		bcc ShipBelow
+
+		ShipAbove:
+
+			cmp #128
+			bcs Okay2
+
+			lda #128
+			jmp Okay2
+
+		ShipBelow:
+
+			cmp #128
+			bcc Okay2
+
+			lda #127
+
+
+		Okay2:
+
+			sta ENEMY.MoveY
+
+		jsr ENEMY.CalculateRequiredSpeed
 
 		rts
 	}
@@ -511,7 +581,7 @@
 	NearBottomOfScreen: {
 
 
-
+		.break
 
 		rts
 	}

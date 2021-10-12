@@ -197,12 +197,12 @@ al C:1c .COLOR_ADDRESS__0
 al C:1c .COLOR_ADDRESS__1
 al C:2a9a .LoopStart
 al C:a101 .DontRepeat__0
-al C:a1a1 .DontRepeat__1
+al C:a1ad .DontRepeat__1
 al C:1b2d .Four
 al C:289c .YChallange_8_1
 al C:2984 .YChallange_8_2
 al C:98a4 .InitialAttacks
-al C:a1a2 .Attack_Y_Add
+al C:a1e5 .Attack_Y_Add
 al C:3533 .NotChallenge__0
 al C:3cec .NotChallenge__1
 al C:b .SFX_EXTRA
@@ -436,6 +436,7 @@ al C:9bbc .NotCapture
 al C:1388 .FlagshipEnemyIDs
 al C:d17 .CheckOffsetLeft__0
 al C:dba .CheckOffsetLeft__1
+al C:a195 .CheckLookAt
 al C:f82f .AddRows
 al C:4140 .Write
 al C:99c1 .CheckIfBeamBoss
@@ -584,6 +585,7 @@ al C:11fd .NoOffsetCheck
 al C:5 .DEG_150
 al C:99b .CheckNTSC
 al C:163a .ExplosionList
+al C:a1cf .ShipAbove
 al C:b01 .CanControl
 al C:3 .ALIEN_BLUE
 al C:89f9 .Chars
@@ -873,7 +875,6 @@ al C:9e22 .Finish__89
 al C:9e7c .Finish__90
 al C:9eaa .Finish__91
 al C:a0f1 .Finish__92
-al C:a191 .Finish__93
 al C:0 .ResetBorderIRQLine
 al C:1f24 .Rows__0
 al C:f805 .Rows__1
@@ -940,6 +941,7 @@ al C:3f47 .Onu
 al C:40f3 .NotBlank
 al C:11 .BulletSpriteID
 al C:11c5 .WithinRange
+al C:a1bf .ShipToRight
 al C:35 .YReached
 al C:ff .ALL_ON
 al C:fad9 .ScoreLoop__0
@@ -961,7 +963,7 @@ al C:9497 .sfx_hit1
 al C:4baa .SpriteLookupX
 al C:b .LOOP_THE_LOOP
 al C:4bc5 .SpriteLookupY
-al C:a232 .FullSpeedCharge
+al C:a275 .FullSpeedCharge
 al C:9c7a .CanAlienAttack
 al C:e8 .MAX_SHIP_X
 al C:33ac .XNotReverse__0
@@ -1039,7 +1041,7 @@ al C:8c13 .NumBadges
 al C:3a45 .WaveKillCount
 al C:385b .MoveRight__0
 al C:8847 .MoveRight__1
-al C:a230 .BackInSwarm
+al C:a273 .BackInSwarm
 al C:2 .GAME_MODE_ATTRACT
 al C:d31 .Control
 al C:8cf .SetupInterrupts
@@ -1090,7 +1092,8 @@ al C:4d2d .Okay__18
 al C:8f0d .Okay__19
 al C:8f46 .Okay__20
 al C:9d65 .Okay__21
-al C:6e32 .Okay__22
+al C:a1c5 .Okay__22
+al C:6e32 .Okay__23
 al C:fb0 .AbortFire__0
 al C:1057 .AbortFire__1
 al C:d002 .SPRITE_1_X
@@ -1163,7 +1166,7 @@ al C:24 .PATH_BOSS_ATTACK
 al C:9e57 .CalculateCountdownBeforeAttack
 al C:27 .PATH_FLUTTER_MIR
 al C:32e2 .Spawn
-al C:a21c .FlagshipReachedBottom
+al C:a25f .FlagshipReachedBottom
 al C:3a42 .DelayTimer__0
 al C:4c3c .DelayTimer__1
 al C:fc61 .DelayTimer__2
@@ -1199,6 +1202,7 @@ al C:af7 .ExplodeTimer
 al C:bd2 .Destroy__0
 al C:1909 .Destroy__1
 al C:301e .Destroy__2
+al C:a1b6 .ShipToLeft
 al C:11f5 .Missed
 al C:a15f .AttackingPlayer
 al C:144f .StartOffset
@@ -1341,12 +1345,13 @@ al C:4cd4 .Controls
 al C:8ec0 .init2
 al C:99b9 .AttackerKilled
 al C:fa66 .NotPlayer2
-al C:a233 .AttackingAggressively
+al C:a276 .AttackingAggressively
 al C:26b5 .YChallange_6_1
 al C:2962 .XChallange_8_2
 al C:207a .DownRow
 al C:275f .YChallange_6_2
 al C:285a .XChallange_8_1
+al C:a1ae .CalculateLookAtFrame
 al C:3ef3 .Tmn
 al C:0 .MonthStart
 al C:1f0c .STARS
@@ -1392,12 +1397,12 @@ al C:8c2 .MultiIRQLines
 al C:b16 .ResetPosition
 al C:164d .Direction
 al C:1f .PAUSE
-al C:a1ca .NoDecH
+al C:a20d .NoDecH
 al C:f26 .PlayerLookup
 al C:8000 .SAVE
 al C:8a80 .Check2Player
 al C:9296 .HiScore
-al C:a1f1 .NoDecL
+al C:a234 .NoDecL
 al C:88ca .Reached2
 al C:2f .AttackAddressY
 al C:2d .AttackAddressX
@@ -1492,7 +1497,7 @@ al C:348f .UpdateCount
 al C:ce6 .NoWrapOffsetRight__0
 al C:d89 .NoWrapOffsetRight__1
 al C:197b .CalculateEnemiesLeft
-al C:a1dd .NoForce
+al C:a220 .NoForce
 al C:23 .StageWaveOrderAddress
 al C:6 .SUBTUNE_CAPTURE
 al C:39a2 .Flutter
@@ -1606,7 +1611,7 @@ al C:2de6 .DontExplode
 al C:30ff .LaunchFromGrid
 al C:210a .Challenge2
 al C:356f .IsNormalPath
-al C:a235 .CompleteLoop
+al C:a278 .CompleteLoop
 al C:39b7 .OtherAttack
 al C:8af6 .GameOver2
 al C:213c .Challenge7
@@ -1624,7 +1629,8 @@ al C:2114 .Challenge3
 al C:2a97 .SelfMod
 al C:211e .Challenge4
 al C:98a3 .AddFighterToWave
-al C:a21a .NearBottomOfScreen
+al C:a18f .NearBottomOfScreen__0
+al C:a25d .NearBottomOfScreen__1
 al C:394c .DecisionOnPostPath
 al C:9f4 .Loop__0
 al C:a08 .Loop__1
@@ -1681,7 +1687,7 @@ al C:9911 .AttackReady
 al C:9943 .SecondAttack
 al C:9c9b .HaveAliensInTopRow
 al C:476b .SpeedLoop__0
-al C:a1bf .SpeedLoop__1
+al C:a202 .SpeedLoop__1
 al C:403c .Lo2
 al C:0 .SCORE_MODE_VIEW
 al C:1a82 .Five
@@ -1740,7 +1746,7 @@ al C:3da9 .LevelNotComplete
 al C:9ae5 .BeeLoop__0
 al C:9b34 .BeeLoop__1
 al C:3124 .CopyHitsLeft
-al C:a231 .ContinuingAttackFromTop
+al C:a274 .ContinuingAttackFromTop
 al C:d004 .SPRITE_2_X
 al C:9ec3 .CheckFlag
 al C:8fbd .Ratio__0
@@ -1757,7 +1763,7 @@ al C:30d0 .NoPopup
 al C:1 .PROCESSOR_PORT
 al C:1370 .ChallengeToScore
 al C:0 .PLAN_INACTIVE
-al C:a236 .Unknown_1091
+al C:a279 .Unknown_1091
 al C:338a .MinusX__0
 al C:87de .MinusX__1
 al C:1c .ColourAddress
@@ -1851,6 +1857,7 @@ al C:1646 .ExplosionColour
 al C:321a .NotExtraEnemy
 al C:3f80 .Hmr
 al C:880 .VIC
+al C:a1de .Okay2
 al C:9df5 .UpdateCounters
 al C:3a41 .EveryCounter
 al C:30af .Formation
@@ -1867,7 +1874,7 @@ al C:c .PLAN_FLUTTER
 al C:9ca6 .FlagshipSecondaryCounter
 al C:2a39 ._SpriteY
 al C:2a25 ._SpriteX
-al C:a21d .ReturningToSwarm
+al C:a260 .ReturningToSwarm
 al C:1 .CHALLENGE_NUM_HITS
 al C:2386 .XChallange_5_1
 al C:a43 .ReadC64Joystick
@@ -1882,6 +1889,7 @@ al C:fb1d .EnterMode__1
 al C:9a5c .LaunchNormalAttack
 al C:3 .GAME_MODE_PLAY
 al C:11a2 .BulletAlive
+al C:a1d8 .ShipBelow
 al C:d019 .INTERRUPT_STATUS
 al C:3 .SUBTUNE_PERFECT
 al C:7 .STOP_DELAY
@@ -1975,7 +1983,7 @@ al C:80e3 .LOAD
 al C:99fe .CheckIfEnemyAvailable
 al C:3938 .CheckYClose
 al C:f .TransformGap
-al C:a1cc .NoCarry
+al C:a20f .NoCarry
 al C:2 .ENEMY_MOTH
 al C:989f .BeamStatus
 al C:bfa .NotCaptured
@@ -2151,8 +2159,8 @@ al C:10e2 .CheckOrphanedCollision
 al C:1309 .Switching
 al C:30e5 .SpecialColours
 al C:41c4 .FractionSpeed
-al C:a21b .ReachedBottomOfScreen
-al C:a234 .LoopTheLoop
+al C:a25e .ReachedBottomOfScreen
+al C:a277 .LoopTheLoop
 al C:19c2 .NotTwo
 al C:9987 .LaunchAttacker
 al C:e .BLUE_MULT
@@ -2163,6 +2171,7 @@ al C:10a7 .CheckOffset
 al C:3886 .MoveLeft__0
 al C:886a .MoveLeft__1
 al C:19d7 .NotFive
+al C:a19d .CheckRepeat
 al C:308d .Challenging__0
 al C:323f .Challenging__1
 al C:3ce6 .Challenging__2
@@ -2408,7 +2417,7 @@ al C:4184 .Colours__3
 al C:4c4a .Colours__4
 al C:97f9 .Colours__5
 al C:6e78 .SaveKernalZP
-al C:a200 .NoForce2
+al C:a243 .NoForce2
 al C:d018 .MEMORY_SETUP
 al C:8cf6 .NoUpdate
 al C:1714 .EnemyKilled
@@ -2430,3 +2439,4 @@ break 3dbf
 break fb19 
 break 8073 
 break 8f0b 
+break a25d 

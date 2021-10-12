@@ -76,7 +76,7 @@ Default-segment:
   $9853-$989d Attacks
   $989e-$9c73 Attackers
   $9c74-$9f4c Chargers
-  $9f4d-$a236 Flight
+  $9f4d-$a279 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$cfbf Sprites
   $f000-$f7ff Charset
