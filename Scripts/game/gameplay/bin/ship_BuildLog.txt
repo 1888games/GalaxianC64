@@ -1,0 +1,19 @@
+parsing
+Got 86 errors while executing:
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/ship.asm 85:7) Unknown symbol 'SpriteX'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/ship.asm 101:7) Unknown symbol 'SpritePointer'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/ship.asm 104:7) Unknown symbol 'SpriteColor'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/ship.asm 107:7) Unknown symbol 'SpriteY'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/ship.asm 129:7) Unknown symbol 'VIC'
+  ...
+
+  sta PosX_LSB + 1
+
+  lda #SHIP_START_X
+  sta SpriteX + MAIN_SHIP_POINTER
+      ^
+
+Error: Unknown symbol 'SpriteX'
+at line 85, column 7 in ship.asm
+
+

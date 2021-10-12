@@ -182,7 +182,7 @@ TITLE: {
 
 			jsr MAIN.ResetGame
 
-			sfx(SFX_THEME)
+			
 		//	lda #SUBTUNE_START
 		//	jsr sid.init
 

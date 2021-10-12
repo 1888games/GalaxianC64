@@ -493,6 +493,9 @@ BOMBS: {
 
 		Again:
 
+		lda #0
+		sta ActiveBombs
+
 		ldx #BombStartID
 
 		Loop:	
@@ -508,6 +511,11 @@ BOMBS: {
 			beq EndLoop
 
 			jsr CheckMove
+
+			lda Active, x
+			beq EndLoop
+
+			inc ActiveBombs
 		
 
 		EndLoop:

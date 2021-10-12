@@ -101,7 +101,7 @@ MP_IRQ: {
 					tax
 
 					lda SpriteCopyY, x
-					cmp #20
+					cmp #30
 					bcs SpriteOkay
 
 					jmp SkipSprite

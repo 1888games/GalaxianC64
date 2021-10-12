@@ -67,7 +67,7 @@ TEXT: {
 	Str:	.text @"start\$00"		
 	Stg:	.text @"stage\$00"
 	Cst:	.text @"challenging stage\$00"
-	Rea:	.text @"ready\$00"	
+	Rea:	.text @"get ready\$00"	
 	Onu:	.text @"1 up\$00"	
 	Twu:	.text @"2 up\$00"	
 	Gmo:	.text @"game over\$00"	

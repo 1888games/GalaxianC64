@@ -179,6 +179,7 @@
 
 			lda FORMATION.ScrollExtentLeft
 			lsr
+			lsr
 			sec
 			sbc ZP.Amount
 			bcs RandomOkay
@@ -190,6 +191,7 @@
 		ScrolledRight:
 
 			lda FORMATION.ScrollExtentRight
+			lsr
 			lsr
 			sec
 			sbc FORMATION.ScrollValue

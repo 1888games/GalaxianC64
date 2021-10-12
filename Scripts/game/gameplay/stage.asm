@@ -534,8 +534,9 @@ STAGE: {
 		lda #255
 		sta SpawnTimer
 
-		lda #SUBTUNE_DANGER
-		jsr sid.init
+		
+		//lda #SUBTUNE_DANGER
+		//jsr sid.init
 
 
 		rts

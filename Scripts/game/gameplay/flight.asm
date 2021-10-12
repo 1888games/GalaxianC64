@@ -267,7 +267,7 @@
 			lda SpriteX, x
 			sec
 			sbc SHIP.PosX_MSB
-			bmi AlienToLeft
+			bcc AlienToLeft
 
 		AlienToRight:
 
@@ -356,14 +356,20 @@
 
 			inc SpriteY, x
 
+			lda SpriteX, x
+			sta ZP.B
+
 			jsr Attack_Y_Add
 
 			lda ENEMY.PivotXValue, x
 			clc
 			adc ENEMY.PivotXValueAdd, x
 			sta SpriteX, x
-			
-			cmp #16
+
+			cmp #9
+			bcc NotOffScreen
+
+			cmp #11
 			bcs NotOffScreen
 
 		Off:
@@ -638,13 +644,18 @@
 			adc ENEMY.PivotXValueAdd, x
 			sta SpriteX, x
 			
-			cmp #16
+			cmp #9
+			bcc NotOffScreen
+
+			cmp #11
 			bcs NotOffScreen
 
 		Off:
 
 			lda #REACHED_BOTTOM_OF_SCREEN
 			sta ENEMY.Plan, x
+			rts
+
 		
 		NotOffScreen:
 	
@@ -654,7 +665,7 @@
 
 	ReachedBottomOfScreen: {
 
-		lda #11
+		lda #25
 		sta SpriteY, x
 
 		inc ENEMY.SortieCount, x

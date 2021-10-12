@@ -1,10 +1,10 @@
 parsing
-Got 25 errors and 0 warnings while executing:
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 133:7) Error: Unknown symbol 'MAIN'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 134:8) Error: Unknown symbol 'GAME_MODE_PLAY'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 204:7) Error: Unknown symbol 'SHIP'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 326:7) Error: Unknown symbol 'SHIP'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 366:8) Error: Unknown symbol 'SHIP'
+Got 34 errors while executing:
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 143:7) Unknown symbol 'MAIN'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 144:8) Unknown symbol 'GAME_MODE_PLAY'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 170:7) Unknown symbol 'FORMATION'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 177:8) Unknown symbol 'FORMATION'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/charger.asm 178:8) Unknown symbol 'ZP'
   ...
 
  FrameUpdate: {
@@ -14,5 +14,6 @@ Got 25 errors and 0 warnings while executing:
       ^
 
 Error: Unknown symbol 'MAIN'
+at line 143, column 7 in charger.asm
 
 

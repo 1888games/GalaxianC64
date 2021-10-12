@@ -45,6 +45,7 @@ SHIP: {
 	DeadTimer:			.byte 255
 	PlayerDied:			.byte 0
 	GameOver:			.byte 0
+	StartTimer:			.byte 200
 
 	.label MAIN_SHIP_POINTER = 18
 
@@ -76,6 +77,14 @@ SHIP: {
 		lda #6
 		sta OffsetX
 
+		lda StartTimer
+		bne DontOverride
+
+		lda #1
+		sta StartTimer
+
+		DontOverride:
+
 		lda #0
 		sta PosX_LSB
 		sta PosX_LSB + 1
@@ -103,7 +112,7 @@ SHIP: {
 		sta SpriteColor + MAIN_SHIP_POINTER
 
 		lda #SHIP_Y
-		sta SpriteY + MAIN_SHIP_POINTER
+		//sta SpriteY + MAIN_SHIP_POINTER
 
 
 		rts
@@ -129,6 +138,10 @@ SHIP: {
 
 		lda #0
 		sta Docked
+
+		lda #200
+		sta StartTimer
+
 
 		lda #SPRITE_POINTER
 		sta SpritePointer + MAIN_SHIP_POINTER + 1
@@ -182,8 +195,8 @@ SHIP: {
 		sta Dead
 
 		lda #1
-		sta Active
-		sta CanControl
+		//sta Active
+		//sta CanControl
 
 		lda #255
 		sta ExplodeProgress
@@ -723,12 +736,21 @@ SHIP: {
 		lda Active
 		beq Finish
 
+		lda StartTimer
+		beq Override
+
+		lda #10
+		sta SpriteY + MAIN_SHIP_POINTER
+		rts
+
 		Override:
 
 			lda PosX_MSB
 			sta PreviousX
-
 			sta SpriteX +  MAIN_SHIP_POINTER
+
+			lda #SHIP_Y
+			sta SpriteY + MAIN_SHIP_POINTER
 
 			lda TwoPlayer
 			bne ShowSecondShip
@@ -764,6 +786,8 @@ SHIP: {
 			ExplosionInProcess:
 
 		Finish:
+
+			
 
 			
 		rts
@@ -924,7 +948,36 @@ SHIP: {
 	}	
 
 
+
 	FrameUpdate: {
+
+
+		lda StartTimer
+		beq Ready
+
+		dec StartTimer
+		lda StartTimer
+		bne NotStart
+
+		Starting:
+
+			lda #1
+			sta Active
+			sta CanControl
+
+			ldy #PRE_STAGE.StageRow
+			ldx #PRE_STAGE.StageColumn
+			lda #20
+			
+			jsr UTILITY.DeleteText
+			jmp Ready
+		
+		NotStart:
+
+			rts
+
+
+		Ready:
 
 			jsr Control
 

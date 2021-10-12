@@ -14,7 +14,7 @@ PRE_STAGE: {
 
 
 
-	.label StartTime = 30
+	.label StartTime = 1
 	.label DelayTime = 2
 	.label StageTime = 2
 	.label ReadyTime = 5
@@ -23,7 +23,7 @@ PRE_STAGE: {
 	.label StartRow = 14
 	.label StartColumn = 11
 
-	.label StageRow = 10
+	.label StageRow = 18
 	.label StageColumn = 9
 	.label ChallengeColumn =5
 
@@ -58,12 +58,16 @@ PRE_STAGE: {
 		lda #255
 		sta VIC.SPRITE_ENABLE
 
+		sfx(SFX_THEME)
+
 
 		lda #StartTime
 		sta Timer
 
 		lda #0
 		sta Progress
+
+		lda #0
 		sta STARS.Scrolling
 		sta GameStarted
 
@@ -83,10 +87,10 @@ PRE_STAGE: {
 		lda #StartColumn
 		sta TextColumn
 
-		ldx #RED
-		lda #TEXT.START
+		// ldx #RED
+		// lda #TEXT.START
 
-		jsr TEXT.Draw
+		// jsr TEXT.Draw
 
 		jsr STAGE.NewGame
 
@@ -96,13 +100,6 @@ PRE_STAGE: {
 
 
 	StartStage: {
-
-
-		ldy #StartRow
-		ldx #StartColumn
-		lda #5
-		
-		jsr UTILITY.DeleteText
 
 	
 		lda GameStarted
@@ -171,7 +168,7 @@ PRE_STAGE: {
 		Ready:
 
 			lda Progress
-			beq PreStageDelay
+			beq ShowStage
 
 			cmp #1
 			beq ShowStage2
@@ -179,8 +176,8 @@ PRE_STAGE: {
 			cmp #2
 			beq ShowBadges2
 
-			cmp #3
-			beq ShowReady2
+			//cmp #3
+			//beq ShowReady2
 
 			jmp StartStage
 
@@ -267,8 +264,12 @@ PRE_STAGE: {
 		jsr DeleteBadges
 		jsr ShowStageTitle
 
+		lda #1
+		sta STARS.Scrolling
+		sta LIVES.Active
 
-		jsr CalculateWaveSpeed
+
+		//jsr CalculateWaveSpeed
 
 		rts
 	}	
@@ -489,7 +490,7 @@ PRE_STAGE: {
 			cmp #CHALLENGING_STAGE
 			bcs NoSound
 
-			sfx(SFX_BADGE)
+			//sfx(SFX_BADGE)
 
 
 			NoSound:
