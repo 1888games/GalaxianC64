@@ -58,11 +58,28 @@
 			lda Plan, x
 			beq EndLoop
 
+			ldy #0
+			sty Repeated
+
+		Repeat:
+
 			jsr ProcessEnemy
 
 			ldx ZP.EnemyID
 			lda Plan, x
 			beq EndLoop
+
+			lda IRQ.Frame
+			sec
+			sbc MAIN.MachineType
+			adc Repeated
+			bpl DontRepeat
+
+			inc Repeated
+
+			jmp Repeat
+
+		DontRepeat:
 
 			jsr CheckShipCollision
 			//jsr BOMBS.CheckEnemyFire

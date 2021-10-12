@@ -44,7 +44,7 @@
 	Inflight_S1A:			.fill MAX_ENEMIES, 0
 	Inflight_S1B:			.fill MAX_ENEMIES, 0
 	Inflight_S1C:			.fill MAX_ENEMIES, 0
-
+	Repeated:				.byte 0
 
 
 	Quadrant:			.byte 0

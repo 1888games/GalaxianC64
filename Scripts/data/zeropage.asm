@@ -61,6 +61,8 @@ ZP: {
 	E:						.byte 0
 	D:						.byte 0
 	C:						.byte 0
+	B:						.byte 0
+	Repeat:					.byte 0
 }
 
 

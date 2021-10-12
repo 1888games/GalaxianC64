@@ -288,6 +288,7 @@
 
 			lda #0
 			sta FORMATION.Occupied, y
+			sta FORMATION.Drawn, y
 			
 			lda #$C4
 

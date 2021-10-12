@@ -23,6 +23,7 @@ FORMATION: {
 
 				.fill 48, 0
 
+	Drawn:		.fill 48, 0
 
 	.label ExplosionChar = 63
 	.label EXPLOSION_TIME = 3
@@ -273,6 +274,7 @@ FORMATION: {
 			lda #0
 			sta Occupied, x
 			sta Column, x
+			sta Drawn, x
 		
 			inx
 			cpx #48
@@ -623,6 +625,9 @@ FORMATION: {
 				ldx ZP.CurrentID
 				lda Occupied, x
 				beq EndLoop
+
+				lda #1
+				sta Drawn, x
 
 				jsr DrawEnemy
 

@@ -852,40 +852,40 @@ COLOUR_ATTRIBUTE_TABLE_3:
 0E6A: C9            ret
 
 
-  //
-  // When an alien is close to the horizontal plane where the player resides, it speeds up to zoom by (or into) the player.
-  //
-  // Expects:
-  // IX = pointer to INFLIGHT_ALIEN structure
-  //
+              //
+              // When an alien is close to the horizontal plane where the player resides, it speeds up to zoom by (or into) the player.
+              //
+              // Expects:
+              // IX = pointer to INFLIGHT_ALIEN structure
+              //
 
-  INFLIGHT_ALIEN_NEAR_BOTTOM_OF_SCREEN:
-  0E6B: 3A 5F 42      ld   a,($425F)           // read TIMING_VARIABLE
-  0E6E: E6 01         and  $01                 // ..now A is either 0 or 1.
-  0E70: 3C            inc  a                   // ..now A is either 1 or 2. 
-  0E71: DD 86 03      add  a,(ix+$03)          // Add either 1 or 2 pixels to INFLIGHT_ALIEN.X
-  0E74: DD 77 03      ld   (ix+$03),a          // and update INFLIGHT_ALIEN.X
-  0E77: D6 06         sub  $06
-  0E79: FE 03         cp   $03                 // has alien gone off the bottom of the screen?
-  0E7B: 38 18         jr   c,$0E95             // yes, goto $0E95
+              INFLIGHT_ALIEN_NEAR_BOTTOM_OF_SCREEN:
+              0E6B: 3A 5F 42      ld   a,($425F)           // read TIMING_VARIABLE
+              0E6E: E6 01         and  $01                 // ..now A is either 0 or 1.
+              0E70: 3C            inc  a                   // ..now A is either 1 or 2. 
+              0E71: DD 86 03      add  a,(ix+$03)          // Add either 1 or 2 pixels to INFLIGHT_ALIEN.X
+              0E74: DD 77 03      ld   (ix+$03),a          // and update INFLIGHT_ALIEN.X
+              0E77: D6 06         sub  $06
+              0E79: FE 03         cp   $03                 // has alien gone off the bottom of the screen?
+              0E7B: 38 18         jr   c,$0E95             // yes, goto $0E95
 
-  0E7D: CD 6B 11      call $116B               // call UPDATE_INFLIGHT_ALIEN_YADD 
-  0E80: DD 7E 19      ld   a,(ix+$19)          // read INFLIGHT_ALIEN.PivotYValueAdd        
-  0E83: A7            and  a                   // set flags - we are interested if its a minus value
-  0E84: FA 90 0E      jp   m,$0E90             // if the PivotYValueAdd is a negative value, goto $0E90
+              0E7D: CD 6B 11      call $116B               // call UPDATE_INFLIGHT_ALIEN_YADD 
+              0E80: DD 7E 19      ld   a,(ix+$19)          // read INFLIGHT_ALIEN.PivotYValueAdd        
+              0E83: A7            and  a                   // set flags - we are interested if its a minus value
+              0E84: FA 90 0E      jp   m,$0E90             // if the PivotYValueAdd is a negative value, goto $0E90
 
-  0E87: DD 86 09      add  a,(ix+$09)          // add INFLIGHT_ALIEN.PivotYValue 
-  0E8A: 38 09         jr   c,$0E95             // carry flag set if alien has gone off side of screen,  goto $0E95
+              0E87: DD 86 09      add  a,(ix+$09)          // add INFLIGHT_ALIEN.PivotYValue 
+              0E8A: 38 09         jr   c,$0E95             // carry flag set if alien has gone off side of screen,  goto $0E95
 
-  0E8C: DD 77 04      ld   (ix+$04),a          // set INFLIGHT_ALIEN.Y 
-  0E8F: C9            ret
+              0E8C: DD 77 04      ld   (ix+$04),a          // set INFLIGHT_ALIEN.Y 
+              0E8F: C9            ret
 
-  0E90: DD 86 09      add  a,(ix+$09)          // add INFLIGHT_ALIEN.PivotYValue
-  0E93: 38 F7         jr   c,$0E8C
+              0E90: DD 86 09      add  a,(ix+$09)          // add INFLIGHT_ALIEN.PivotYValue
+              0E93: 38 F7         jr   c,$0E8C
 
-  // alien's went off the bottom or the side of the screen. 
-  0E95: DD 34 02      inc  (ix+$02)            // now call INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN stage of life.
-  0E98: C9            ret
+              // alien's went off the bottom or the side of the screen. 
+              0E95: DD 34 02      inc  (ix+$02)            // now call INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN stage of life.
+              0E98: C9            ret
 
 
 //
@@ -909,48 +909,48 @@ COLOUR_ATTRIBUTE_TABLE_3:
 // IX = pointer to INFLIGHT_ALIEN structure
 //
 
-INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN:
-0E99: DD 36 03 08   ld   (ix+$03),$08        // set INFLIGHT_ALIEN.X to position at very top of screen
-0E9D: DD 34 17      inc  (ix+$17)            // increment INFLIGHT_ALIEN.SortieCount
-0EA0: DD 36 05 00   ld   (ix+$05),$00        // clear INFLIGHT_ALIEN.AnimationFrame
+              INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN:
+              0E99: DD 36 03 08   ld   (ix+$03),$08        // set INFLIGHT_ALIEN.X to position at very top of screen
+              0E9D: DD 34 17      inc  (ix+$17)            // increment INFLIGHT_ALIEN.SortieCount
+              0EA0: DD 36 05 00   ld   (ix+$05),$00        // clear INFLIGHT_ALIEN.AnimationFrame
 
-// what type of alien are we dealing with?
-0EA4: DD 7E 07      ld   a,(ix+$07)          // read INFLIGHT_ALIEN.IndexInSwarm  
-0EA7: E6 70         and  $70                 // remove the column number from the index, keep the row
-0EA9: FE 70         cp   $70                 // is this alien a flagship?
-0EAB: 28 2D         jr   z,$0EDA             // yes, goto INFLIGHT_ALIEN_FLAGSHIP_REACHED_BOTTOM_OF_SCREEN
+              // what type of alien are we dealing with?
+              0EA4: DD 7E 07      ld   a,(ix+$07)          // read INFLIGHT_ALIEN.IndexInSwarm  
+              0EA7: E6 70         and  $70                 // remove the column number from the index, keep the row
+              0EA9: FE 70         cp   $70                 // is this alien a flagship?
+              0EAB: 28 2D         jr   z,$0EDA             // yes, goto INFLIGHT_ALIEN_FLAGSHIP_REACHED_BOTTOM_OF_SCREEN
 
-//if the player has not spawned, the alien will return to the swarm.
-0EAD: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
-0EB0: 0F            rrca                     // move flag into carry
-0EB1: 30 23         jr   nc,$0ED6            // if player has not spawned yet, goto $0ED6 - aliens return to swarm
+              //if the player has not spawned, the alien will return to the swarm.
+              0EAD: 3A 00 42      ld   a,($4200)           // read HAS_PLAYER_SPAWNED
+              0EB0: 0F            rrca                     // move flag into carry
+              0EB1: 30 23         jr   nc,$0ED6            // if player has not spawned yet, goto $0ED6 - aliens return to swarm
 
-//  if HAVE_AGGRESSIVE_ALIENS OR HAVE_NO_BLUE_OR_PURPLE_ALIENS flags are set, the alien will keep attacking (see $0EBF).
-//  otherwise the alien returns to the swarm (see $0ED3 and $0F07)
-0EB3: 3A 24 42      ld   a,($4224)           // read HAVE_AGGRESSIVE_ALIENS flag
-0EB6: A7            and  a                   // test flag
-0EB7: 20 06         jr   nz,$0EBF            // if aliens are aggressive, make alien reappear at top of screen, keep attacking 
-0EB9: 3A 21 42      ld   a,($4221)           // read HAVE_NO_BLUE_OR_PURPLE_ALIENS
-0EBC: A7            and  a                   // test flag             
-0EBD: 28 17         jr   z,$0ED6             // if we do have any blue or purple aliens, goto $0ED6 - aliens return to swarm
+              //  if HAVE_AGGRESSIVE_ALIENS OR HAVE_NO_BLUE_OR_PURPLE_ALIENS flags are set, the alien will keep attacking (see $0EBF).
+              //  otherwise the alien returns to the swarm (see $0ED3 and $0F07)
+              0EB3: 3A 24 42      ld   a,($4224)           // read HAVE_AGGRESSIVE_ALIENS flag
+              0EB6: A7            and  a                   // test flag
+              0EB7: 20 06         jr   nz,$0EBF            // if aliens are aggressive, make alien reappear at top of screen, keep attacking 
+              0EB9: 3A 21 42      ld   a,($4221)           // read HAVE_NO_BLUE_OR_PURPLE_ALIENS
+              0EBC: A7            and  a                   // test flag             
+              0EBD: 28 17         jr   z,$0ED6             // if we do have any blue or purple aliens, goto $0ED6 - aliens return to swarm
 
-// alien reappears at top of screen and will keep attacking - it will not return to swarm. 
-// add some unpredictability to where it reappears, so that player can't wait for it and shoot it easily
-0EBF: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y 
-0EC2: 1F            rra                      // divide by 2 (don't worry about carry, it was cleared by AND above)
-0EC3: 4F            ld   c,a                 // preserve in C              
-0EC4: CD 3C 00      call $003C               // call GENERATE_RANDOM_NUMBER
-0EC7: E6 1F         and  $1F                 // ensure random number is between 0..31 decimal
-0EC9: 81            add  a,c                 
-0ECA: C6 20         add  a,$20               
-0ECC: DD 77 04      ld   (ix+$04),a          // set INFLIGHT_ALIEN.Y   
-0ECF: DD 36 10 28   ld   (ix+$10),$28        // set INFLIGHT_ALIEN.TempCounter1 for INFLIGHT_ALIEN_UNKNOWN_OF3C to use.
+              // alien reappears at top of screen and will keep attacking - it will not return to swarm. 
+              // add some unpredictability to where it reappears, so that player can't wait for it and shoot it easily
+              0EBF: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y 
+              0EC2: 1F            rra                      // divide by 2 (don't worry about carry, it was cleared by AND above)
+              0EC3: 4F            ld   c,a                 // preserve in C              
+              0EC4: CD 3C 00      call $003C               // call GENERATE_RANDOM_NUMBER
+              0EC7: E6 1F         and  $1F                 // ensure random number is between 0..31 decimal
+              0EC9: 81            add  a,c                 
+              0ECA: C6 20         add  a,$20               
+              0ECC: DD 77 04      ld   (ix+$04),a          // set INFLIGHT_ALIEN.Y   
+              0ECF: DD 36 10 28   ld   (ix+$10),$28        // set INFLIGHT_ALIEN.TempCounter1 for INFLIGHT_ALIEN_UNKNOWN_OF3C to use.
 
-// if both of these incs are called, the stage of life will be set to INFLIGHT_ALIEN_CONTINUING_ATTACK_RUN_FROM_TOP_OF_SCREEN. 
-// if only the inc @ $0ED6 is invoked (see $0EB1), then the stage of life will be set to INFLIGHT_ALIEN_RETURNING_TO_SWARM.
-0ED3: DD 34 02      inc  (ix+$02)            // increment INFLIGHT_ALIEN.StageOfLife
-0ED6: DD 34 02      inc  (ix+$02)            // increment INFLIGHT_ALIEN.StageOfLife
-0ED9: C9            ret
+              // if both of these incs are called, the stage of life will be set to INFLIGHT_ALIEN_CONTINUING_ATTACK_RUN_FROM_TOP_OF_SCREEN. 
+              // if only the inc @ $0ED6 is invoked (see $0EB1), then the stage of life will be set to INFLIGHT_ALIEN_RETURNING_TO_SWARM.
+              0ED3: DD 34 02      inc  (ix+$02)            // increment INFLIGHT_ALIEN.StageOfLife
+              0ED6: DD 34 02      inc  (ix+$02)            // increment INFLIGHT_ALIEN.StageOfLife
+              0ED9: C9            ret
 
 
 //

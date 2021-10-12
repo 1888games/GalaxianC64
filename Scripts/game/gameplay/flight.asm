@@ -36,8 +36,7 @@
 
 			lda ENEMY.Slot, x
 			tay
-			pha
-
+			
 			lda FORMATION.Relative_Row, y
 			tay
 
@@ -46,18 +45,7 @@
 
 		Position:
 
-			pla
-			tay
-
-			lda FORMATION.FormationSpriteX, y
-			sec
-			sbc #4
-			sta SpriteX, x
-
-			lda FORMATION.SpriteRow, y
-			sec
-			sbc #6
-			sta SpriteY, x
+			jsr GetEnemyStartPosition
 
 		GetColour:
 
@@ -105,6 +93,24 @@
 			sta ENEMY.Angle, x
 			// COUNT ESCORTS HERE? CAN'T WE DO IT ELSEWHERE?
 
+
+		rts
+	}
+
+	GetEnemyStartPosition: {
+
+		lda ENEMY.Slot, x
+		tay
+
+		lda FORMATION.FormationSpriteX, y
+		sec
+		sbc #4
+		sta SpriteX, x
+
+		lda FORMATION.SpriteRow, y
+		sec
+		sbc #6
+		sta SpriteY, x
 
 		rts
 	}
@@ -238,7 +244,7 @@
 
 			inc ZP.Amount
 
-			jmp Repeat
+			//jmp Repeat
 
 		DontRepeat:
 				
@@ -370,7 +376,7 @@
 
 			lda SpriteY, x
 			clc
-			adc #72
+			adc #64
 			bcc CheckLookAt
 
 		NearBottomOfScreen:
@@ -397,7 +403,7 @@
 
 			inc ZP.Amount
 
-			jmp Repeat
+			//jmp Repeat
 
 		DontRepeat:
 
@@ -633,8 +639,66 @@
 
 	ReachedBottomOfScreen: {
 
+		lda #11
+		sta SpriteY, x
 
-		.break
+		inc ENEMY.SortieCount, x
+
+		lda #8
+		clc
+		adc ENEMY.BasePointer, x
+		sta SpritePointer, x
+
+		CheckIfFlagship:
+
+			lda ENEMY.Type, x
+			bne NotFlagship
+
+		IsFlagship:
+
+			jmp FlagshipReachedBottom
+
+		NotFlagship:
+
+			lda SHIP.Active
+			beq ReturnToSwarm
+
+		PlayerAlive:
+
+			lda CHARGER.HaveAggressiveAliens
+			bne KeepAttacking
+
+			lda CHARGER.HaveBluePurpleAliens
+			beq KeepAttacking
+
+
+		ReturnToSwarm:
+
+			lda #RETURNING_TO_SWARM
+			sta ENEMY.Plan, x
+			rts
+
+
+		KeepAttacking:
+
+			clc
+			lda SpriteX, x
+			lsr
+			sta ZP.C
+
+			jsr RANDOM.Get
+			and #%00011111
+			clc
+			adc ZP.C
+			clc
+			adc #32
+			sta SpriteX, x
+
+			lda #40
+			sta ENEMY.TempCounter1, x
+
+			lda #CONTINUING_ATTACK
+			sta ENEMY.Plan, x
 
 		rts
 	}
@@ -650,17 +714,103 @@
 
 	ReturningToSwarm: { 
 
+
+		lda SpriteY, x
+		sta ZP.B
+		inc ZP.B
+
+		jsr GetEnemyStartPosition
+
+		lda SpriteY, x
+		sec
+		sbc ZP.B
+		beq BackInSwarm
+		bcc BackInSwarm
+
+		ldy ZP.B
+		sty SpriteY, x
+
+	NotThereYet:
+
+		cmp #4
+		bcc Flat
+
+		cmp #36
+		bcs Exit
+
+		and #%00000011
+		bne Exit
+
+		lda ENEMY.ArcClockwise, x
+		beq GoingLeft
+
+	GoingRight:
+
+			inc ENEMY.Angle, x
+
+			lda ENEMY.Angle, x
+			cmp #16
+			bcc Okay1
+
+	Flat:
+
+			lda #0
+			sta ENEMY.Angle, x
+
+		Okay1:
+
+			lda ENEMY.BasePointer, x
+			clc
+			adc ENEMY.Angle, x
+			sta SpritePointer, x
+			rts
+
+	GoingLeft:
+
+			dec ENEMY.Angle, x
+
+			lda ENEMY.Angle, x
+			bpl Okay2
+		
+			lda #0
+			sta ENEMY.Angle, x
+
+		Okay2:
+
+			lda ENEMY.BasePointer, x
+			clc
+			adc ENEMY.Angle, x
+			sta SpritePointer, x
+			rts
+
+	BackInSwarm:
+
 		lda ENEMY.Slot, x
 		tay
 
 		lda #1
 		sta FORMATION.Occupied, y
 
+		lda FORMATION.Drawn, y
+		beq Exit
+		
 		lda #PLAN_INACTIVE
 		sta ENEMY.Plan, x
 
 		lda #10
 		sta SpriteY, x
+
+	Exit:
+
+		rts
+	}
+
+
+	SetInflightAlienStartPosition: {
+
+
+
+
 
 		rts
 	}
@@ -675,7 +825,8 @@
 
 	ContinuingAttackFromTop: {
 
-
+		.break
+		lsr
 
 		rts
 	}

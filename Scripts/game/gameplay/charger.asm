@@ -681,6 +681,7 @@
 
 		lda #0
 		sta FORMATION.Occupied, x
+		sta FORMATION.Drawn, x
 
 		ldy ZP.EnemyID
 		lda #PACKS_BAGS

@@ -9,10 +9,10 @@ Memory Map
 ----------
 Default-segment:
   *$0002-$0024 Temp vars zero page
-  *$0025-$003a LPAX
-  *$003b-$004e SpriteX
-  *$004f-$00b2 SpriteY
-  *$00b3-$00ca SpriteCopyY
+  *$0025-$003c LPAX
+  *$003d-$0050 SpriteX
+  *$0051-$00b4 SpriteY
+  *$00b5-$00cc SpriteCopyY
   $0801-$080d Basic
   $080e-$080d Basic End
   $0810-$0832 Hi score_Data
@@ -24,36 +24,36 @@ Default-segment:
   $0ae5-$0e83 SHIP
   $0e84-$0eff CheckDead
   $0f00-$1246 Bullets
-  $1247-$137b Formation
-  $137c-$1481 Enemies Left
-  $1482-$1dd8 Offset
-  $1dd9-$20c9 Maploader
-  $20ca-$20c9 WaveMovement
-  $20ca-$20c9 XPaths
-  $20ca-$20c9 YPaths
-  $20ca-$20e1 WaveStartPos
-  $20e2-$214f StagesIndex
-  $2150-$21c3 StagesIndexLookup
-  $21c4-$29ff Challenge Paths 4-8
-  $2a00-$2a88 VicSpriteTable
-  $2a89-$2d7a IRQ
-  $2d7b-$2df5 Enemy
-  $2df6-$2e45 Enemy Variables
-  $2e46-$2e6d Plan
-  $2e6e-$2eee Extra
-  $2eef-$2ef3 Enemies In Wave
-  $2ef4-$2f16 Enemy Ship ID
-  $2f17-$30e4 Enemies
-  $30e5-$3302 Spawn
-  $3303-$3a3b Pathfinding
-  $3a3c-$3d6e Stage
-  $3d6f-$3df2 Check Complete
-  $3df3-$3e68 Check Spawn
-  $3e69-$405b ---String Data
-  $405c-$4191 ---Text
-  $4192-$4c4e Enemy Data
-  $4c4f-$4ce5 Title
-  $4ce6-$4e73 Check Left Finish
+  $1247-$13ab Formation
+  $13ac-$14b1 Enemies Left
+  $14b2-$1e10 Offset
+  $1e11-$2101 Maploader
+  $2102-$2101 WaveMovement
+  $2102-$2101 XPaths
+  $2102-$2101 YPaths
+  $2102-$2119 WaveStartPos
+  $211a-$2187 StagesIndex
+  $2188-$21fb StagesIndexLookup
+  $21fc-$2aff Challenge Paths 4-8
+  $2b00-$2b88 VicSpriteTable
+  $2b89-$2e7a IRQ
+  $2e7b-$2f0c Enemy
+  $2f0d-$2f5c Enemy Variables
+  $2f5d-$2f84 Plan
+  $2f85-$3006 Extra
+  $3007-$300b Enemies In Wave
+  $300c-$302e Enemy Ship ID
+  $302f-$31ff Enemies
+  $3200-$341d Spawn
+  $341e-$3b56 Pathfinding
+  $3b57-$3e89 Stage
+  $3e8a-$3f0d Check Complete
+  $3f0e-$3f83 Check Spawn
+  $3f84-$4176 ---String Data
+  $4177-$42ac ---Text
+  $42ad-$4d69 Enemy Data
+  $4d6a-$4e00 Title
+  $4e01-$4f8e Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6ea2 Main
@@ -75,8 +75,8 @@ Default-segment:
   $941a-$9852 -Sound
   $9853-$989d Attacks
   $989e-$9c73 Attackers
-  $9c74-$9f4c Chargers
-  $9f4d-$a2a9 Flight
+  $9c74-$9f4f Chargers
+  $9f50-$a352 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$cfbf Sprites
   $f000-$f7ff Charset
