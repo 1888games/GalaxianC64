@@ -26,57 +26,9 @@ BOMBS: {
 	FractionSpeedX:	.fill MAX_ENEMIES + MAX_BOMBS, 0
 	FractionSpeedY:	.fill MAX_ENEMIES + MAX_BOMBS, 0
 
-	BombsLeft:				.fill MAX_ENEMIES, 0
-	ShotTimer:				.fill MAX_ENEMIES, 0
-
-	MoveX:	.byte 0
-	MoveY:	.byte 0
 	ActiveBombs:	.byte 0
 
-	MoveXReverse:	.byte 0
-	MoveYReverse:	.byte 0
-
-	.label MaxY = 250
-
-	PixelLookup:
-
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 2,2,2,1,1,1,0,0,0,0,0,0,0,0,0,0
-	.byte 2,2,2,2,2,1,1,1,1,0,0,0,0,0,0,0
-	.byte 2,2,2,2,2,2,1,1,1,1,1,0,0,0,0,0
-	.byte 2,2,2,2,2,2,2,1,1,1,1,1,1,1,0,0
-	.byte 2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1
-	.byte 2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1
-	.byte 2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1
-	.byte 2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1
-	.byte 2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1
-	.byte 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
-	.byte 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
-	.byte 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
-	.byte 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
-	.byte 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
-
-
-	FractionLookup:
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 188,188,94,233,175,140,117,100,88,78,70,64,58,54,50,47
-	.byte 188,188,188,211,94,24,233,200,175,156,140,127,117,108,100,93
-	.byte 188,188,188,188,13,164,94,44,7,233,210,191,175,162,150,140
-	.byte 188,188,188,188,188,48,211,144,94,55,24,255,233,215,200,187
-	.byte 188,188,188,188,188,188,71,244,182,133,94,62,36,13,250,233
-	.byte 188,188,188,188,188,188,188,88,13,211,164,126,94,67,44,24
-	.byte 188,188,188,188,188,188,188,188,101,32,234,189,152,121,94,71
-	.byte 188,188,188,188,188,188,188,188,188,110,48,253,211,175,144,117
-	.byte 188,188,188,188,188,188,188,188,188,188,118,61,13,229,194,164
-	.byte 188,188,188,188,188,188,188,188,188,188,188,124,71,26,244,211
-	.byte 188,188,188,188,188,188,188,188,188,188,188,188,130,80,38,1
-	.byte 188,188,188,188,188,188,188,188,188,188,188,188,188,134,88,48
-	.byte 188,188,188,188,188,188,188,188,188,188,188,188,188,188,138,95
-	.byte 188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,141
-	.byte 188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188
-
-
+	.label MaxY = 252
 
 	Fire: {
 
@@ -208,17 +160,6 @@ BOMBS: {
 		rts
 	}
 
-	// 0048: 0E 00         ld   c,$00
-	// 004A: 06 08         ld   b,$08
-	// 004C: BA            cp   d
-	// 004D: 38 01         jr   c,$0050
-	// 004F: 92            sub  d
-	// 0050: 3F            ccf
-	// 0051: CB 11         rl   c
-	// 0053: CB 1A         rr   d
-	// 0055: 10 F5         djnz $004C
-	// 0057: C9            ret
-		
 
 	CalculateTangent: {
 
@@ -251,83 +192,6 @@ BOMBS: {
 			
 
 	}
-
-	 CalculateRequiredSpeed: {
-
-	 	lda MoveX
-	 	bpl XNotReverse
-
-	 	MinusX:
-
-		 	eor #%11111111
-		 	clc
-		 	adc #1
-		 	sta MoveX
-
-	 	XNotReverse:
-
-	 	CheckMagnitude:
-
-		 	lda MoveX
-		 	cmp #16
-		 	bcc XOkay
-
-		 	lsr MoveX
-		 	lsr MoveY
-		 	jmp CheckMagnitude
-
-	 	XOkay:
-
-	 		lda MoveY
-	 		cmp #16
-	 		bcc CalculateXSpeed
-
-	 		lsr MoveX
-	 		lsr MoveY
-
-	 		jmp XOkay
-
-
-		CalculateXSpeed:
-
-			lda MoveX
-			asl
-			asl
-			asl
-			asl
-			clc
-			adc MoveY
-			tay
-
-			lda PixelLookup, y
-			sta PixelSpeedX, x
-
-			lda FractionLookup, y
-			sta FractionSpeedX, x
-
-
-		CalculateYSpeed:
-
-			lda MoveY
-			asl
-			asl
-			asl
-			asl
-			clc
-			adc MoveX
-			tay
-
-			lda PixelLookup, y
-			sta PixelSpeedY, x
-
-			lda FractionLookup, y
-			sta FractionSpeedY, x
-
-		rts
-
-
-	 }
-
 
 
 	 CheckMove: {

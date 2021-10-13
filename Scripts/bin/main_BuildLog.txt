@@ -30,54 +30,47 @@ Default-segment:
   $19e7-$1a0a Hmm
   $1a0b-$1e3c Unnamed
   $1e3d-$212d Maploader
-  $212e-$212d WaveMovement
-  $212e-$212d XPaths
-  $212e-$212d YPaths
-  $212e-$2145 WaveStartPos
-  $2146-$21b3 StagesIndex
-  $21b4-$2227 StagesIndexLookup
-  $2228-$2aff Challenge Paths 4-8
-  $2b00-$2b88 VicSpriteTable
-  $2b89-$2e7a IRQ
-  $2e7b-$2f12 Enemy
-  $2f13-$2f62 Enemy Variables
-  $2f63-$2f8a Plan
-  $2f8b-$301c Extra
-  $301d-$3021 Enemies In Wave
-  $3022-$3044 Enemy Ship ID
-  $3045-$3208 Enemies
-  $3209-$3222 Spawn
-  $3223-$32d9 Pathfinding
-  $32da-$358b Stage
-  $358c-$360a Check Complete
-  $360b-$367d Check Spawn
-  $367e-$3874 ---String Data
-  $3875-$39aa ---Text
-  $39ab-$4467 Enemy Data
-  $4468-$44fe Title
-  $44ff-$467d Check Left Finish
+  $212e-$29ff Challenge Paths 4-8
+  $2a00-$2a88 VicSpriteTable
+  $2a89-$2d7a IRQ
+  $2d7b-$2e12 Enemy
+  $2e13-$2e62 Enemy Variables
+  $2e63-$2e8a Plan
+  $2e8b-$2f1c Extra
+  $2f1d-$2f21 Enemies In Wave
+  $2f22-$2f44 Enemy Ship ID
+  $2f45-$3108 Enemies
+  $3109-$3122 Spawn
+  $3123-$31d9 Pathfinding
+  $31da-$3366 Stage
+  $3367-$3406 Check Complete
+  $3407-$35fd ---String Data
+  $35fe-$3733 ---Text
+  $3734-$3bda Enemy Data
+  $3bdb-$3c71 Title
+  $3c72-$3df0 Check Left Finish
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6ea7 Main
+  $6c00-$6ea4 Main
   $7400-$7503 Game Map
   $7504-$7797 Game Tiles
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
   $8158-$84ad Score
-  $84ae-$8900 Bombs
-  $8901-$8ae8 Lives
-  $8ae9-$8dad Pre-Stage
-  $8dae-$8dff -Random
-  $8e00-$8ea9 -Plot
-  $8eaa-$9115 STATS
-  $9116-$9117 GAME OVER
-  $9118-$913c 
-  $913d-$9314 DisplayGameOver
-  $9315-$974d -Sound
-  $974e-$9774 Chargers
-  $9775-$9aa3 Have Alien
-  $9aa4-$9ec1 Flight
+  $84ae-$868e Bombs
+  $868f-$8876 Lives
+  $8877-$8b21 Pre-Stage
+  $8b22-$8b73 -Random
+  $8b74-$8c1d -Plot
+  $8c1e-$8e89 STATS
+  $8e8a-$8e8b GAME OVER
+  $8e8c-$8eb0 
+  $8eb1-$9088 DisplayGameOver
+  $9089-$94c1 -Sound
+  $94c2-$94e8 Chargers
+  $94e9-$9817 Have Alien
+  $9818-$9c35 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$cfbf Sprites
   $f000-$f7ff Charset

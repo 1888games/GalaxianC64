@@ -568,10 +568,10 @@ BULLETS: {
 		GoingRight:
 
 			pla
-			cmp #14
+			cmp #13
 			bcs Missed
 
-			cmp #4
+			cmp #5
 			bcc EndLoop
 
 			jmp NoOffsetCheck

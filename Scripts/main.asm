@@ -26,7 +26,7 @@ MAIN: {
 
 	#import "game/system/stars.asm"
 
-	#import "data/wave_data.asm"
+
 	#import "data/challenge_paths.asm"
 	#import "game/system/multiplexor.asm"
 	#import "game/gameplay/enemy.asm"
@@ -436,8 +436,6 @@ MAIN: {
 		jmp GamePaused
 
 	IsActive:
-
-		jsr SpeedFrameUpdate
 
 		lda GameMode
 		cmp #GAME_MODE_PLAY

@@ -87,11 +87,6 @@ PRE_STAGE: {
 		lda #StartColumn
 		sta TextColumn
 
-		// ldx #RED
-		// lda #TEXT.START
-
-		// jsr TEXT.Draw
-
 		jsr STAGE.NewGame
 
 		rts
@@ -293,29 +288,10 @@ PRE_STAGE: {
 		lda #StageColumn
 		sta TextColumn
 
-		lda #255
-		sta ZP.Amount
-		jsr STAGE.CalculateStageIndex
-
-		cmp #3
-		bcc NormalStage
-
-		ChallengingStage:
-
-			lda #ChallengeColumn
-			sta TextColumn
-
-			jsr ChallengeJingle
-
-			ldx #CYAN
-			lda #TEXT.CHALLENGING_STAGE
-			jsr TEXT.Draw
-			rts
-
 		NormalStage:
 
 			lda #TEXT.STAGE
-			ldx #CYAN
+			ldx #RED
 
 			jsr TEXT.Draw
 
@@ -327,7 +303,7 @@ PRE_STAGE: {
 			clc
 			adc #1
 
-			ldy #CYAN
+			ldy #RED
 
 			ldx #0
 			jsr TEXT.DrawByteInDigits

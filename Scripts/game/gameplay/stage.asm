@@ -98,162 +98,10 @@ STAGE: {
 		rts
 	}
 
-	CalculateStageIndex: {
 
-		ldx CurrentPlayer
-		lda CurrentStage, x
-		clc
-		adc #1
-
-		cmp #2
-		bcc IndexIsTwo
-
-		cmp #1
-		beq IndexIsOne
-
-		and #%00000011
-		sta StageIndex
-
-		cmp #3
-		bcc Finish
-
-		ChallengingStage:
-
-			lda ZP.Amount
-			bmi Finish
-
-			inc ChallengeStage, x
-
-			lda ChallengeStage, x
-			cmp #NumChallengeStages
-			bcc NoWrap
-
-			lda #0
-			sta ChallengeStage, x
-
-		NoWrap:
-
-			clc
-			adc StageIndex
-			sta StageIndex
-
-			rts
-
-		IndexIsOne:	
-
-			lda #1
-			sta StageIndex
-			jmp Finish
-
-
-		IndexIsTwo:	
-
-			lda #2
-			sta StageIndex
-
-		Finish:
-
-			rts
-
-	}
-
-	CalculateFiring: {
-
-		lda #0
-		sta Every
-		sta Bullets
-
-		lda StageIndex
-		cmp #3
-		bcs ChallengingStage
-
-		ldx CurrentPlayer
-		lda CurrentStage, x
-
-		cmp #1
-		bcc Finish
-
-		cmp #2
-		beq EveryFourth
-
-		cmp #7
-		bcs EveryOtherEnemy
-
-		EveryFourth:
-
-			lda #4
-			sta Every
-
-			jmp OneBullet
-
-		EveryThird:
-
-			lda #3
-			sta Every
-
-			jmp OneBullet
-
-		EveryOtherEnemy:
-
-			cmp #10
-			beq Finish
-
-			lda #2
-			sta Every
-
-			jmp OneBullet
-
-		CalcBullets:
-
-			lda CurrentStage, x
-			cmp #5
-			bcc OneBullet
-
-			jsr RANDOM.Get
-			and #%00000001
-			clc
-			adc #1
-			sta Bullets
-			jmp Finish
-
-		OneBullet:
-
-			inc Bullets
-			jmp Finish
-
-		ChallengingStage:
-
-
-		Finish:
-
-
-		rts
-	}
-
-
-
-	ClearSprites: {
-
-		ldx #0
-
-		lda #10
-
-		Loop:
-
-			sta SpriteY, x
-
-			inx
-			cpx #MAX_SPRITES - 2
-			bcc Loop
-
-
-
-		rts
-	}
 
 	GetStageData: {
 
-		jsr ClearSprites
 
 		lda #0
 		sta CurrentWave
@@ -278,25 +126,11 @@ STAGE: {
 
 		lda #0
 		sta ZP.Amount
-		jsr CalculateStageIndex
 
 		asl
 		tax
 
-		lda StageIndexLookup, x
-		sta ZP.StageWaveOrderAddress
-
-		lda StageIndexLookup + 1, x
-		sta ZP.StageWaveOrderAddress + 1
-
-
-		jsr CalculateFiring
-
-		ldx CurrentPlayer
-		lda TransformTypes, x
-		sta TransformType
-
-	
+		
 		jsr UpdateTransformType
 
 		lda #1
@@ -347,10 +181,6 @@ STAGE: {
 		lda #DelayTime
 		sta DelayTimer
 
-		lda StageIndex
-		cmp #3
-		bcc NormalStage
-
 		lda #50
 		sta SpawnTimer
 
@@ -362,69 +192,6 @@ STAGE: {
 		lda #0
 		sta EveryCounter
 		sta WaveKillCount
-
-
-		lda CurrentWaveIDs
-		asl
-		tax
-		lda WaveStartPos, x
-
-		sta StartX
-
-		lda WaveStartPos + 1, x
-		sec
-		sbc #WaveYAdjust
-		sta StartY
-
-
-		lda CurrentWaveIDs + 1
-		asl
-		tax
-		lda WaveStartPos, x
-	
-
-		sta StartX + 1
-
-		lda WaveStartPos + 1, x
-		sec
-		sbc #WaveYAdjust
-		sta StartY + 1
-
-
-		lda CurrentWaveIDs
-		asl
-		tax
-
-		lda X_Paths, x
-		sta ZP.LeftPathAddressX
-
-		lda X_Paths + 1, x
-		sta ZP.LeftPathAddressX + 1
-
-		lda Y_Paths, x
-		sta ZP.LeftPathAddressY
-
-		lda Y_Paths + 1, x
-		sta ZP.LeftPathAddressY + 1
-
-
-		lda CurrentWaveIDs + 1
-		asl
-		tax
-
-		lda X_Paths, x
-		sta ZP.RightPathAddressX
-
-		lda X_Paths + 1, x
-		sta ZP.RightPathAddressX + 1
-
-		lda Y_Paths, x
-		sta ZP.RightPathAddressY
-
-		lda Y_Paths + 1, x
-		sta ZP.RightPathAddressY + 1
-
-
 
 
 		rts
@@ -689,7 +456,7 @@ STAGE: {
 		NoSkip:
 
 		//jsr CheckSoftlock
-		jsr CheckSpawn
+		
 		jsr CheckComplete
 
 		rts
@@ -717,78 +484,6 @@ STAGE: {
 		rts
 	}	
 
-
-	* = * "Check Spawn"
-
-	CheckSpawn: {
-
-
-		CheckAllDone:
-
-			lda SpawnTimer
-			bmi Finish
-
-		CheckIfNewWave:
-
-			lda ReadyNextWave
-			beq NotNewWave
-
-			jmp CheckNewWave
-
-		NotNewWave:
-
-			lda SpawnTimer
-			beq ReadyToSpawn
-
-			dec SpawnTimer
-			jmp Finish
-
-		ReadyToSpawn:
-
-		CheckDelay:
-
-			lda SpawnSide
-			bne Delay
-
-			ldx CurrentWaveIDs
-			lda AllowDelaySkip, x
-			beq Delay
-
-			lda CurrentWaveIDs
-			sec
-			sbc CurrentWaveIDs + 1
-			bne NoDelay
-
-		Delay:
-
-			lda #SpawnGap
-			sta SpawnTimer
-
-		NoDelay:
-
-			ldx SpawnedInWave
-			cpx ENEMY.EnemiesInWave
-			bcc AvailableToSpawn
-
-			jsr CheckEnemies
-
-			jmp Finish
-
-		AvailableToSpawn:
-
-			lda #255
-			sta SoftlockTimer
-
-			//jsr ENEMY.Spawn
-
-			lda SpawnSide  
-			eor #%00000001
-			sta SpawnSide
-
-		Finish:
-
-		rts
-	}
 
 
 	CheckEnemies: {

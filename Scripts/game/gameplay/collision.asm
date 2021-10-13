@@ -1,6 +1,5 @@
 
 
-
 .namespace ENEMY {
 
 	* = * "Enemies"
