@@ -67,6 +67,8 @@ SCORE:{
 		// y = scoreType
 		// x = score index
 
+		sty ZP.Temp2
+
 		lda #0
 		sta ZP.Amount
 

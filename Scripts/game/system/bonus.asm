@@ -5,11 +5,11 @@ BONUS: {
 	Timer:	.byte 255, 255
 	Active:	.byte 0, 0
 
-	Colours:	.byte RED, ORANGE, BLUE, GREEN, CYAN, YELLOW, WHITE
+	Colours:	.byte PURPLE, PURPLE, PURPLE, PURPLE, CYAN, YELLOW, WHITE
 
 
-	.label StartPointer = 138
-	.label StartSpriteID = 10
+	.label StartPointer = 59
+	.label StartSpriteID = 21
 	.label ShowTime = 60
 
 
@@ -40,7 +40,7 @@ BONUS: {
 			EndLoop:
 
 				inx
-				cpx #2
+				cpx #1
 				bcc Loop
 
 

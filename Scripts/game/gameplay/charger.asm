@@ -57,6 +57,8 @@
 
 	AliensAttackRightFlank:		.byte 1
 	FlagshipEscortCount:		.byte 0
+	EscortKillCount:			.byte 0
+	FlagshipActive:				.byte 0
 
 	AliensInColumn:			.fill 10, 0
 
@@ -98,6 +100,7 @@
 		sta FlagshipSurvivorCount
 		sta FlagshipEscortCount
 		sta DifficultyExtraValue
+		sta FlagshipActive
 
 
 		lda #$8
@@ -814,6 +817,10 @@
 
 		lda #0
 		sta ZP.C
+		sta EscortKillCount
+
+		lda #1
+		sta FlagshipActive
 
 		txa
 		clc

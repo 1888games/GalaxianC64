@@ -531,13 +531,18 @@ MAIN: {
 			jsr FORMATION.FrameUpdate		
 			jsr FORMATION.CalculateEnemiesLeft
 		
-			jsr BULLETS.FrameUpdate
+			
 			jsr STAGE.FrameUpdate
 			jsr ENEMY.FrameUpdate
 			jsr CHARGER.FrameUpdate
 			jsr BOMBS.FrameUpdate
 			jsr LIVES.FrameUpdate
 			jsr SHIP.FrameUpdate
+			jsr BULLETS.FrameUpdate
+			
+			
+			jsr BONUS.FrameUpdate
+
 
 			Delay:
 
@@ -643,8 +648,8 @@ MAIN: {
 		// LowByte:			.byte $23, $12, $70, $63, $78, $91, $52, $46, $02, $08, $99, $31, $47, $28, $12
 
 		MillByte:			.byte $00, $00, $00, $00, $00
-		HiByte:				.byte $01, $01, $07, $00, $00
-		MedByte:			.byte $50, $00, $50, $50, $25
+		HiByte:				.byte $01, $01, $00, $00, $00
+		MedByte:			.byte $50, $00, $75, $50, $25
 		LowByte:			.byte $00, $00, $00, $00, $00
 
 * = $a500 "Game ZP Backup"

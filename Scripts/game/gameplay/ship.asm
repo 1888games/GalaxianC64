@@ -47,7 +47,7 @@ SHIP: {
 	GameOver:			.byte 0
 	StartTimer:			.byte 200
 
-	.label MAIN_SHIP_POINTER = 18
+	.label MAIN_SHIP_POINTER = 19
 
 	Initialise: {
 

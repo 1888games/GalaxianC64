@@ -225,34 +225,11 @@
 		pla
 		tax
 
-		lda HitsLeft, x
-		sta ZP.SoundFX
-		beq Destroy
-
-		HitTwoHitter:
-
-			dec HitsLeft, x
-
-			lda #WHITE
-			sta SpriteColor, x
-
-			lda BasePointer, x
-			clc
-			adc #22
-			sta BasePointer, x
-
-			lda SpritePointer, x
-			clc
-			adc #22
-			sta SpritePointer, x
-
-
-			jmp StillEnemiesToDock
-
 		Destroy:
 
 			lda #PLAN_EXPLODE
 			sta Plan, x
+			stx ZP.EnemyID
 
 			lda #0
 			sta ExplosionProgress, x
@@ -281,12 +258,54 @@
 				
 				inc CHARGER.FlagshipHit
 
+				lda #0
+				sta CHARGER.FlagshipActive
+
 				lda #240
 				sta CHARGER.AliensInShockCounter
 
+				lda CHARGER.FlagshipEscortCount
+				beq NotRed
+
+				cmp #1
+				beq TwoHundred
+
+			TwoEscorts:
+
+				lda CHARGER.EscortKillCount
+				cmp #2
+				beq EightHundred
+
+			ThreeHundred:
+
+				ldy #9
+				jmp DoScore
+
+			EightHundred:
+
+				ldy #10
+				jmp DoScore
+
+
+			TwoHundred:
+
+				ldy #8
+				jmp DoScore
+				
 			NotFlagship:
 
+				cmp #ALIEN_RED
+				bne NotRed
+
+				lda CHARGER.FlagshipActive
+				beq NotRed
+
+				inc CHARGER.EscortKillCount
+
+			NotRed:
+
 				sty ZP.EnemyType
+				tya
 				sec
 				sbc ZP.SoundFX
 				
@@ -304,7 +323,6 @@
 				jsr SCORE.AddScore
 
 				ldx ZP.EnemyID
-
 
 				ldy ZP.Temp2
 				lda SCORE.PopupID, y

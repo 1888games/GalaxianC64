@@ -318,7 +318,38 @@ BULLETS: {
 			sta PlayerShooting
 
 			lda CharX, x
-			bmi EndLoop
+			bpl ActiveBullet
+
+		ShowOnShip:
+
+			lda SHIP.Active, x
+			beq DontShow
+
+			lda #YELLOW
+			sta SpriteColor + BulletSpriteID,x
+
+			lda #BulletSpritePointer
+			sta SpritePointer + BulletSpriteID, x
+
+			lda SHIP.PosX_MSB, x
+			sta SpriteX + BulletSpriteID, x
+
+			lda #SHIP.SHIP_Y
+			sec
+			sbc #SpriteYOffset
+			sta SpriteY + BulletSpriteID, x
+
+			jmp EndLoop
+
+		DontShow:
+
+			lda #10
+			sta SpriteY + BulletSpriteID, x
+
+			jmp EndLoop
+
+
+		ActiveBullet:
 
 			lda CharY, x
 			sta ZP.Temp1
@@ -382,8 +413,13 @@ BULLETS: {
 
 			ldx ZP.StoredXReg
 			inx
-			cpx #4
-			bcc BulletLoop
+			cpx #2
+			bcs Done
+
+			jmp BulletLoop
+
+
+		Done:
 
 
 			rts

@@ -3,7 +3,7 @@
 
 
 .label PADDING = 4
-.label MAX_SPRITES = 20
+.label MAX_SPRITES = 23
 
 ZP: {
 
