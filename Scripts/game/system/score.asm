@@ -9,6 +9,7 @@ SCORE:{
 
 	.label CharacterSetStart = 48
 
+	.label ExtraLife = 70
 
 	DrawWhenFree:	.byte 0
 	ScoreInitialised: .byte 0
@@ -20,8 +21,7 @@ SCORE:{
 	PopupID:	.byte $00, $00, $00, $00, $01, $00, $00, $00, $02, $03, $04
 
 
-	NextExtra:		.byte 2, 2
-	CurrentExtra:	.byte 0, 0
+	HadExtra:	.byte 0, 0
 	ExtraNormal:	.byte 0, 0
 
 	Reset:{
@@ -45,19 +45,11 @@ SCORE:{
 		sta Value + 5
 		sta Value + 6
 		sta Value + 7
-		sta ExtraNormal
-		sta ExtraNormal + 1
-		sta CurrentExtra 
-		sta CurrentExtra + 1
 
-		lda #2
-		sta NextExtra
-		sta NextExtra + 1
+		sta HadExtra 
+		sta HadExtra + 1
 
 
-
-
-		
 
 		Finish:
 
@@ -96,90 +88,39 @@ SCORE:{
 			lda Value + 1, x
 			adc #0
 			sta Value + 1, x
-
-			lda ZP.Amount
-			adc #0
 			sta ZP.Amount
 
 		SecondDigit:
 		
 			lda ScoreM, y
-			beq ThirdDigit
+			beq Finish
 			clc
 			adc Value + 1, x
 			sta Value + 1, x
-
-			lda ZP.Amount
-			adc #0
 			sta ZP.Amount
-
-		ThirdDigit:
-
-			lda ScoreH, y
-			beq Finish
-			sta ZP.Amount
-
-			
-		Finish:
 
 			lda Value + 2, x
-			clc
-			adc ZP.Amount
+			adc #0
 			sta Value + 2, x
 
 			lda Value + 3, x
 			adc #0
 			sta Value + 3, x
 
+		Finish:
+
 			ldx STAGE.CurrentPlayer
-			lda CurrentExtra, x
-			clc
-			adc ZP.Amount
-			sta CurrentExtra, x
-
-			cmp #$10
-			bcc CheckAgainstNext
-
-			sec
-			sbc #$10
-			sta CurrentExtra, x
-
-		CheckAgainstNext:
-
-			cmp NextExtra, X
+			lda HadExtra, x
 			bne NotYet
 
-		ExtraLife:
+			lda ZP.Amount
+			cmp #$70
+			bcc NotYet
 
-			lda ExtraNormal, x
-			beq AddFive
-
-		AddSeven:
-
-			lda NextExtra, x
-			clc
-			adc #7
-			sta NextExtra, x
-
-			cmp #$10
-			bcc AddLife
-
-			sec
-			sbc #$10
-			sta NextExtra, X
-
-			jmp AddLife
-
-		AddFive:
-
-			lda NextExtra, x
-			clc
-			adc #5
-			sta NextExtra, x
-
-			inc ExtraNormal, x
+			inc HadExtra, x
 
 		AddLife:
+
 			cld
 			jsr LIVES.Add
 			jmp NowDraw

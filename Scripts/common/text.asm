@@ -83,7 +83,7 @@ TEXT: {
 	Fic:		.text @"fighter captured\$00"	
 	Eni:		.text @"enter your initials !\$00"
 	Sco:		.text @"pos    score    name\$00"
-	Tp5:		.text @"galactic heroes\$00"
+	Tp5:		.text @" galaxip heroes\$00"
 	Nm1:		.text @"1st\$00"
 	Nm2:		.text @"2nd\$00"
 	Nm3:		.text @"3rd\$00"

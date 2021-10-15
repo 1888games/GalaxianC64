@@ -20,7 +20,7 @@ TITLE: {
 
 	Scrolling:		.byte 0
 
-	LogoColours:	.byte CYAN, CYAN, WHITE, CYAN, CYAN, WHITE
+	LogoColours:	.byte GREEN, GREEN, BLUE, BLUE, CYAN, CYAN
 	LogoColour:		.byte 0
 
 	FlipTimer:		.byte 0
@@ -248,6 +248,7 @@ TITLE: {
 
 		lda #0
 		sta INPUT.FIRE_UP_THIS_FRAME + 1
+		sta LogoColour
 
 		lda #DebounceTime
 		sta DebounceTimer
@@ -355,6 +356,8 @@ TITLE: {
 			bcc Loop
 
 		NextRow:
+
+		//	inc LogoColour
 
 			tya
 			clc

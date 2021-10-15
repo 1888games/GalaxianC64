@@ -158,7 +158,7 @@ HI_SCORE:  {
 			adc AddColumn
 			sta TextColumn
 
-			ldx #RED
+			ldx #WHITE
 			lda #TEXT.TOP_5
 
 			jsr TEXT.Draw
@@ -175,7 +175,7 @@ HI_SCORE:  {
 			adc AddColumn
 			sta TextColumn
 
-			ldx #WHITE
+			ldx #RED
 			lda #TEXT.SCORE
 
 			jsr TEXT.Draw

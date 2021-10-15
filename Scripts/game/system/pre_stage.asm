@@ -30,24 +30,23 @@ PRE_STAGE: {
 	  
 	.label StageNumColumn = 17
 
-	BadgeValues:	.byte 50, 30, 20, 10, 5, 1
+	BadgeValues:	.byte 10, 1
 
-	BadgeChars:		.byte 142, 143, 159, 160
-					.byte 140, 141, 157, 158
-					.byte 138, 139, 155, 156
-					.byte 136, 137, 153, 154
-					.byte 43, 44, 60, 61
-					.byte 41, 42, 58, 59
+	BadgeChars:		.byte 44, 58, 43, 59
+					.byte 42, 255,41, 255
+					
 
-	BadgeColours:	.byte WHITE_MULT, YELLOW_MULT, PURPLE_MULT, YELLOW_MULT, WHITE_MULT, WHITE_MULT
+	BadgeColours:	.byte WHITE_MULT, WHITE_MULT
 
 
-	BadgesToShow:	.byte 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	BadgesToShow:	.fill 13, 0
 	NumBadges:		.byte 0
 	BadgeProgress:	.byte 0
 
-	BadgeRows:		.byte 19, 19, 19, 19, 21, 21, 21, 21, 23, 23, 23, 23
-	BadgeColumns:	.byte 29, 31, 33, 35, 29, 31, 33, 35, 29, 31, 33, 35
+	BadgeRows:		.byte 19, 19, 19, 19, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21
+	BadgeColumns:	
+	//.byte 29, 31, 33, 35, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38
+					.byte 30, 32, 34, 36, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39
 	GameStarted:	.byte 0
 
 	NewStage:		.byte 1
@@ -352,8 +351,11 @@ PRE_STAGE: {
 			ldy #1
 			ldx ZP.StoredYReg
 			inc ZP.StoredYReg
-			lda BadgeChars, x
 
+			lda BadgeChars, x
+			bmi BottomLeft
+
+			
 			sta (ZP.ScreenAddress), y
 
 			lda ZP.Colour
@@ -367,7 +369,6 @@ PRE_STAGE: {
 			ldx ZP.StoredYReg
 			inc ZP.StoredYReg
 			lda BadgeChars, x
-
 			sta (ZP.ScreenAddress), y
 
 
@@ -381,6 +382,7 @@ PRE_STAGE: {
 			ldx ZP.StoredYReg
 			inc ZP.StoredYReg
 			lda BadgeChars, x
+			bmi Skip
 
 			sta (ZP.ScreenAddress), y
 
@@ -388,7 +390,7 @@ PRE_STAGE: {
 			sta (ZP.ColourAddress), y
 
 
-
+		Skip:
 
 
 		rts
@@ -446,9 +448,11 @@ PRE_STAGE: {
 		Loop:
 
 			stx ZP.StoredXReg
+			cpx #13
+			beq NoMoreBadges
 
 			lda BadgesToShow, x
-			bmi NoMoreBadges
+			bmi SkipBadge
 			sta ZP.Amount
 
 			asl
@@ -463,7 +467,7 @@ PRE_STAGE: {
 
 			jsr ShowBadge
 
-		
+			
 			lda STAGE.StageIndex
 			cmp #CHALLENGING_STAGE
 			bcs NoSound
@@ -473,7 +477,8 @@ PRE_STAGE: {
 
 			NoSound:
 
-
+			SkipBadge:
+	
 			inc BadgeProgress
 
 			lda #BadgeTime
@@ -494,13 +499,32 @@ PRE_STAGE: {
 
 	CalculateBadges: {
 
+		lda #255
 
+		ldx #0
+
+		Loop:
+
+			sta BadgesToShow, x
+			inx
+			cpx #13
+			bcc Loop
+			
 
 		ldx STAGE.CurrentPlayer
 		lda STAGE.CurrentStage
 		clc
 		adc #1
 		sta ZP.Amount
+
+		cmp #49
+		bcc Okay
+
+		lda #48
+		sta ZP.Amount
+
+		Okay:
+
 
 		ldx #0
 		stx NumBadges
@@ -516,12 +540,11 @@ PRE_STAGE: {
 		NotEnoughLeft:
 
 			inx
-			cpx #6
+			lda #4
+			sta NumBadges
+			cpx #2
 			bcc BadgeLoop
 
-			lda #255
-			ldy NumBadges
-			sta BadgesToShow, y
 			jmp Finish
 
 		AddBadge:

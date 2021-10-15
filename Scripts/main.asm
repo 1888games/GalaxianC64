@@ -41,10 +41,10 @@ MAIN: {
 	#import "data/enemy_data.asm"
 	#import "game/system/title.asm"
 
-
+	#import "game/system/demo.asm"
 	* = $f800
 	#import "game/system/hi_score.asm"
-	#import "game/system/demo.asm"
+
 
 		
 

@@ -12,7 +12,7 @@ LIVES: {
 
 	Chars:	.byte 36, 38, 34, 35
 
-	Columns:	.byte 30, 32, 34, 36, 28, 38, 26
+	Columns:	.byte 31, 33, 35, 37, 28, 38, 26
 				.byte 30, 32, 34, 36, 28, 38, 26
 
 	Rows:		.byte 15, 15, 15, 15, 15, 15, 15
@@ -253,7 +253,7 @@ LIVES: {
 
 			jsr PLOT.PlotCharacter
 
-			lda #WHITE_MULT
+			lda #CYAN_MULT
 
 			jsr PLOT.ColorCharacter
 
@@ -264,7 +264,7 @@ LIVES: {
 			lda Chars + 1
 			sta (ZP.ScreenAddress), y
 
-			lda #WHITE_MULT
+			lda #CYAN_MULT
 			sta (ZP.ColourAddress), y
 
 		BottomLeft:
@@ -274,7 +274,7 @@ LIVES: {
 			lda Chars + 2
 			sta (ZP.ScreenAddress), y
 
-			lda #WHITE_MULT
+			lda #CYAN_MULT
 			sta (ZP.ColourAddress), y
 
 		BottomRight:
@@ -284,7 +284,7 @@ LIVES: {
 			lda Chars + 3
 			sta (ZP.ScreenAddress), y
 
-			lda #WHITE_MULT
+			lda #CYAN_MULT
 			sta (ZP.ColourAddress), y
 			
 

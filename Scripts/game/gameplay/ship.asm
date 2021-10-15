@@ -116,7 +116,7 @@ SHIP: {
 		lda #SPRITE_POINTER
 		sta SpritePointer + MAIN_SHIP_POINTER
 
-		lda #WHITE
+		lda #CYAN
 		sta SpriteColor + MAIN_SHIP_POINTER
 
 		lda #SHIP_Y
@@ -154,7 +154,7 @@ SHIP: {
 		lda #SPRITE_POINTER
 		sta SpritePointer + MAIN_SHIP_POINTER + 1
 
-		lda #WHITE
+		lda #CYAN
 		sta SpriteColor + MAIN_SHIP_POINTER + 1
 
 		lda #SHIP_Y
@@ -320,6 +320,9 @@ SHIP: {
 			sbc #3
 			sta SpriteY + MAIN_SHIP_POINTER	+ 1
 
+			lda #YELLOW
+			sta SpriteColor + MAIN_SHIP_POINTER + 1
+
 			lda ExplosionFrames
 			sta SpritePointer + MAIN_SHIP_POINTER + 1
 
@@ -340,6 +343,9 @@ SHIP: {
 
 			lda ExplosionFrames
 			sta SpritePointer + MAIN_SHIP_POINTER
+
+			lda #YELLOW
+			sta SpriteColor + MAIN_SHIP_POINTER
 
 			lda SpriteX + MAIN_SHIP_POINTER
 			sec
