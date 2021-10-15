@@ -151,9 +151,17 @@ BOMBS: {
 		adc #6
 		bpl Finish
 
-		lda #127
+		jsr RANDOM.Get
+		and #%00011111
+		clc
+		adc #80
 
 		Finish:
+
+
+
+
+		Okay:
 
 
 

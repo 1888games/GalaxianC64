@@ -976,7 +976,7 @@ FORMATION: {
 
 		NotFour:
 
-		cmp #4
+		cpx #4
 		bne NotFive
 
 		jmp Five
