@@ -5,7 +5,7 @@ SCORE:{
 	Value: 	.byte 0, 0, 0, 0	// H M L
 	Value2: .byte 0, 0, 0, 0
 
-	Best: 	.byte 0, 0, 3, 0
+	Best: 	.byte 0, 0, 0, 0
 
 	.label CharacterSetStart = 48
 
@@ -13,11 +13,11 @@ SCORE:{
 	DrawWhenFree:	.byte 0
 	ScoreInitialised: .byte 0
 
-	ScoreH:		.byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ,$00, $00, $00, $00, $01
-	ScoreM:		.byte $00, $01, $00, $01, $01, $04, $08, $16, $10, $10, $15, $20, $30, $01, $10, $20, $30, $00
-	ScoreL:		.byte $50, $00, $80, $60, $50, $00, $00, $00, $00, $00, $00, $00, $00, $60, $00, $00, $00, $00
+	ScoreH:		.byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+	ScoreM:		.byte $00, $00, $00, $00, $01, $01, $00, $00, $02, $03, $08
+	ScoreL:		.byte $60, $50, $40, $30, $50, $00, $80, $60, $00, $00, $00
 	
-	PopupID:	.byte $00, $00, $00, $00, $00, $01, $02, $05, $03, $03, $04, $06, $07, $00, $00, $00, $00, $00
+	PopupID:	.byte $00, $00, $00, $00, $01, $00, $00, $00, $02, $03, $04
 
 
 	NextExtra:		.byte 2, 2
@@ -56,7 +56,6 @@ SCORE:{
 
 
 
-		
 
 		
 
@@ -347,7 +346,7 @@ SCORE:{
 	
 	DrawBest:{
 
-		ldy #7	// screen offset, right most digit
+		ldy #7	//screen offset, right most digit
 		ldx #ZERO	// score byte index
 
 		lda #4

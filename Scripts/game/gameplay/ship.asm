@@ -65,6 +65,14 @@ SHIP: {
 		jsr MainShip
 		jsr Reset
 
+		lda StartTimer
+		bne Finish
+
+		lda #1
+		sta StartTimer
+
+		Finish:
+
 		rts
 	}
 
@@ -349,8 +357,8 @@ SHIP: {
 			lda #1
 			sta ExplodeProgress
 
-			lda #0
-			sta STARS.Scrolling
+			//lda #0
+			//sta STARS.Scrolling
 
 			lda TwoPlayer
 			beq Finish
@@ -422,21 +430,6 @@ SHIP: {
 
 			ldy #0
 
-			// lda PosX_MSB + 1
-			// sec
-			// sbc ZP.Amount
-			// clc
-			// adc OffsetX + 1
-			// sta OffsetX + 1
-
-			// cmp #8
-			// bcc NoWrapOffsetRight
-
-			// sec
-			// sbc #8
-			// sta OffsetX + 1
-
-			// inc CharX + 1
 
 		NoWrapOffsetRight:
 
@@ -489,22 +482,6 @@ SHIP: {
 			ldy #0
 
 
-			// lda PosX_MSB + 1
-			// sec
-			// sbc ZP.Amount
-			// clc
-			// adc OffsetX + 1
-			// sta OffsetX + 1
-
-			// bpl NoWrapOffsetLeft
-
-			// clc
-			// adc #8
-			// sta OffsetX + 1
-
-
-			// dec CharX + 1
-
 		NoWrapOffsetLeft:
 
 		CheckFire:
@@ -523,8 +500,6 @@ SHIP: {
 	}
 	
 	Control: {	
-
-		SetDebugBorder(1)
 
 		//lda CanControl
 		//bne NotDisabled
@@ -587,23 +562,6 @@ SHIP: {
 
 			ldy #1
 
-
-			// lda PosX_MSB
-			// sec
-			// sbc ZP.Amount
-			// clc
-			// adc OffsetX
-			// sta OffsetX
-
-			// cmp #8
-			// bcc NoWrapOffsetRight
-
-			// sec
-			// sbc #8
-			// sta OffsetX
-
-			// inc CharX
-
 		NoWrapOffsetRight:
 
 			jmp CheckFire
@@ -652,22 +610,6 @@ SHIP: {
 
 			ldy #1
 
-
-			// lda PosX_MSB
-			// sec
-			// sbc ZP.Amount
-			// clc
-			// adc OffsetX
-			// sta OffsetX
-
-			// bpl NoWrapOffsetLeft
-
-			// clc
-			// adc #8
-			// sta OffsetX
-
-
-			// dec CharX
 
 		NoWrapOffsetLeft:
 

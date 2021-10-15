@@ -657,10 +657,10 @@ FORMATION: {
 		
 	FrameUpdate: {
 
-		jsr CalculateEnemiesLeft
+	//	jsr CalculateEnemiesLeft
 
-		//inc $d020
-
+		SetDebugBorder(8)
+		
 		lda #0
 		sta ZP.Temp4
 
@@ -756,26 +756,26 @@ FORMATION: {
 				sbc #2
 				sta ScrollValue
 
-			lda DrawIteration
-			cmp #1
+			//lda DrawIteration
+			//cmp #1
 			//beq Start
 
 		Finish:
 
-			lda #0
-			sta TextColumn
-			sta TextRow
+			// lda #0
+			// sta TextColumn
+			// sta TextRow
 
-			ldy #YELLOW
+			// ldy #YELLOW
 
-			lda ScrollValue
-			ldx #0
-			jsr TEXT.DrawByteInDigits
+			// lda ScrollValue
+			// ldx #0
+			// jsr TEXT.DrawByteInDigits
 
 		Exit:
 
-	
-		//dec $d020
+		SetDebugBorder(0)
+
 
 		rts
 	}
@@ -823,15 +823,9 @@ FORMATION: {
 
 			sfxFromA()
 
-
-			lda TypeToScore, y
-			tay
-
 			jsr SCORE.AddScore
 
 			ldx ZP.FormationID
-
-
 
 		NoDelete:
 
@@ -872,7 +866,8 @@ FORMATION: {
 
 	CalculateEnemiesLeft: {
 
-		
+		SetDebugBorder(9)
+
 		jsr ResetFlags
 
 		Loop:
@@ -921,13 +916,31 @@ FORMATION: {
 				cpy #48
 				bcc Loop
 
+			SetDebugBorder(0)
 
 		rts
 
 	}
 
 
+	ClearAll: {
+
+		ldx #0
 	
+		Loop:
+
+			stx DrawIteration
+
+			jsr ClearRow
+
+			inx
+			cpx #6
+			bcc Loop
+
+			
+
+		rts
+	}
 	
 
 	

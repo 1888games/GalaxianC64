@@ -6,8 +6,8 @@ LIVES: {
 
 	.label Lives = 3
 	.label FlashTime = 16
-	.label LabelColumn = 31
-	.label LivesColumn = 28
+	.label LabelColumn = 32
+	.label LivesColumn = 29
 
 
 	Chars:	.byte 36, 38, 34, 35
@@ -385,7 +385,7 @@ LIVES: {
 			lda #LabelColumn
 			sta TextColumn
 
-			ldx #RED
+			ldx #WHITE
 			lda #TEXT.ONE_UP
 
 			jsr TEXT.Draw
@@ -401,7 +401,7 @@ LIVES: {
 			lda #LabelColumn
 			sta TextColumn
 
-			ldx #RED
+			ldx #WHITE
 			lda #TEXT.TWO_UP
 
 			jsr TEXT.Draw

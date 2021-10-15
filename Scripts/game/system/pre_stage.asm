@@ -68,7 +68,7 @@ PRE_STAGE: {
 		sta Progress
 
 		lda #0
-		sta STARS.Scrolling
+		//sta STARS.Scrolling
 		sta GameStarted
 
 		lda #28
@@ -112,6 +112,9 @@ PRE_STAGE: {
 
 			lda NewStage
 			bne IsNewStage
+
+			lda #1
+			sta STARS.Scrolling
 
 			jsr LIVES.Decrease
 			jsr SHIP.Initialise

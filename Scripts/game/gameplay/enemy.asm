@@ -49,6 +49,9 @@
 	// Bashes AXY
 	FrameUpdate: {
 
+		SetDebugBorder(7)
+
+
 		ldx #0
 		stx EnemiesAlive
 
@@ -98,6 +101,8 @@
 
 			lda #0
 			sta FormationUpdated
+
+			SetDebugBorder(0)
 		
 		rts
 	}	

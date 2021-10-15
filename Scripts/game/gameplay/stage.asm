@@ -103,6 +103,9 @@ STAGE: {
 	GetStageData: {
 
 
+		lda #250
+		sta STAGE.SpawnTimer
+
 		lda #0
 		sta CurrentWave
 		sta SoftlockProtect
@@ -327,8 +330,23 @@ STAGE: {
 		jsr MoveIntoFormationMode
 
 		lda #0
-		sta FORMATION.Occupied + 1
+
+		ldy CHARGER.ExtraFlagships
+		cpy #1
+		beq SkipOne
+
+		cpy #2
+		beq SkipTwo
+
+		lda #0
 		sta FORMATION.Occupied + 2
+
+		SkipOne:
+
+		sta FORMATION.Occupied + 1
+
+		SkipTwo:
+
 		sta FORMATION.Mode
 
 
@@ -363,10 +381,6 @@ STAGE: {
 		//sta SCREEN_RAM + 558
 		bne LevelNotComplete
 
-		lda SHIP.Recaptured
-		//sta SCREEN_RAM + 638
-		bne LevelNotComplete
-
 		lda SHIP.Active
 		//sta SCREEN_RAM + 678
 		beq LevelNotComplete
@@ -389,6 +403,9 @@ STAGE: {
 
 			lda #0
 			sta FORMATION.Mode
+
+			lda #1
+			sta CHARGER.LevelComplete
 
 			jsr play_background
 
@@ -486,42 +503,6 @@ STAGE: {
 
 
 
-	CheckEnemies: {
-
-		lda #0
-		sta ZP.Amount
-
-		ldx #0
-
-		Loop:
-
-			lda ENEMY.Plan, x
-			beq EndLoop
-
-			inc ZP.Amount
-
-			EndLoop:
-
-			inx
-			cpx #MAX_ENEMIES
-			bcc Loop
-
-		lda ZP.Amount
-		cmp ENEMY.EnemiesAlive
-		bcs Okay
-
-		sta ENEMY.EnemiesAlive
-		bne Okay
-
-		lda #1
-		sta ReadyNextWave
-		
-
-		Okay:
-
-
-		rts
-	}
 
 
 }

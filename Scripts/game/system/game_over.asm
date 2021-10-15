@@ -178,7 +178,7 @@ END_GAME: {
 		sta VIC.SPRITE_ENABLE
 		
 
-	//	jsr FORMATION.DeleteAll
+		jsr FORMATION.ClearAll
 
 		ldy #OverRow
 		ldx #OverColumn

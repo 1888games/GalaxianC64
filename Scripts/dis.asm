@@ -3359,20 +3359,20 @@ SET_INACTIVE_OR_DYING_SPRITE_STATE:
 
 
 
-//
-// This routine is responsible for processing all 8 elements in the INFLIGHT_ALIENS array. 
-//
+                  //
+                  // This routine is responsible for processing all 8 elements in the INFLIGHT_ALIENS array. 
+                  //
 
-HANDLE_INFLIGHT_ALIENS:
-0CC3: DD 21 B0 42   ld   ix,$42B0            // load IX with address of INFLIGHT_ALIENS
-0CC7: 11 20 00      ld   de,$0020            // sizeof(INFLIGHT_ALIEN)
-0CCA: 06 08         ld   b,$08               // 1 misc + 7 attacking aliens to process
-0CCC: D9            exx
-0CCD: CD D6 0C      call $0CD6               // call HANDLE_INFLIGHT_ALIEN_STAGE_OF_LIFE
-0CD0: D9            exx
-0CD1: DD 19         add  ix,de               // bump IX to point to next INFLIGHT_ALIEN structure
-0CD3: 10 F7         djnz $0CCC               // do while b!=0
-0CD5: C9            ret
+                  HANDLE_INFLIGHT_ALIENS:
+                  0CC3: DD 21 B0 42   ld   ix,$42B0            // load IX with address of INFLIGHT_ALIENS
+                  0CC7: 11 20 00      ld   de,$0020            // sizeof(INFLIGHT_ALIEN)
+                  0CCA: 06 08         ld   b,$08               // 1 misc + 7 attacking aliens to process
+                  0CCC: D9            exx
+                  0CCD: CD D6 0C      call $0CD6               // call HANDLE_INFLIGHT_ALIEN_STAGE_OF_LIFE
+                  0CD0: D9            exx
+                  0CD1: DD 19         add  ix,de               // bump IX to point to next INFLIGHT_ALIEN structure
+                  0CD3: 10 F7         djnz $0CCC               // do while b!=0
+                  0CD5: C9            ret
 
 
 
@@ -3387,34 +3387,34 @@ HANDLE_INFLIGHT_ALIENS:
 // IX = pointer to INFLIGHT_ALIEN structure.
 //
 
-HANDLE_INFLIGHT_ALIEN_STAGE_OF_LIFE:
-0CD6: DD CB 01 46   bit  0,(ix+$01)          // test INFLIGHT_ALIEN.IsDying flag
-0CDA: C2 E4 10      jp   nz,$10E4            // if alien is dying, goto HANDLE_INFLIGHT_ALIEN_DYING
-0CDD: DD CB 00 46   bit  0,(ix+$00)          // test INFLIGHT_ALIEN.IsActive flag 
-0CE1: C8            ret  z                   // exit if not active
+               HANDLE_INFLIGHT_ALIEN_STAGE_OF_LIFE:
+               0CD6: DD CB 01 46   bit  0,(ix+$01)          // test INFLIGHT_ALIEN.IsDying flag
+               0CDA: C2 E4 10      jp   nz,$10E4            // if alien is dying, goto HANDLE_INFLIGHT_ALIEN_DYING
+               0CDD: DD CB 00 46   bit  0,(ix+$00)          // test INFLIGHT_ALIEN.IsActive flag 
+               0CE1: C8            ret  z                   // exit if not active
 
-// We need to determine what stage of life the inflight alien is at, then call the appropriate function to
-// tell it how to behave. 
+               // We need to determine what stage of life the inflight alien is at, then call the appropriate function to
+               // tell it how to behave. 
 
-0CE2: DD 7E 02      ld   a,(ix+$02)          // read INFLIGHT_ALIEN.StageOfLife 
-0CE5: EF            rst  $28                 // jump to code @ $0CE6 + (A*2)
-0CE6: 
-      06 0D         // $0D06                  // INFLIGHT_ALIEN_PACKS_BAGS
-      71 0D         // $0D71                  // INFLIGHT_ALIEN_FLIES_IN_ARC
-      D1 0D         // $0DD1                  // INFLIGHT_ALIEN_READY_TO_ATTACK
-      2B 0E         // $0E2B                  // INFLIGHT_ALIEN_ATTACKING_PLAYER
-      6B 0E         // $0E6B                  // INFLIGHT_ALIEN_NEAR_BOTTOM_OF_SCREEN
-      99 0E         // $0E99                  // INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN
-      07 0F         // $0F07                  // INFLIGHT_ALIEN_RETURNING_TO_SWARM
-      3C 0F         // $0F3C                  // INFLIGHT_ALIEN_CONTINUING_ATTACK_RUN_FROM_TOP_OF_SCREEN 
-      66 0F         // $0F66                  // INFLIGHT_ALIEN_FULL_SPEED_CHARGE 
-      AF 0F         // $0FAF                  // INFLIGHT_ALIEN_ATTACKING_PLAYER_AGGRESSIVELY
-      1F 10         // $101F                  // INFLIGHT_ALIEN_LOOP_THE_LOOP
-      8E 10         // $108E                  // INFLIGHT_ALIEN_COMPLETE_LOOP
-      91 10         // $1091                  // INFLIGHT_ALIEN_UNKNOWN_1091
-      9B 10         // $109B                  // INFLIGHT_ALIEN_CONVOY_CHARGER_SET_COLOUR_POS_ANIM
-      C2 10         // $10C2                  // INFLIGHT_ALIEN_CONVOY_CHARGER_START_SCROLL  
-      D8 10         // $10D8                  // INFLIGHT_ALIEN_CONVOY_CHARGER_DO_SCROLL
+               0CE2: DD 7E 02      ld   a,(ix+$02)          // read INFLIGHT_ALIEN.StageOfLife 
+               0CE5: EF            rst  $28                 // jump to code @ $0CE6 + (A*2)
+               0CE6: 
+                     06 0D         // $0D06                  // INFLIGHT_ALIEN_PACKS_BAGS
+                     71 0D         // $0D71                  // INFLIGHT_ALIEN_FLIES_IN_ARC
+                     D1 0D         // $0DD1                  // INFLIGHT_ALIEN_READY_TO_ATTACK
+                     2B 0E         // $0E2B                  // INFLIGHT_ALIEN_ATTACKING_PLAYER
+                     6B 0E         // $0E6B                  // INFLIGHT_ALIEN_NEAR_BOTTOM_OF_SCREEN
+                     99 0E         // $0E99                  // INFLIGHT_ALIEN_REACHED_BOTTOM_OF_SCREEN
+                     07 0F         // $0F07                  // INFLIGHT_ALIEN_RETURNING_TO_SWARM
+                     3C 0F         // $0F3C                  // INFLIGHT_ALIEN_CONTINUING_ATTACK_RUN_FROM_TOP_OF_SCREEN 
+                     66 0F         // $0F66                  // INFLIGHT_ALIEN_FULL_SPEED_CHARGE 
+                     AF 0F         // $0FAF                  // INFLIGHT_ALIEN_ATTACKING_PLAYER_AGGRESSIVELY
+                     1F 10         // $101F                  // INFLIGHT_ALIEN_LOOP_THE_LOOP
+                     8E 10         // $108E                  // INFLIGHT_ALIEN_COMPLETE_LOOP
+                     91 10         // $1091                  // INFLIGHT_ALIEN_UNKNOWN_1091
+                     9B 10         // $109B                  // INFLIGHT_ALIEN_CONVOY_CHARGER_SET_COLOUR_POS_ANIM
+                     C2 10         // $10C2                  // INFLIGHT_ALIEN_CONVOY_CHARGER_START_SCROLL  
+                     D8 10         // $10D8                  // INFLIGHT_ALIEN_CONVOY_CHARGER_DO_SCROLL
 
 
 

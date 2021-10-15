@@ -34,13 +34,15 @@ STARS: {
 	
 	FrameUpdate: {
 
-		SetDebugBorder(4)
+		SetDebugBorder(14)
 
-		inc FrameTimer
+		 inc FrameTimer
 
-		lda FrameTimer
-		and #%00000001
-		beq Okay4
+		 lda FrameTimer
+		 and #%00000001
+		 beq Okay4
+
+		 SetDebugBorder(0)
 
 		rts
 

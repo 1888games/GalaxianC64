@@ -24,6 +24,7 @@
 
 
 
+
 	PacksBags: {
 
 		
@@ -85,12 +86,19 @@
 
 			lda #0
 			sta ENEMY.Angle, x
-			rts
+			
+			jmp CheckEscorts
 
 		GoingLeft:
 
 			lda #16
 			sta ENEMY.Angle, x
+
+
+		CheckEscorts:
+
+
+
 			// COUNT ESCORTS HERE? CAN'T WE DO IT ELSEWHERE?
 
 
@@ -273,18 +281,18 @@
 
 			lsr
 			clc
-			adc #16
-			cmp #48
+			adc #12
+			cmp #40
 			bcs GreaterEqual48
 
-			lda #48
+			lda #40
 
 		GreaterEqual48:
 
-			cmp #112
+			cmp #100
 			bcc LessThan112
 
-			lda #112
+			lda #100
 
 		LessThan112:
 
@@ -313,18 +321,18 @@
 			lsr
 			ora #%10000000
 			sec
-			sbc #16
-			cmp #208
+			sbc #12
+			cmp #215
 			bcc LessThan208
 
-			lda #-48
+			lda #-40
 
 		LessThan208:
 
-			cmp #144
+			cmp #156
 			bcs GreaterEqual144
 
-			lda #-112
+			lda #-100
 
 		GreaterEqual144:
 
@@ -337,6 +345,11 @@
 
 			lda ENEMY.Plan + 1
 			beq NotRed
+
+			lda SpriteX, x
+			sec
+			sbc SpriteX + 1
+			sta ENEMY.XOffset, x
 
 			lda ENEMY.PivotXValueAdd + 1
 			jmp SetPivotValues	
@@ -356,6 +369,24 @@
 
 			inc SpriteY, x
 
+			cpx #2
+			bcc NotEscort
+
+			cpx #4
+			bcs NotEscort
+
+			lda ENEMY.Plan + 1
+			beq CheckOff
+
+			lda SpriteX + 1
+			clc
+			adc ENEMY.XOffset, x
+			sta SpriteX, x
+
+			jmp CheckOff
+
+		NotEscort:
+
 			lda SpriteX, x
 			sta ZP.B
 
@@ -365,6 +396,8 @@
 			clc
 			adc ENEMY.PivotXValueAdd, x
 			sta SpriteX, x
+
+		CheckOff:
 
 			cmp #9
 			bcc NotOffScreen
@@ -637,12 +670,32 @@
 
 		NoFlyOut:
 
+			cpx #2
+			bcc NotEscort
+
+			cpx #4
+			bcs NotEscort
+
+			lda ENEMY.Plan + 1
+			beq CheckOff
+
+			lda SpriteX + 1
+			clc
+			adc ENEMY.XOffset, x
+			sta SpriteX, x
+
+			jmp CheckOff
+
+		NotEscort:
+
 			jsr Attack_Y_Add
 
 			lda ENEMY.PivotXValue, x
 			clc
 			adc ENEMY.PivotXValueAdd, x
 			sta SpriteX, x
+
+		CheckOff:
 			
 			cmp #9
 			bcc NotOffScreen
@@ -732,8 +785,49 @@
 
 	FlagshipReachedBottom: {
 
+		lda CHARGER.FlagshipEscortCount
+		beq NoEscorts
 
+		lda #0
+		sta CHARGER.FlagshipEscortCount
 
+		CheckEscort1:
+
+			lda ENEMY.Plan + 2
+			beq FirstDead
+
+			cmp #PLAN_EXPLODE
+			beq FirstDead
+
+			inc CHARGER.FlagshipEscortCount
+
+		FirstDead:
+
+			lda ENEMY.Plan + 3
+			beq SecondDead
+			cmp #PLAN_EXPLODE
+			beq SecondDead
+
+			inc CHARGER.FlagshipEscortCount
+
+		SecondDead:
+
+			lda #RETURNING_TO_SWARM
+			sta ENEMY.Plan, x
+			rts
+
+		NoEscorts:
+
+			lda CHARGER.FlagshipSurvivorCount
+			cmp #2
+			bcs Finish
+
+			inc CHARGER.FlagshipSurvivorCount
+
+			lda #PLAN_INACTIVE
+			sta ENEMY.Plan + 1
+
+		Finish:
 
 		rts
 	}

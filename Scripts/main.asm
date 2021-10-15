@@ -138,7 +138,7 @@ MAIN: {
 		jsr TEXT.Draw
 
 
-		//jsr LoadScores
+		jsr LoadScores
 
 		ldx #0
 
@@ -167,7 +167,7 @@ MAIN: {
 	
 	LoadScores: {
 
-		jsr DISK.LOAD
+		//jsr DISK.LOAD
 
 		lda LowByte
 		sta SCORE.Best + 0
@@ -300,9 +300,6 @@ MAIN: {
 
 		rts
 	}
-
-
-
 
 
 	ResetGame: {
@@ -531,32 +528,28 @@ MAIN: {
 
 			sta IRQ.Frame
 
-			lda IRQ.SidTimer
-			cmp #1
-			beq Skip
-
-			jsr STARS.FrameUpdate
-			
+			jsr FORMATION.FrameUpdate		
+			jsr FORMATION.CalculateEnemiesLeft
+		
 			jsr BULLETS.FrameUpdate
 			jsr STAGE.FrameUpdate
 			jsr ENEMY.FrameUpdate
 			jsr CHARGER.FrameUpdate
 			jsr BOMBS.FrameUpdate
-			//jsr LIVES.FrameUpdate
-			//jsr ATTACKS.FrameUpdate
+			jsr LIVES.FrameUpdate
 			jsr SHIP.FrameUpdate
 
 			Delay:
 
-			lda $d012
-			cmp #100
-			bcc Delay
-			
-			jsr FORMATION.FrameUpdate
-		//	jsr BEAM.FrameUpdate
-			//jsr BONUS.FrameUpdate
+				lda $d012
+				cmp #180
 
-			Skip:
+				bcs NoStars
+				jsr STARS.FrameUpdate
+
+			NoStars:
+		
+				Skip:
 
 			jmp Loop
 
@@ -650,8 +643,8 @@ MAIN: {
 		// LowByte:			.byte $23, $12, $70, $63, $78, $91, $52, $46, $02, $08, $99, $31, $47, $28, $12
 
 		MillByte:			.byte $00, $00, $00, $00, $00
-		HiByte:				.byte $07, $05, $03, $02, $01
-		MedByte:			.byte $50, $00, $00, $00, $00
+		HiByte:				.byte $01, $01, $07, $00, $00
+		MedByte:			.byte $50, $00, $50, $50, $25
 		LowByte:			.byte $00, $00, $00, $00, $00
 
 * = $a500 "Game ZP Backup"

@@ -643,6 +643,8 @@ BULLETS: {
 
 	FrameUpdate: {
 
+		SetDebugBorder(5)
+
 		jsr Move
 
 		lda Cooldown + 1
@@ -659,6 +661,8 @@ BULLETS: {
 
 		Finish:
 
+			SetDebugBorder(0)
+			
 			rts
 
 

@@ -60,7 +60,7 @@
 
 	CreateExplosion: {
 
-		jsr GetNextAvailable
+		ldx #0
 
 		lda #PLAN_EXPLODE
 		sta Plan, x
@@ -268,103 +268,37 @@
 //
 		Kamikaze:	
 
-			stx ZP.Temp2
-
-			lda IsExtraEnemy, x
-			bne NotConvoyBoss
-
-			lda Slot, x
-			tax
-			sta ZP.Amount
-
-			
-			ldx ZP.Temp2
-			ldy ZP.Amount
-
-			lda #PLAN_INACTIVE
-			sta FORMATION.Plan, y
-
-			lda #0
-			sta FORMATION.Occupied, y
-			sta FORMATION.Drawn, y
-			
-			lda #$C4
-
-			jsr FORMATION.EnemyKilled
-			
-		NotConvoyBoss:
-
-			lda #0
-			sta ZP.Temp2
-
 			lda Slot, x
 			tay
 			sta ZP.Amount
 
 			lda FORMATION.Type, y
-			cmp #ENEMY_FIGHTER
-			bcc NotFighter
-
-		
-			lda FORMATION.Type, y
-
-		NotFighter:
-
-			cmp #2
-			bcs NotBoss
-
-			pha
-			//lda ATTACKS.ConvoySize, y
-			//sta ZP.Temp2
-			pla
-
-		NotBoss:
-
 			tay
-			sty ZP.EnemyType
-			sec
-			sbc ZP.SoundFX
-			
-			jsr EnemyHitSFX
+			cmp #ALIEN_FLAGSHIP
+			bne NotFlagship
 
-			lda STAGE.StageIndex
-			cmp #3
-			bcc NormalStage
+			IsFlagship:
+				
+				inc CHARGER.FlagshipHit
 
-			Challenging:
+				lda #240
+				sta CHARGER.AliensInShockCounter
 
-				ldy ZP.EnemyType
-				sty ZP.Temp2
-				lda FORMATION.ChallengeToScore, y
-				tay
+			NotFlagship:
 
-				jmp DoScore
+				sty ZP.EnemyType
+				sec
+				sbc ZP.SoundFX
+				
+				jsr EnemyHitSFX
 
 			NormalStage:
 
-				lda FORMATION.Mode
-				//beq Formation
-
-				jsr CheckTransformBonus
-
-				ldy ZP.EnemyType
-				lda FORMATION.TypeToScore, y
+				lda ZP.EnemyType
 				clc
-				adc #1
-				clc
-				adc ZP.Temp2
+				adc #4
 				tay
-				sty ZP.Temp2
-
-				jmp DoScore
-
-
-			Formation:
-
-				ldy ZP.EnemyType
-				lda FORMATION.TypeToScore, y
-				tay
-
+				
 			DoScore:
 
 				jsr SCORE.AddScore

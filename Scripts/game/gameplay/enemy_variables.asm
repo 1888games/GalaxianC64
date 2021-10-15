@@ -47,6 +47,7 @@
 	Repeated:				.byte 0
 	ShootExactY:			.fill MAX_ENEMIES, 0
 	ShootRangeMult:			.fill MAX_ENEMIES, 0
+	XOffset:				.fill MAX_ENEMIES, 0
 
 
 	Quadrant:			.byte 0

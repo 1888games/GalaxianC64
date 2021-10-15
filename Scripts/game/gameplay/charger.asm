@@ -16,11 +16,11 @@
 	AttackSecondaryCounters:	.fill 15, 0
 
 
-	AttackCounterDefaults://	.byte $05, $2F, $43, $77, $71, $6D, $67, $65
-							//.byte $4F, $49, $43, $3D, $3B, $35, $2B, $29
+	AttackCounterDefaults:	.byte $05, $2F, $43, $77, $71, $6D, $67, $65
+							.byte $4F, $49, $43, $3D, $3B, $35, $2B, $29
 
-							.byte 04, 39, 56, 99, 94, 91, 86, 84
-							.byte 66, 61, 56, 51, 49, 44, 36, 34
+							//.byte 04, 39, 56, 99, 94, 91, 86, 84
+							//.byte 66, 61, 56, 51, 49, 44, 36, 34
 
 	* = * "Have Alien"
 	
@@ -31,6 +31,7 @@
 	HaveAliensIn5thRow:		.byte 0
 	HaveAliensIn6thRow:		.byte 0
 	NotUsed:				.byte 0, 0
+	Repeated:				.byte 0
 
 	HaveBluePurpleAliens:	.byte 0
 
@@ -99,12 +100,19 @@
 		sta DifficultyExtraValue
 
 
+		lda #$8
+		sta FlagshipMasterCounter_2
+
+		lda #$30
+		sta FlagshipMasterCounter_1
+
+
 		lda #48
 		sta SwarmAliens
 
 		jsr ResetFlagshipSecondary
 	
-		ldx #1
+		ldx #0
 
 
 		Loop:
@@ -139,15 +147,25 @@
 
 	FrameUpdate: {
 
+		SetDebugBorder(6)
+
 
 		lda MAIN.GameMode
 		cmp #GAME_MODE_PLAY
 		beq GameStuff
 
-			jmp UpdateCounters
+			jsr HandleLevelComplete
+			rts
+		//	jmp UpdateCounters
 
 		GameStuff:
 
+			lda #0
+			sta Repeated
+
+		Repeat:
+
+			jsr HandleFlagshipAttack
 			jsr HandleSingleAlienAttack
 			jsr HandleLevelDifficulty
 			jsr SetAlienAttackFlank
@@ -157,11 +175,23 @@
 			jsr CheckIfFlagshipCanAttack
 			jsr CalculateMinimumShootingDistance
 			jsr HandleAlienAggressiveness
-			jsr HandleLevelComplete
+			
 			jsr HandleShockedSwarm
 
-	
+			lda IRQ.Frame
+			sec
+			sbc MAIN.MachineType
+			adc Repeated
+			bpl DontRepeat
 
+			inc Repeated
+
+			jmp Repeat
+
+		DontRepeat:
+
+	
+		SetDebugBorder(0)
 		rts
 	}
 
@@ -222,13 +252,13 @@
 		dec DifficultyCounter1
 		bne Finish
 
-		lda #50
+		lda #60
 		sta DifficultyCounter1
 
 		dec DifficultyCounter2
 		bne Finish
 
-		lda #7
+		lda #20
 		sta DifficultyCounter2
 
 		lda DifficultyExtraValue
@@ -388,10 +418,10 @@
 
 		SetMultiplier:
 
-			lda #2
+			lda #1
 			sta InflightAlienShootRangeMult
 
-			lda #165
+			lda #160
 			sta InflightAlienShootExactY
 
 			jmp Loop
@@ -435,7 +465,7 @@
 		dec FlagshipMasterCounter_1
 		beq Finish
 
-		lda #50
+		lda #60
 		sta FlagshipMasterCounter_1
 
 		dec FlagshipMasterCounter_2
@@ -448,6 +478,7 @@
 
 		Finish:
 
+		SetDebugBorder(0)
 
 		rts
 	}
@@ -496,7 +527,7 @@
 
 		MasterCounterExpired:
 
-			lda #50
+			lda #60
 			sta FlagshipMasterCounter_1
 
 			lda HaveBluePurpleAliens
@@ -523,6 +554,7 @@
 			beq Finish
 
 		CalculateCountdownBeforeAttack:
+
 
 			lsr
 			lsr
@@ -634,6 +666,228 @@
 	}
 
 
+	HandleFlagshipAttack: {
+
+		
+		InitialCheck:
+
+			lda FlagshipOrRedCanAttack
+			beq Exit
+
+			lda SwarmAliens
+			beq Exit
+
+			lda SHIP.Active
+			beq Exit
+
+			jmp CheckSlot
+
+		Exit:	
+
+			rts
+
+		CheckSlot:
+
+			lda #0
+			sta FlagshipOrRedCanAttack
+
+			lda ENEMY.Plan + 1
+			bne Exit
+
+		WhichSide:
+
+			lda AliensAttackRightFlank
+			bne RightSide
+
+		LeftSide:
+
+			jmp FlagshipLeft
+
+
+		RightSide:
+
+			jmp FlagshipRight
+
+
+		rts
+	}
+
+	FlagshipLeft: {
+
+		ldx #0
+
+		Loop:	
+
+			lda FORMATION.Occupied, x
+			bne FoundFlagship
+
+			EndLoop:
+
+				inx
+				cpx #4
+				bcc Loop
+
+			rts
+				
+
+		ldx #4
+
+		RedLoop:
+			
+			lda FORMATION.Occupied, x
+			bne FoundRed
+
+			inx
+			cpx #10
+			bcc RedLoop
+
+			rts
+
+		FoundRed:
+
+			jmp TryInitInflightAlien
+
+		FoundFlagship:
+
+			lda AliensAttackRightFlank
+
+			stx ZP.SlotID
+
+			ldy #1
+			sty ZP.EnemyID
+			sta ENEMY.ArcClockwise, y
+
+			jmp StartFlagshipAttack
+
+		rts
+	}
+
+	FlagshipRight: {
+
+		ldx #3
+
+		Loop:	
+
+			lda FORMATION.Occupied, x
+			bne FoundFlagship
+
+			EndLoop:
+
+				dex
+				bpl Loop
+
+		ldx #9
+		
+		RedLoop:
+			
+			lda FORMATION.Occupied, x
+			bne FoundRed
+
+			dex
+			cpx #4
+			bcs RedLoop
+
+			rts
+
+		FoundRed:
+
+			jmp TryInitInflightAlien
+
+		FoundFlagship:
+
+			lda AliensAttackRightFlank
+
+			stx ZP.SlotID
+			ldy #1
+			sty ZP.EnemyID
+			sta ENEMY.ArcClockwise, y
+
+			jmp StartFlagshipAttack
+
+	}
+
+
+	StartFlagshipAttack: {
+
+	
+		jsr StartAlienAttack
+
+		lda #0
+		sta ZP.C
+
+		txa
+		clc
+		adc #6
+		tax 
+
+		ldy #3
+
+		Loop:
+
+			sty ZP.StoredYReg
+			stx ZP.X
+
+			lda FORMATION.Occupied, x
+			beq EndLoop
+
+			jsr StartEscortAlien
+
+			lda ZP.C
+			cmp #2
+			bcs Done
+
+			EndLoop:
+
+				ldx ZP.X
+				ldy ZP.StoredYReg
+
+				dex
+				dey
+				bne Loop
+
+				rts
+
+
+		Done:
+
+		lda ZP.C
+		sta FlagshipEscortCount
+
+
+		rts
+	}
+
+	StartEscortAlien: {
+
+		ldy ZP.C
+
+		lda ENEMY.Plan + 2, y
+		bne Finish
+
+		LaunchEscort:
+
+			tya
+			adc #2
+			sta ZP.EnemyID
+
+			tay
+
+			lda AliensAttackRightFlank
+			sta ENEMY.ArcClockwise, y
+
+			jsr StartAlienAttack
+
+			inc ZP.C
+
+		Finish:
+
+		rts
+	}
+
+
+	
+
+
 
 
 	HandleSingleAlienAttack: {
@@ -700,6 +954,44 @@
 		Left:
 
 			jmp SingleLeft
+
+		rts
+	}
+
+	TryInitInflightAlien: {
+
+			stx ZP.SlotID
+
+			ldx #7
+			ldy #4
+
+		Loop:
+
+			lda ENEMY.Plan, x
+			beq Found
+
+			dex
+			dey
+			bne Loop
+
+			rts
+
+		Found:
+
+			lda AliensAttackRightFlank
+			stx ZP.EnemyID
+			sta ENEMY.ArcClockwise, x
+
+			ldx ZP.SlotID
+			
+			jmp StartAlienAttack
+
+		rts
+
+
+
+
+
 
 		rts
 	}
