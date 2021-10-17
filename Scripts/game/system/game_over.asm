@@ -48,7 +48,7 @@ END_GAME: {
 			bcc Loop
 
 		lda #SUBTUNE_DANGER
-		jsr sid.init
+		//jsr sid.init
 
 
 		rts

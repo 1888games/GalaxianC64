@@ -779,6 +779,8 @@
 			lda #CONTINUING_ATTACK
 			sta ENEMY.Plan, x
 
+			sfx(SFX_DIVE)
+
 		rts
 	}
 
@@ -826,6 +828,12 @@
 
 			lda #PLAN_INACTIVE
 			sta ENEMY.Plan + 1
+
+			lda ENEMY.Slot + 1
+			tay
+
+			lda #0
+			sta FORMATION.Alive, y
 
 		Finish:
 
@@ -931,14 +939,74 @@
 
 	ContinuingAttackFromTop: {
 
-		lda #RETURNING_TO_SWARM
+		inc $d020
+
+		inc SpriteY, x
+
+		lda SHIP.PosX_MSB
+		sec
+		sbc SpriteX, x
+
+		asl
+		sta ZP.E
+
+		lda #0
+		sbc #0
+		sta ZP.D
+
+		rol ZP.E
+		rol ZP.D
+
+		lda SpriteX, x
+		sec
+		sbc ZP.D
+		sta SpriteX, x
+
+		lda ENEMY.PivotXValue, x
+		sbc #0
+		sec
+		sbc ZP.E
+		sta ENEMY.PivotXValue,x 
+
+		dec ENEMY.TempCounter1, x
+		bne Finish
+
+		lda #FULL_SPEED_CHARGE
 		sta ENEMY.Plan, x
+
+		Finish:
+
+		dec $d020
+
 		rts
 		
 	}
 
 
 	FullSpeedCharge: {
+
+	
+		inc SpriteY, x
+
+		lda SpriteY, x
+		sec
+		sbc #$60
+		cmp #$40
+		bcc Veer
+
+
+
+		Veer:
+
+
+
+		jsr ReadyToAttack.NotRed
+
+		lda #3
+		sta ENEMY.Speed, x
+
+		lda #100
+		sta ENEMY.TempCounter1, x
 
 
 		rts
@@ -947,9 +1015,112 @@
 	AttackingAggressively: {
 
 
+		lda #0
+		sta ZP.Amount
 
+
+		Repeat:
+
+			inc SpriteY, x
+
+			jsr Attack_Y_Add
+
+			lda ENEMY.SortieCount, x
+			cmp #4
+			beq MaybeTowards
+
+			cmp #5
+			beq Towards
+
+
+		MaybeTowards:
+
+
+
+
+		Towards:
+
+		DoX:
+
+			lda ENEMY.PivotXValue, x
+			clc
+			adc ENEMY.PivotXValueAdd, x
+			sta SpriteX, x
+
+		CheckOff:
+
+			cmp #9
+			bcc NotOffScreen
+
+			cmp #11
+			bcs NotOffScreen
+
+		Off:
+
+			lda #REACHED_BOTTOM_OF_SCREEN
+			sta ENEMY.Plan, x
+			rts
+
+		NotOffScreen:
+
+			lda SpriteY, x
+			clc
+			adc #64
+			bcc CheckLookAt
+
+		NearBottomOfScreen:
+
+			lda #NEAR_BOTTOM_OF_SCREEN
+			sta ENEMY.Plan, x
+			rts
+			
+
+		CheckLookAt:
+
+			lda SHIP.Active
+			beq Shooting
+
+			jsr CalculateLookAtFrame
+
+		Shooting:	
+
+			lda CHARGER.FlagshipHit
+			bne NoShoot
+
+		CanShoot:
+
+			ldy CHARGER.InflightAlienShootRangeMult
+
+			lda SpriteY, x
+
+		RangeLoop:
+	
+			cmp CHARGER.InflightAlienShootExactY
+			beq TrySpawn
+
+			clc
+			adc #25
+			dey
+			bne RangeLoop
+
+			rts
+
+
+		TrySpawn:
+
+			jsr BOMBS.Fire
+
+
+		NoShoot:
 
 		rts
+
+
+
+
+
+
+	
 	}
 
 	LoopTheLoop: {

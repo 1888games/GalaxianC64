@@ -82,7 +82,7 @@ HI_SCORE:  {
 
 		Play:
 
-			jsr sid.init
+			//jsr sid.init
 
 		NoMusic:
 

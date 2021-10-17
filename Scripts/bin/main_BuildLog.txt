@@ -22,15 +22,15 @@ Default-segment:
   $0a2a-$0a46 Input
   $0a47-$0ae4 Joystick
   $0ae5-$0e9b SHIP
-  $0e9c-$0f34 CheckDead
-  $0f35-$126f Bullets
-  $1270-$13d5 Formation
-  $13d6-$14dd Enemies Left
-  $14de-$1a25 Offset
-  $1a26-$1a49 Hmm
-  $1a4a-$1e93 Unnamed
-  $1e94-$218e Maploader
-  $218f-$29ff Challenge Paths 4-8
+  $0e9c-$0f37 CheckDead
+  $0f38-$1272 Bullets
+  $1273-$1371 Formation
+  $1372-$1479 Enemies Left
+  $147a-$19c1 Offset
+  $19c2-$19ea Hmm
+  $19eb-$1e68 Unnamed
+  $1e69-$2163 Maploader
+  $2164-$29ff Challenge Paths 4-8
   $2a00-$2a97 VicSpriteTable
   $2a98-$2d89 IRQ
   $2d8a-$2e35 Enemy
@@ -39,45 +39,45 @@ Default-segment:
   $2eae-$2f47 Extra
   $2f48-$2f4c Enemies In Wave
   $2f4d-$2f6f Enemy Ship ID
-  $2f70-$30f3 Enemies
-  $30f4-$310d Spawn
-  $310e-$31c4 Pathfinding
-  $31c5-$3363 Stage
-  $3364-$33df Check Complete
-  $33e0-$35d6 ---String Data
-  $35d7-$370c ---Text
-  $370d-$3bc2 Enemy Data
-  $3bc3-$3c59 Title
-  $3c5a-$3ddb Check Left Finish
-  $3ddc-$3e95 Demo
+  $2f70-$3109 Enemies
+  $310a-$3123 Spawn
+  $3124-$31da Pathfinding
+  $31db-$3378 Stage
+  $3379-$33f1 Check Complete
+  $33f2-$35e8 ---String Data
+  $35e9-$371e ---Text
+  $371f-$3bd4 Enemy Data
+  $3bd5-$3c6b Title
+  $3c6c-$3ded Check Left Finish
+  $3dee-$3ea7 Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6ea6 Main
+  $6c00-$6ea9 Main
   $7400-$7503 Game Map
   $7504-$7687 Game Tiles
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
   $8158-$8442 Score
-  $8443-$8629 Bombs
-  $862a-$8811 Lives
-  $8812-$8ac4 Pre-Stage
-  $8ac5-$8b16 -Random
-  $8b17-$8bc0 -Plot
-  $8bc1-$8e2c STATS
-  $8e2d-$8e2e GAME OVER
-  $8e2f-$8e53 
-  $8e54-$902e DisplayGameOver
-  $902f-$9487 -Sound
-  $9488-$94ae Chargers
-  $94af-$9911 Have Alien
-  $9912-$9da0 Flight
+  $8443-$8626 Bombs
+  $8627-$880e Lives
+  $880f-$8a93 Pre-Stage
+  $8a94-$8ae5 -Random
+  $8ae6-$8b8f -Plot
+  $8b90-$8dfb STATS
+  $8dfc-$8dfd GAME OVER
+  $8dfe-$8e1f 
+  $8e20-$8ffa DisplayGameOver
+  $8ffb-$94e4 -Sound
+  $94e5-$950b Chargers
+  $950c-$9974 Have Alien
+  $9975-$9ebe Flight
   $a500-$a6ff Game ZP Backup
   $c400-$cfbf Sprites
   $f000-$f7ff Charset
   $f800-$f7ff Unnamed
   $f800-$f829 High Scores
-  $f82a-$fc60 Position
+  $f82a-$fc5d Position
   $fd00-$feff SpriteCharLookup
 
 Writing Vice symbol file: /Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/bin/main.vs

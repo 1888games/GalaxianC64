@@ -231,6 +231,9 @@
 			sta Plan, x
 			stx ZP.EnemyID
 
+			dec drone_max
+			dec drone_max
+
 			lda #0
 			sta ExplosionProgress, x
 
@@ -248,6 +251,9 @@
 			lda Slot, x
 			tay
 			sta ZP.Amount
+
+			lda #0
+			sta FORMATION.Alive, y
 
 			lda FORMATION.Type, y
 			tay
@@ -306,10 +312,10 @@
 
 				sty ZP.EnemyType
 				tya
-				sec
-				sbc ZP.SoundFX
-				
-				jsr EnemyHitSFX
+				clc
+				adc #1
+			
+				sfxFromA()
 
 			NormalStage:
 

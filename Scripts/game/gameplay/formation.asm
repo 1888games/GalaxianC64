@@ -32,16 +32,13 @@ FORMATION: {
 
 
 	Column:		.fill 48, 0
-	HitsLeft:	.fill 40, 1
-				.fill 8, 0
 	Switching:	.byte 0
 
-	Plan:		.fill 48, 0
-	NextPlan:	.fill 48, 0
+	Alive:		.fill 48, 0
 
 	TypeToScore:		.byte 4, 4, 2, 0, 3, 7
-	ChallengeToScore: 	.byte 5, 5, 1, 1, 1, 1
-	Alive:			.byte 0
+	
+
 
 	Stop:			.byte 0
 	Stopping:		.byte 0
@@ -323,34 +320,6 @@ FORMATION: {
 	
 
 
-	
-	EnemyKilled: {
-
-		dec Alive
-
-		lda Alive
-		bmi Error
-		// clc
-	 // 	adc #48
-		// sta SCREEN_RAM + 438
-
-		// lda #1
-		// sta VIC.COLOR_RAM + 438
-
-		rts
-
-		Error:
-
-			//.break
-			nop
-
-
-		rts
-	}
-
-	
-	
-
 		
 
 	DrawEnemy: {
@@ -585,7 +554,8 @@ FORMATION: {
 					sta Offset, x
 
 					inc Column, x
-					
+
+
 					lda Column, x
 					cmp IllegalOffsetRight
 					bne Okay
@@ -756,21 +726,23 @@ FORMATION: {
 				sbc #2
 				sta ScrollValue
 
-			//lda DrawIteration
-			//cmp #1
-			//beq Start
+			lda DrawIteration
+			cmp #1
+			bne Finish
+
+			jmp Start
 
 		Finish:
 
-			// lda #0
-			// sta TextColumn
-			// sta TextRow
+			lda #0
+			sta TextColumn
+			sta TextRow
 
-			// ldy #YELLOW
+			ldy #YELLOW
 
-			// lda ScrollValue
-			// ldx #0
-			// jsr TEXT.DrawByteInDigits
+			lda IllegalOffsetLeft
+			ldx #0
+			jsr TEXT.DrawByteInDigits
 
 		Exit:
 
@@ -785,42 +757,31 @@ FORMATION: {
 
 	Hit: {
 
-		lda HitsLeft, x
-		sta ZP.SoundFX
-		beq Destroy
-
-		dec HitsLeft, x
-
-		sty ZP.FormationID
+		
+		stx ZP.FormationID
 
 		jsr STATS.Hit
 
 		ldx ZP.FormationID
-		
-		//jsr Delete
-		//jsr DrawOne
-		jmp NoDelete
+	
+		Destroy:	
 
-		Destroy:
+			dec drone_max
 
 			lda #$52
 
-			jsr EnemyKilled
-
+		
 			lda #0
 			sta Occupied, x
+			sta Alive, x
 
 			sty ZP.FormationID
 
-			lda #PLAN_INACTIVE
-			sta Plan, x
-			sta NextPlan, x
-
 			lda Type, x
 			tay
-			sec
-			sbc ZP.SoundFX
-
+			clc
+			adc #1
+			
 			sfxFromA()
 
 			jsr SCORE.AddScore
@@ -851,6 +812,7 @@ FORMATION: {
 		sty CHARGER.HaveBluePurpleAliens
 		sty CHARGER.SwarmAliens
 		sty CHARGER.InflightAliens
+		sty CHARGER.AliensInColumn + 0
 		sty CHARGER.AliensInColumn + 1
 		sty CHARGER.AliensInColumn + 2
 		sty CHARGER.AliensInColumn + 3
@@ -872,13 +834,13 @@ FORMATION: {
 
 		Loop:
 
-			lda FORMATION.Occupied, y
+			lda FORMATION.Alive, y
 			beq CheckDive
 
 			* = * "Hmm"
-			
-			inc CHARGER.SwarmAliens
-			inc EnemiesLeftInStage
+
+			lda FORMATION.Occupied, y
+			beq NotHere
 
 			UpdateRowCounts:
 
@@ -890,8 +852,14 @@ FORMATION: {
 				bcc UpdateColumnCounts
 
 				inc CHARGER.HaveBluePurpleAliens
+				inc CHARGER.SwarmAliens
+
+			NotHere:
+
 
 			UpdateColumnCounts:
+
+				inc EnemiesLeftInStage
 
 				lda FORMATION.Relative_Column, y
 				tax
@@ -907,7 +875,6 @@ FORMATION: {
 
 				* = *
 
-				inc EnemiesLeftInStage
 				inc CHARGER.InflightAliens
 
 			EndLoop:
@@ -918,8 +885,61 @@ FORMATION: {
 
 			SetDebugBorder(0)
 
+			jsr CalculateExtents
+
 		rts
 
+	}
+
+	CalculateExtents: {
+
+		ldx #0
+
+		lda #-4
+		sta IllegalOffsetLeft
+
+		lda #4
+		sta IllegalOffsetRight
+
+		Loop:
+
+			lda CHARGER.AliensInColumn, x
+			bne DoneLeft
+
+			dec IllegalOffsetLeft
+			dec IllegalOffsetLeft
+
+			EndLoop:
+
+			inx
+			cpx #5
+			bcc Loop
+
+
+		DoneLeft:
+
+		ldx #9
+
+		lda #4
+		sta IllegalOffsetRight
+
+		Loop2:
+
+			lda CHARGER.AliensInColumn, x
+			bne DoneRight
+
+			inc IllegalOffsetRight
+			inc IllegalOffsetRight
+
+			EndLoop2:
+
+			dex
+			cpx #5
+			bcs Loop2
+
+		DoneRight:
+
+		rts
 	}
 
 

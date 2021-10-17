@@ -905,6 +905,8 @@ SHIP: {
 
 		Starting:
 
+			jsr StartDrone
+
 			lda #1
 			sta Active
 			sta CanControl

@@ -294,6 +294,8 @@
 
 		Ready:
 
+			jsr StopDrone
+
 			lda #0
 			sta LevelComplete
 			sta DifficultyExtraValue
@@ -338,6 +340,8 @@
 
 		inc HaveAggressiveAliens
 
+		jsr StopDrone
+
 		Finish:
 
 		rts
@@ -350,6 +354,8 @@
 		beq Finish
 
 		Shocked:
+
+
 
 			lda HaveAggressiveAliens
 			bne DecreaseShock
@@ -424,7 +430,7 @@
 			lda #1
 			sta InflightAlienShootRangeMult
 
-			lda #160
+			lda #166
 			sta InflightAlienShootExactY
 
 			jmp Loop

@@ -265,23 +265,11 @@ PRE_STAGE: {
 		sta LIVES.Active
 
 
-		//jsr CalculateWaveSpeed
-
 		rts
 	}	
 
 
-	ChallengeJingle: {
-
-
-		sfx(SFX_CH1)
-		sfx(SFX_CH2)
-		sfx(SFX_CH3)
-
-
-		rts
-	}
-
+	
 	ShowStageTitle: {
 
 		lda #StageRow

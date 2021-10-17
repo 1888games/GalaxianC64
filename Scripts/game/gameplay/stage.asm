@@ -312,14 +312,9 @@ STAGE: {
 
 		Loop:
 
-			lda #PLAN_GRID
-			sta FORMATION.Plan, x
-
 			lda #1
 			sta FORMATION.Occupied, x
-
-			lda #0
-			sta FORMATION.HitsLeft, x
+			sta FORMATION.Alive, x
 
 			inx
 			cpx #48
@@ -340,10 +335,12 @@ STAGE: {
 
 		lda #0
 		sta FORMATION.Occupied + 2
+		sta FORMATION.Alive + 2
 
 		SkipOne:
 
 		sta FORMATION.Occupied + 1
+		sta FORMATION.Alive + 1
 
 		SkipTwo:
 
@@ -352,10 +349,6 @@ STAGE: {
 
 		lda #0
 		sta FORMATION.Switching
-
-	//	jsr ATTACKS.AttackReady
-
-
 
 
 		rts
@@ -406,8 +399,6 @@ STAGE: {
 
 			lda #1
 			sta CHARGER.LevelComplete
-
-			jsr play_background
 
 			inc CurrentStage
 

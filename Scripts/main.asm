@@ -531,7 +531,7 @@ MAIN: {
 			jsr FORMATION.FrameUpdate		
 			jsr FORMATION.CalculateEnemiesLeft
 		
-			
+			jsr SFX.FrameUpdate
 			jsr STAGE.FrameUpdate
 			jsr ENEMY.FrameUpdate
 			jsr CHARGER.FrameUpdate

@@ -404,7 +404,7 @@ BOMBS: {
 			bne DontRepeat
 
 			inc ENEMY.Repeated
-			jmp Again
+			//jmp Again
 
 		DontRepeat:
 

@@ -1042,42 +1042,42 @@ COLOUR_ATTRIBUTE_TABLE_3:
 
 
               //
-// Called when aliens are aggressive and refuse to return to the swarm.
-//
-// This routine makes the alien fly from the top of the screen for [TempCounter1] pixels vertically.
-// During this time it won't shoot, but it will gravitate towards the player's horizontal position (as the player sees it).
-// 
-// The trigger for this stage of life is when:
-//     HAVE_AGGRESSIVE_ALIENS is set OR 
-//     HAVE_NO_BLUE_OR_PURPLE_ALIENS flag is set 
-// 
-//
+            // Called when aliens are aggressive and refuse to return to the swarm.
+            //
+            // This routine makes the alien fly from the top of the screen for [TempCounter1] pixels vertically.
+            // During this time it won't shoot, but it will gravitate towards the player's horizontal position (as the player sees it).
+            // 
+            // The trigger for this stage of life is when:
+            //     HAVE_AGGRESSIVE_ALIENS is set OR 
+            //     HAVE_NO_BLUE_OR_PURPLE_ALIENS flag is set 
+            // 
+            //
 
-INFLIGHT_ALIEN_CONTINUING_ATTACK_RUN_FROM_TOP_OF_SCREEN:
-0F3C: DD 34 03      inc  (ix+$03)            // increment INFLIGHT_ALIEN.X
+            INFLIGHT_ALIEN_CONTINUING_ATTACK_RUN_FROM_TOP_OF_SCREEN:
+            0F3C: DD 34 03      inc  (ix+$03)            // increment INFLIGHT_ALIEN.X
 
-// 
-0F3F: 3A 02 42      ld   a,($4202)           // read PLAYER_Y      
-0F42: DD 96 04      sub  (ix+$04)            // subtract INFLIGHT_ALIEN.Y 
+            // 
+            0F3F: 3A 02 42      ld   a,($4202)           // read PLAYER_Y      
+            0F42: DD 96 04      sub  (ix+$04)            // subtract INFLIGHT_ALIEN.Y 
 
-0F45: ED 44         neg                      
-0F47: 17            rla                      // A = A * 2
-0F48: 5F            ld   e,a
-0F49: 9F            sbc  a,a                 // A= 0 - Carry flag
-0F4A: 57            ld   d,a
-0F4B: CB 13         rl   e
-0F4D: CB 12         rl   d                   // DE = DE * 2
-0F4F: DD 66 04      ld   h,(ix+$04)
-0F52: DD 6E 09      ld   l,(ix+$09)          // INFLIGHT_ALIEN.PivotYValue
-0F55: A7            and  a                   // Clear carry flag because..
-0F56: ED 52         sbc  hl,de               // ..there's no sub hl,de instruction in Z80 and we dont want a carry
-0F58: DD 74 04      ld   (ix+$04),h          // update INFLIGHT_ALIEN.Y 
-0F5B: DD 75 09      ld   (ix+$09),l          // update INFLIGHT_ALIEN.PivotYValue
-0F5E: DD 35 10      dec  (ix+$10)            // counter was set @ $0ECF
-0F61: C0            ret  nz
+            0F45: ED 44         neg                      
+            0F47: 17            rla                      // A = A * 2
+            0F48: 5F            ld   e,a
+            0F49: 9F            sbc  a,a                 // A= 0 - Carry flag
+            0F4A: 57            ld   d,a
+            0F4B: CB 13         rl   e
+            0F4D: CB 12         rl   d                   // DE = DE * 2
+            0F4F: DD 66 04      ld   h,(ix+$04)
+            0F52: DD 6E 09      ld   l,(ix+$09)          // INFLIGHT_ALIEN.PivotYValue
+            0F55: A7            and  a                   // Clear carry flag because..
+            0F56: ED 52         sbc  hl,de               // ..there's no sub hl,de instruction in Z80 and we dont want a carry
+            0F58: DD 74 04      ld   (ix+$04),h          // update INFLIGHT_ALIEN.Y 
+            0F5B: DD 75 09      ld   (ix+$09),l          // update INFLIGHT_ALIEN.PivotYValue
+            0F5E: DD 35 10      dec  (ix+$10)            // counter was set @ $0ECF
+            0F61: C0            ret  nz
 
-0F62: DD 34 02      inc  (ix+$02)            // set INFLIGHT_ALIEN.StageOfLife to INFLIGHT_ALIEN_FULL_SPEED_CHARGE
-0F65: C9            ret
+            0F62: DD 34 02      inc  (ix+$02)            // set INFLIGHT_ALIEN.StageOfLife to INFLIGHT_ALIEN_FULL_SPEED_CHARGE
+            0F65: C9            ret
 
 
 
@@ -1091,44 +1091,44 @@ INFLIGHT_ALIEN_CONTINUING_ATTACK_RUN_FROM_TOP_OF_SCREEN:
 // After the loop is complete, the alien will start shooting.
 //
 
-INFLIGHT_ALIEN_FULL_SPEED_CHARGE:
-0F66: DD 34 03      inc  (ix+$03)            // increment INFLIGHT_ALIEN.X
+                INFLIGHT_ALIEN_FULL_SPEED_CHARGE:
+                0F66: DD 34 03      inc  (ix+$03)            // increment INFLIGHT_ALIEN.X
 
-// first check the X coordinate to see if the alien is in the centre 
-0F69: DD 7E 03      ld   a,(ix+$03)          // read INFLIGHT_ALIEN.X 
-0F6C: D6 60         sub  $60                                         
-0F6E: FE 40         cp   $40
-0F70: 30 09         jr   nc,$0F7B            // if INFLIGHT_ALIEN.X-$60 >= $40, we're not centre horizontally   
+                // first check the X coordinate to see if the alien is in the centre 
+                0F69: DD 7E 03      ld   a,(ix+$03)          // read INFLIGHT_ALIEN.X 
+                0F6C: D6 60         sub  $60                                         
+                0F6E: FE 40         cp   $40
+                0F70: 30 09         jr   nc,$0F7B            // if INFLIGHT_ALIEN.X-$60 >= $40, we're not centre horizontally   
 
-// next thing we need to do is check if we have enough space for a loop.
-0F72: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y 
-0F75: D6 60         sub  $60
-0F77: FE 40         cp   $40
-0F79: 38 0C         jr   c,$0F87             // yes, we have space, make alien loop the loop
+                // next thing we need to do is check if we have enough space for a loop.
+                0F72: DD 7E 04      ld   a,(ix+$04)          // read INFLIGHT_ALIEN.Y 
+                0F75: D6 60         sub  $60
+                0F77: FE 40         cp   $40
+                0F79: 38 0C         jr   c,$0F87             // yes, we have space, make alien loop the loop
 
-// otherwise, make the alien veer erratically. 
-0F7B: CD DD 0D      call $0DDD               // call INFLIGHT_ALIEN_DEFINE_FLIGHTPATH
-0F7E: DD 36 18 03   ld   (ix+$18),$03        // set INFLIGHT_ALIEN.Speed to maximum!
-0F82: DD 36 10 64   ld   (ix+$10),$64        // set INFLIGHT_ALIEN.TempCounter1
-0F86: C9            ret
-                     
- 
-0F87: DD 34 02      inc  (ix+$02)
-0F8A: DD 34 02      inc  (ix+$02)            // set INFLIGHT_ALIEN.StageOfLife to INFLIGHT_ALIEN_LOOP_THE_LOOP 
-0F8D: DD 36 10 03   ld   (ix+$10),$03        // set INFLIGHT_ALIEN.TempCounter1 to delay before changing animation frame
-0F91: DD 36 11 0C   ld   (ix+$11),$0C        // set INFLIGHT_ALIEN.TempCounter2 to number of animation frames in total
-0F95: DD 36 05 00   ld   (ix+$05),$00        // set INFLIGHT_ALIEN.AnimationFrame
-0F99: DD 36 13 00   ld   (ix+$13),$00        // set INFLIGHT_ALIEN.ArcTableLsb 
-0F9D: 3A 02 42      ld   a,($4202)           // read PLAYER_Y 
-0FA0: DD 96 04      sub  (ix+$04)            // subtract INFLIGHT_ALIEN.Y 
-0FA3: 38 05         jr   c,$0FAA             // if player to right of alien, make alien loop the loop clockwise
+                // otherwise, make the alien veer erratically. 
+                0F7B: CD DD 0D      call $0DDD               // call INFLIGHT_ALIEN_DEFINE_FLIGHTPATH
+                0F7E: DD 36 18 03   ld   (ix+$18),$03        // set INFLIGHT_ALIEN.Speed to maximum!
+                0F82: DD 36 10 64   ld   (ix+$10),$64        // set INFLIGHT_ALIEN.TempCounter1
+                0F86: C9            ret
+                                     
+                 
+                0F87: DD 34 02      inc  (ix+$02)
+                0F8A: DD 34 02      inc  (ix+$02)            // set INFLIGHT_ALIEN.StageOfLife to INFLIGHT_ALIEN_LOOP_THE_LOOP 
+                0F8D: DD 36 10 03   ld   (ix+$10),$03        // set INFLIGHT_ALIEN.TempCounter1 to delay before changing animation frame
+                0F91: DD 36 11 0C   ld   (ix+$11),$0C        // set INFLIGHT_ALIEN.TempCounter2 to number of animation frames in total
+                0F95: DD 36 05 00   ld   (ix+$05),$00        // set INFLIGHT_ALIEN.AnimationFrame
+                0F99: DD 36 13 00   ld   (ix+$13),$00        // set INFLIGHT_ALIEN.ArcTableLsb 
+                0F9D: 3A 02 42      ld   a,($4202)           // read PLAYER_Y 
+                0FA0: DD 96 04      sub  (ix+$04)            // subtract INFLIGHT_ALIEN.Y 
+                0FA3: 38 05         jr   c,$0FAA             // if player to right of alien, make alien loop the loop clockwise
 
-// alien will perform an anti-clockwise loop
-0FA5: DD 36 06 00   ld   (ix+$06),$00        // reset INFLIGHT_ALIEN.ArcClockwise
-0FA9: C9            ret
+                // alien will perform an anti-clockwise loop
+                0FA5: DD 36 06 00   ld   (ix+$06),$00        // reset INFLIGHT_ALIEN.ArcClockwise
+                0FA9: C9            ret
 
-0FAA: DD 36 06 01   ld   (ix+$06),$01        // set INFLIGHT_ALIEN.ArcClockwise 
-0FAE: C9            ret
+                0FAA: DD 36 06 01   ld   (ix+$06),$01        // set INFLIGHT_ALIEN.ArcClockwise 
+                0FAE: C9            ret
 
 
 
