@@ -24,6 +24,7 @@
 
 
 	ShipX:		.byte 0
+	FlagshipX:	.byte 0
 
 
 	PacksBags: {
@@ -365,7 +366,6 @@
 		lda #0
 		sta ZP.Amount
 
-
 		Repeat:
 
 			inc SpriteY, x
@@ -376,8 +376,27 @@
 			cpx #4
 			bcs NotEscort
 
+		IsEscort:
+
 			lda ENEMY.Plan + 1
-			beq CheckOff
+			bne UseFlagship
+
+		PretendFlagship:
+
+			ldx #1
+			lda SpriteX, x
+			sta ZP.B
+
+			jsr Attack_Y_Add	
+
+			lda ENEMY.PivotXValue, x
+			clc
+			adc ENEMY.PivotXValueAdd, x
+			sta SpriteX, x
+
+			ldx ZP.EnemyID
+
+		UseFlagship:
 
 			lda SpriteX + 1
 			clc
@@ -677,8 +696,27 @@
 			cpx #4
 			bcs NotEscort
 
+			IsEscort:
+
 			lda ENEMY.Plan + 1
-			beq CheckOff
+			bne UseFlagship
+
+		PretendFlagship:
+
+			ldx #1
+			lda SpriteX, x
+			sta ZP.B
+
+			jsr Attack_Y_Add	
+
+			lda ENEMY.PivotXValue, x
+			clc
+			adc ENEMY.PivotXValueAdd, x
+			sta SpriteX, x
+
+			ldx ZP.EnemyID
+
+		UseFlagship:
 
 			lda SpriteX + 1
 			clc

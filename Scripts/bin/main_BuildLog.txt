@@ -39,17 +39,17 @@ Default-segment:
   $2ec4-$2f5d Extra
   $2f5e-$2f62 Enemies In Wave
   $2f63-$2f85 Enemy Ship ID
-  $2f86-$311f Enemies
-  $3120-$3139 Spawn
-  $313a-$31f0 Pathfinding
-  $31f1-$338e Stage
-  $338f-$3407 Check Complete
-  $3408-$35ff ---String Data
-  $3600-$3735 ---Text
-  $3736-$3beb Enemy Data
-  $3bec-$3c82 Title
-  $3c83-$3e04 Check Left Finish
-  $3e05-$3f02 Demo
+  $2f86-$3129 Enemies
+  $312a-$3143 Spawn
+  $3144-$31fa Pathfinding
+  $31fb-$3398 Stage
+  $3399-$3411 Check Complete
+  $3412-$3609 ---String Data
+  $360a-$373f ---Text
+  $3740-$3bf5 Enemy Data
+  $3bf6-$3c8c Title
+  $3c8d-$3e0e Check Left Finish
+  $3e0f-$3f0c Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6ea9 Main
@@ -58,20 +58,20 @@ Default-segment:
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
-  $8158-$8442 Score
-  $8443-$8626 Bombs
-  $8627-$880e Lives
-  $880f-$8a93 Pre-Stage
-  $8a94-$8ae5 -Random
-  $8ae6-$8b8f -Plot
-  $8b90-$8dfb STATS
-  $8dfc-$8dfd GAME OVER
-  $8dfe-$8e1f 
-  $8e20-$8ffa DisplayGameOver
-  $8ffb-$94e4 -Sound
-  $94e5-$950b Chargers
-  $950c-$9974 Have Alien
-  $9975-$9f34 Flight
+  $8158-$8445 Score
+  $8446-$8629 Bombs
+  $862a-$8811 Lives
+  $8812-$8a96 Pre-Stage
+  $8a97-$8ae8 -Random
+  $8ae9-$8b92 -Plot
+  $8b93-$8dfe STATS
+  $8dff-$8e00 GAME OVER
+  $8e01-$8e22 
+  $8e23-$8ffd DisplayGameOver
+  $8ffe-$94e7 -Sound
+  $94e8-$950e Chargers
+  $950f-$9977 Have Alien
+  $9978-$9f60 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset

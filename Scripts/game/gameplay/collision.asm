@@ -107,6 +107,11 @@
 		HitShip:
 
 			jsr SHIP.KillMainShip
+
+			lda #0
+			sta BULLETS.PlayerShooting
+
+
 			jmp KillShip
 
 		CheckDualShip:
@@ -130,6 +135,10 @@
 		HitDualShip:
 
 			jsr SHIP.KillDualShip
+
+			lda #1
+			sta BULLETS.PlayerShooting
+
 
 		KillShip:
 
