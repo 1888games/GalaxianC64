@@ -154,7 +154,7 @@ SHIP: {
 		lda #SPRITE_POINTER
 		sta SpritePointer + MAIN_SHIP_POINTER + 1
 
-		lda #CYAN
+		lda #WHITE
 		sta SpriteColor + MAIN_SHIP_POINTER + 1
 
 		lda #SHIP_Y
@@ -682,13 +682,14 @@ SHIP: {
 	UpdateSprites: {
 
 		lda Active
-		beq Finish
+		beq CheckSecond
 
 		lda StartTimer
 		beq Override
 
 		lda #10
 		sta SpriteY + MAIN_SHIP_POINTER
+
 		rts
 
 		Override:
@@ -700,13 +701,17 @@ SHIP: {
 			lda #SHIP_Y
 			sta SpriteY + MAIN_SHIP_POINTER
 
+		CheckSecond:
+
 			lda TwoPlayer
 			bne ShowSecondShip
 
-			lda DualFighter
-			beq HideSecondShip
+			jmp Finish
 
 		ShowSecondShip:
+
+			lda Active + 1
+			beq HideSecondShip
 
 			lda PosX_MSB + 1
 			sta SpriteX + MAIN_SHIP_POINTER + 1
@@ -718,10 +723,6 @@ SHIP: {
 
 		HideSecondShip:
 
-			lda Docked
-			clc
-			adc Recaptured
-			bne Finish
 
 			lda ExplodeProgress + 1
 			cmp #255
@@ -910,6 +911,10 @@ SHIP: {
 			lda #1
 			sta Active
 			sta CanControl
+
+			lda TwoPlayer
+			sta Active + 1
+			sta CanControl + 1
 
 			ldy #PRE_STAGE.StageRow
 			ldx #PRE_STAGE.StageColumn

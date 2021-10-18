@@ -281,25 +281,25 @@ BULLETS: {
 
 	SetupSprite: {
 
-		lda BulletSpriteX
-		sta SpriteX + BulletSpriteID
+		lda BulletSpriteX, x
+		sta SpriteX + BulletSpriteID,x
 
 		lda #YELLOW
-		sta SpriteColor + BulletSpriteID
+		sta SpriteColor + BulletSpriteID,x
 
 		lda #BulletSpritePointer
-		sta SpritePointer + BulletSpriteID
+		sta SpritePointer + BulletSpriteID,x
 
-		lda SpriteY_MSB
-		sta SpriteY + BulletSpriteID
+		lda SpriteY_MSB,x
+		sta SpriteY + BulletSpriteID,x
 
 		rts
 	}
 
 	UpdateSprite: {
 
-		lda SpriteY_MSB
-		sta SpriteY + BulletSpriteID
+		lda SpriteY_MSB, x
+		sta SpriteY + BulletSpriteID, x
 
 
 		rts

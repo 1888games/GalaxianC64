@@ -21,16 +21,16 @@ Default-segment:
   $09de-$0a29 Utility
   $0a2a-$0a46 Input
   $0a47-$0ae4 Joystick
-  $0ae5-$0e9b SHIP
-  $0e9c-$0f37 CheckDead
-  $0f38-$1272 Bullets
-  $1273-$1371 Formation
-  $1372-$1479 Enemies Left
-  $147a-$19c1 Offset
-  $19c2-$19ea Hmm
-  $19eb-$1e68 Unnamed
-  $1e69-$2163 Maploader
-  $2164-$29ff Challenge Paths 4-8
+  $0ae5-$0e95 SHIP
+  $0e96-$0f3a CheckDead
+  $0f3b-$1275 Bullets
+  $1276-$1374 Formation
+  $1375-$147c Enemies Left
+  $147d-$19c4 Offset
+  $19c5-$19ed Hmm
+  $19ee-$1e6b Unnamed
+  $1e6c-$2166 Maploader
+  $2167-$29ff Challenge Paths 4-8
   $2a00-$2a97 VicSpriteTable
   $2a98-$2d89 IRQ
   $2d8a-$2e35 Enemy
