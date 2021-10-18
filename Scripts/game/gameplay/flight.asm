@@ -23,6 +23,7 @@
 	.byte $01, $00, $01, $00, $01, $00, $01 
 
 
+	ShipX:		.byte 0
 
 
 	PacksBags: {
@@ -274,7 +275,7 @@
 
 			lda SpriteX, x
 			sec
-			sbc SHIP.PosX_MSB
+			sbc ShipX
 			bcc AlienToLeft
 
 		AlienToRight:
@@ -468,7 +469,7 @@
 
 	CalculateLookAtFrame: {
 
-		lda SHIP.PosX_MSB
+		lda ShipX
 		sec
 		sbc SpriteX, x
 		bcs ShipToRight
@@ -779,8 +780,6 @@
 			lda #CONTINUING_ATTACK
 			sta ENEMY.Plan, x
 
-			sfx(SFX_DIVE)
-
 		rts
 	}
 
@@ -828,12 +827,6 @@
 
 			lda #PLAN_INACTIVE
 			sta ENEMY.Plan + 1
-
-			lda ENEMY.Slot + 1
-			tay
-
-			lda #0
-			sta FORMATION.Alive, y
 
 		Finish:
 
@@ -943,7 +936,7 @@
 
 		inc SpriteY, x
 
-		lda SHIP.PosX_MSB
+		lda ShipX
 		sec
 		sbc SpriteX, x
 
@@ -985,7 +978,9 @@
 
 	FullSpeedCharge: {
 
-	
+		lda #4
+		sta $d020
+
 		inc SpriteY, x
 
 		lda SpriteY, x
@@ -995,18 +990,61 @@
 		bcc Veer
 
 
+		CheckLoop:
+
+			lda SpriteX, x
+			sec
+			sbc #96
+			cmp #80
+			bcs Veer
+
+		Loop:
+
+			.break
+
+			lda #LOOP_THE_LOOP
+			sta ENEMY.Plan, x
+
+			lda #3
+			sta ENEMY.TempCounter1, x
+
+			lda #8
+			sta ENEMY.TempCounter2, x
+
+			lda #0
+			sta ENEMY.ArcTableLSB, x
+
+			lda ShipX
+			sec
+			sbc SpriteX, x
+			bcc Left
+
+
+		Right:
+
+			lda #1
+			sta ENEMY.ArcClockwise, x
+			rts
+
+
+		Left:
+
+			lda #0
+			sta ENEMY.ArcClockwise, x
+			rts
 
 		Veer:
 
+			jsr ReadyToAttack.NotRed
 
+			lda #3
+			sta ENEMY.Speed, x
 
-		jsr ReadyToAttack.NotRed
+			lda #100
+			sta ENEMY.TempCounter1, x
 
-		lda #3
-		sta ENEMY.Speed, x
+			dec $d020
 
-		lda #100
-		sta ENEMY.TempCounter1, x
 
 
 		rts
@@ -1014,6 +1052,7 @@
 
 	AttackingAggressively: {
 
+		.break
 
 		lda #0
 		sta ZP.Amount
@@ -1032,13 +1071,31 @@
 			cmp #5
 			beq Towards
 
+			jmp DoX
 
 		MaybeTowards:
 
-
-
+			lda ZP.Counter
+			and #%00000001
+			beq DoX
 
 		Towards:
+
+			lda ShipX
+			sec
+			sbc ENEMY.PivotXValue, x
+			bcc ShipToLeft
+
+		ShipToLeft:
+
+			dec ENEMY.PivotXValue, x
+			jmp DoX
+
+
+		ShipToRight:
+
+
+			inc ENEMY.PivotXValue, x
 
 		DoX:
 
@@ -1117,15 +1174,58 @@
 
 
 
-
-
-
 	
 	}
 
 	LoopTheLoop: {
 
-		
+		rts
+
+		lda ENEMY.ArcTableLSB, x
+		sta ZP.DataAddress
+
+		lda #$1E
+		sta ZP.DataAddress + 1
+
+		ldy #0
+
+		lda SpriteX, x
+		sec
+		sbc (ZP.DataAddress), y
+		sta SpriteX, x
+
+		iny
+
+		lda ENEMY.ArcClockwise, y
+		bne Clockwise
+
+
+		AntiClockwise:
+
+			lda SpriteY, x
+			sec	
+			sbc (ZP.DataAddress), y
+			sta SpriteY, x
+
+			lda ENEMY.ArcTableLSB, x
+			clc
+			adc #2
+			sta ENEMY.ArcTableLSB, x
+
+
+		Clockwise:
+
+			lda SpriteY, x
+			clc
+			adc (ZP.DataAddress), y
+			sta SpriteY, x
+
+			lda ENEMY.ArcTableLSB, x
+			clc
+			adc #2
+			sta ENEMY.ArcTableLSB, x
+
+
 
 
 		rts

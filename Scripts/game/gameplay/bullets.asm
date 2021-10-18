@@ -17,10 +17,10 @@ BULLETS: {
 
 	CharLookups:	.byte 179, 180, 181, 182
 	Cooldown:		.byte CooldownTime, CooldownTime
-	MaxBullets:		.byte 1, 4
+	MaxBullets:		.byte 1, 1
 	BulletToDie:	.byte 0
 	PlayerShooting:	.byte 0
-	PlayerLookup:	.byte 0, 0, 1, 1
+	PlayerLookup:	.byte 0, 1, 0, 1
 
 	.label SPEED_MSB = 4
 	.label SPEED_LSB = 220
@@ -54,7 +54,7 @@ BULLETS: {
 
 		CooldownExpired:
 
-			ldx #2
+			ldx #1
 
 		CheckOneBullet:
 
@@ -80,6 +80,7 @@ BULLETS: {
 			sfx(SFX_FIRE)
 
 		NoSFX:
+
 
 			lda #SHIP.CharY
 			sta CharY, x
@@ -407,6 +408,7 @@ BULLETS: {
 			lda #1
 			sta Cooldown
 
+			ldx ZP.StoredXReg
 			jsr KillBullet
 
 		EndLoop:
@@ -432,16 +434,15 @@ BULLETS: {
 	KillBullet: {
 
 		lda #10
-		sta SpriteY + BulletSpriteID
+		sta SpriteY + BulletSpriteID, x
 
-		ldx #0
 		lda #255
 		sta CharX, x
 
 		lda SHIP.TwoPlayer
 		beq OnePlayer
 
-		cpx #2
+		cpx #1
 		bcc OnePlayer
 
 		dec ActiveBullets + 1

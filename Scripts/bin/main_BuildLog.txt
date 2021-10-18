@@ -21,40 +21,40 @@ Default-segment:
   $09de-$0a29 Utility
   $0a2a-$0a46 Input
   $0a47-$0ae4 Joystick
-  $0ae5-$0e95 SHIP
-  $0e96-$0f3a CheckDead
-  $0f3b-$1275 Bullets
-  $1276-$1374 Formation
-  $1375-$147c Enemies Left
-  $147d-$19c4 Offset
-  $19c5-$19ed Hmm
-  $19ee-$1e6b Unnamed
-  $1e6c-$2166 Maploader
-  $2167-$29ff Challenge Paths 4-8
+  $0ae5-$0e97 SHIP
+  $0e98-$0f3c CheckDead
+  $0f3d-$1277 Bullets
+  $1278-$1376 Formation
+  $1377-$1482 Enemies Left
+  $1483-$19e1 Offset
+  $19e2-$1a0a Hmm
+  $1a0b-$1e88 Unnamed
+  $1e89-$2183 Maploader
+  $2184-$29ff Challenge Paths 4-8
   $2a00-$2a97 VicSpriteTable
   $2a98-$2d89 IRQ
-  $2d8a-$2e35 Enemy
-  $2e36-$2e85 Enemy Variables
-  $2e86-$2ead Plan
-  $2eae-$2f47 Extra
-  $2f48-$2f4c Enemies In Wave
-  $2f4d-$2f6f Enemy Ship ID
-  $2f70-$3109 Enemies
-  $310a-$3123 Spawn
-  $3124-$31da Pathfinding
-  $31db-$3378 Stage
-  $3379-$33f1 Check Complete
-  $33f2-$35e8 ---String Data
-  $35e9-$371e ---Text
-  $371f-$3bd4 Enemy Data
-  $3bd5-$3c6b Title
-  $3c6c-$3ded Check Left Finish
-  $3dee-$3ea7 Demo
+  $2d8a-$2e4b Enemy
+  $2e4c-$2e9b Enemy Variables
+  $2e9c-$2ec3 Plan
+  $2ec4-$2f5d Extra
+  $2f5e-$2f62 Enemies In Wave
+  $2f63-$2f85 Enemy Ship ID
+  $2f86-$311f Enemies
+  $3120-$3139 Spawn
+  $313a-$31f0 Pathfinding
+  $31f1-$338e Stage
+  $338f-$3407 Check Complete
+  $3408-$35fe ---String Data
+  $35ff-$3734 ---Text
+  $3735-$3bea Enemy Data
+  $3beb-$3c81 Title
+  $3c82-$3e03 Check Left Finish
+  $3e04-$3ebd Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6ea9 Main
   $7400-$7503 Game Map
-  $7504-$7687 Game Tiles
+  $7504-$767f Game Tiles
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
@@ -71,7 +71,7 @@ Default-segment:
   $8ffb-$94e4 -Sound
   $94e5-$950b Chargers
   $950c-$9974 Have Alien
-  $9975-$9ebe Flight
+  $9975-$9f34 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$cfbf Sprites
   $f000-$f7ff Charset

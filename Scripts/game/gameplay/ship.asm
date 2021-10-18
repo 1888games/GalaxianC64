@@ -158,7 +158,7 @@ SHIP: {
 		sta SpriteColor + MAIN_SHIP_POINTER + 1
 
 		lda #SHIP_Y
-		sta SpriteY + MAIN_SHIP_POINTER + 1
+		//sta SpriteY + MAIN_SHIP_POINTER + 1
 
 		lda #0
 		sta BULLETS.PlayerLookup + 2
@@ -173,11 +173,11 @@ SHIP: {
 			sta SpriteX + MAIN_SHIP_POINTER + 1
 			sta PosX_MSB + 1
 
-			lda #145
+			lda #SPRITE_POINTER
 			sta SpritePointer + MAIN_SHIP_POINTER + 1
 
 			lda #1
-			sta Active + 1
+		//	sta Active + 1
 
 			lda #14
 			sta CharX + 1
@@ -687,8 +687,11 @@ SHIP: {
 		lda StartTimer
 		beq Override
 
+		HideBoth:
+
 		lda #10
 		sta SpriteY + MAIN_SHIP_POINTER
+		sta SpriteY + MAIN_SHIP_POINTER + 1
 
 		rts
 
@@ -702,6 +705,9 @@ SHIP: {
 			sta SpriteY + MAIN_SHIP_POINTER
 
 		CheckSecond:
+
+			lda StartTimer
+			bne HideBoth
 
 			lda TwoPlayer
 			bne ShowSecondShip

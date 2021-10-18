@@ -102,7 +102,7 @@ BOMBS: {
 		sbc SpriteY, x
 		sta ZP.D
 
-		lda SHIP.PosX_MSB
+		lda CHARGER.ShipX
 		sec
 		sbc SpriteX, x
 		bcs DontNegate

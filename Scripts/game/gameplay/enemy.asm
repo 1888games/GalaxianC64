@@ -55,6 +55,21 @@
 		ldx #0
 		stx EnemiesAlive
 
+		lda SHIP.PosX_MSB
+		sta CHARGER.ShipX
+
+		lda SHIP.TwoPlayer
+		beq UseP1
+
+		lda ZP.Counter
+		and #%00000001
+		tay
+
+		lda SHIP.PosX_MSB, y
+		sta CHARGER.ShipX
+
+		UseP1:
+
 		Loop:
 
 			stx ZP.EnemyID

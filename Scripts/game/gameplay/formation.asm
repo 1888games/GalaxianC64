@@ -55,8 +55,8 @@ FORMATION: {
 	EnemiesLeftInStage:	.byte 0
 
 
-	TypeToColour:		.byte YELLOW + 8, RED + 8, PURPLE + 8, CYAN + 8
-
+	TypeToColour:		.byte YELLOW + 8, YELLOW + 8, PURPLE + 8, CYAN + 8
+	TypeCharAdd:		.byte 0, 78, 0, 0
 
 	CurrentRow:	.byte 255
 
@@ -100,7 +100,7 @@ FORMATION: {
 
 	TopLeftChar:		.byte 184, 184, 188, 188, 192, 192, 208, 213
 	TopMiddleChar:		.byte 185, 185, 189, 189, 193, 193, 209, 209
-	TopRightChar:		.byte 000, 188, 000, 192, 196, 213, 212, 212
+	TopRightChar:		.byte 000, 188, 000, 192, 196, 156, 212, 212
 	BottomLeftChar:		.byte 187, 187, 191, 191, 195, 195, 000, 000
 	BottomMiddleChar:	.byte 186, 186, 190, 190, 194, 194, 210, 210
 	BottomRightChar:	.byte 000, 191, 000, 192, 000, 000, 211, 211
@@ -340,6 +340,9 @@ FORMATION: {
 		lda TypeToColour, y
 		sta ZP.Colour
 
+		lda TypeCharAdd, y
+		sta ZP.Temp4
+
 
 		lda Offset, x
 		asl
@@ -444,6 +447,8 @@ FORMATION: {
 			ldy ZP.Column
 			ldx ZP.CharID
 			lda TopLeftChars, x
+			clc
+			adc ZP.Temp4
 			sta (ZP.ScreenAddress), y
 
 			lda ZP.Colour
@@ -451,12 +456,16 @@ FORMATION: {
 
 			iny
 			lda TopMiddleChars, x
+			clc
+			adc ZP.Temp4
 			sta (ZP.ScreenAddress), y
 			lda ZP.Colour
 			sta (ZP.ColourAddress), y
 
 			iny
 			lda TopRightChars, x
+			clc
+			adc ZP.Temp4
 			sta (ZP.ScreenAddress), y
 			lda ZP.Colour
 			sta (ZP.ColourAddress), y
@@ -468,18 +477,24 @@ FORMATION: {
 			tay
 
 			lda BottomLeftChars, x
+			clc
+			adc ZP.Temp4
 			sta (ZP.ScreenAddress), y
 			lda ZP.Colour
 			sta (ZP.ColourAddress), y
 
 			iny
 			lda BottomMiddleChars, x
+			clc
+			adc ZP.Temp4
 			sta (ZP.ScreenAddress), y
 			lda ZP.Colour
 			sta (ZP.ColourAddress), y
 
 			iny
 			lda BottomRightChars, x
+			clc
+			adc ZP.Temp4
 			sta (ZP.ScreenAddress), y
 			lda ZP.Colour
 			sta (ZP.ColourAddress), y
