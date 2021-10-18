@@ -84,7 +84,7 @@ BULLETS: {
 
 			lda #SHIP.CharY
 			clc
-			adc #1
+			adc #2
 			sta CharY, x
 			
 			lda SHIP.CharX + 1, y
@@ -213,7 +213,7 @@ BULLETS: {
 
 			lda #SHIP.CharY
 			clc
-			adc #1
+			adc #2
 			sta CharY, x
 			
 			lda SHIP.CharX, y
@@ -396,7 +396,7 @@ BULLETS: {
 
 			dec CharY, x
 			lda CharY, x
-			cmp #252
+			cmp #253
 			beq BulletDead
 
 

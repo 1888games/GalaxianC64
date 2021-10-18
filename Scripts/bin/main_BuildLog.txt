@@ -58,20 +58,20 @@ Default-segment:
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
-  $8158-$8445 Score
-  $8446-$8629 Bombs
-  $862a-$8811 Lives
-  $8812-$8a96 Pre-Stage
-  $8a97-$8ae8 -Random
-  $8ae9-$8b92 -Plot
-  $8b93-$8dfe STATS
-  $8dff-$8e00 GAME OVER
-  $8e01-$8e22 
-  $8e23-$8ffd DisplayGameOver
-  $8ffe-$94e7 -Sound
-  $94e8-$950e Chargers
-  $950f-$9977 Have Alien
-  $9978-$9f60 Flight
+  $8158-$843f Score
+  $8440-$8623 Bombs
+  $8624-$880b Lives
+  $880c-$8a90 Pre-Stage
+  $8a91-$8ae2 -Random
+  $8ae3-$8b8c -Plot
+  $8b8d-$8df8 STATS
+  $8df9-$8dfa GAME OVER
+  $8dfb-$8e1c 
+  $8e1d-$8ff7 DisplayGameOver
+  $8ff8-$94e1 -Sound
+  $94e2-$9508 Chargers
+  $9509-$9971 Have Alien
+  $9972-$9f5a Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset

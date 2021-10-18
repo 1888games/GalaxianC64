@@ -72,13 +72,7 @@ SCORE:{
 		lda #0
 		sta ZP.Amount
 
-		lda BULLETS.PlayerShooting
-		beq Okay
-
-		.break
-		nop
-
-
+		
 		Okay:
 		asl
 		asl
