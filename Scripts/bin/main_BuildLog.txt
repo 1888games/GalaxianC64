@@ -49,7 +49,7 @@ Default-segment:
   $3736-$3beb Enemy Data
   $3bec-$3c82 Title
   $3c83-$3e04 Check Left Finish
-  $3e05-$3ebe Demo
+  $3e05-$3f02 Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6ea9 Main

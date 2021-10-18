@@ -16,7 +16,7 @@ al C:263a .Mir_YChallange_5_2
 al C:24f6 .Mir_YChallange_5_1
 al C:3c .ShowTime
 al C:1a27 .CalculateExtents
-al C:3e6b .ColourRows
+al C:3ea1 .ColourRows
 al C:a .RECAPTURE_PLAYER_MOVE_Y
 al C:9 .RECAPTURE_PLAYER_MOVE_X
 al C:f62 .PlayerShooting
@@ -89,6 +89,7 @@ al C:1659 .PreviousPosition
 al C:17 .StageOrderID
 al C:1a .NUM_START
 al C:a9b .DownUp
+al C:3e30 .FirstNumber
 al C:aeb .Dead
 al C:17a7 .NormalEnemy
 al C:2f5d .Quadrant
@@ -125,7 +126,7 @@ al C:1b .PATH_BEE_ATTACK_MIR
 al C:2da7 .ClearData
 al C:34 .XReached
 al C:f82e .AddColumn
-al C:3eba .NoFire__0
+al C:3efe .NoFire__0
 al C:fc2a .NoFire__1
 al C:fc54 .NoFire__2
 al C:137d .EnemiesLeftInStage
@@ -403,6 +404,7 @@ al C:f9fd .Names
 al C:30c5 .TwoHundred
 al C:8171 .ScoreM
 al C:817c .ScoreL
+al C:3ed7 .FlipCheck
 al C:9c2d .CalcY
 al C:1388 .RightMinColumn
 al C:8166 .ScoreH
@@ -497,7 +499,7 @@ al C:e9d .SkipCheck
 al C:a57 .CheckFire__0
 al C:d37 .CheckFire__1
 al C:dd0 .CheckFire__2
-al C:3ea1 .CheckFire__3
+al C:3ee5 .CheckFire__3
 al C:fc3b .CheckFire__4
 al C:a6e .CheckFireUp
 al C:b10 .NewStage__0
@@ -885,7 +887,7 @@ al C:b .LOOP_THE_LOOP
 al C:3b66 .SpriteLookupY
 al C:9e32 .FullSpeedCharge
 al C:94eb .CanAlienAttack
-al C:3e84 .ColumnLoop
+al C:3eba .ColumnLoop
 al C:e8 .MAX_SHIP_X
 al C:3166 .XNotReverse
 al C:0 .ZERO
@@ -960,7 +962,7 @@ al C:2cce .NoSpritesExit
 al C:8b31 .GetCharacter
 al C:96d0 .CalculateMinimumShootingDistance
 al C:1f15 .Tile
-al C:3eb7 .Title
+al C:3efb .Title
 al C:f67 .ActiveBullets
 al C:e52 .ExplosionInProcess
 al C:c .PATH_CHALLANGE_1_1
@@ -986,13 +988,14 @@ al C:33ff .Okay__8
 al C:36eb .Okay__9
 al C:3c8d .Okay__10
 al C:3cce .Okay__11
-al C:8528 .Okay__12
-al C:8a67 .Okay__13
-al C:8aee .Okay__14
-al C:8b27 .Okay__15
-al C:968d .Okay__16
-al C:9c1e .Okay__17
-al C:6e31 .Okay__18
+al C:3e83 .Okay__12
+al C:8528 .Okay__13
+al C:8a67 .Okay__14
+al C:8aee .Okay__15
+al C:8b27 .Okay__16
+al C:968d .Okay__17
+al C:9c1e .Okay__18
+al C:6e31 .Okay__19
 al C:fec .AbortFire__0
 al C:1092 .AbortFire__1
 al C:9d75 .SecondDead
@@ -1029,6 +1032,7 @@ al C:a33 .JOY_UP_LAST
 al C:f7b .CooldownExpired__0
 al C:1002 .CooldownExpired__1
 al C:29bd .Mir_YChallange_8_2
+al C:3ed4 .ReadyToNum
 al C:2916 .Mir_YChallange_8_1
 al C:f .HITS
 al C:32b7 .UpdateTransformType
@@ -1495,7 +1499,7 @@ al C:3c5e .Loop__19
 al C:3d50 .Loop__20
 al C:3d8d .Loop__21
 al C:3df2 .Loop__22
-al C:3e6d .Loop__23
+al C:3ea3 .Loop__23
 al C:f921 .Loop__24
 al C:f9ff .Loop__25
 al C:852f .Loop__26
@@ -1554,7 +1558,7 @@ al C:f45 .SpriteY_LSB__0
 al C:3bbe .SpriteY_LSB__1
 al C:8a84 .AddBadge
 al C:8b19 .CheckCanOverwrite
-al C:3e93 .FrameCode__0
+al C:3ec9 .FrameCode__0
 al C:fc2b .FrameCode__1
 al C:6da2 .FrameCode__2
 al C:2 .ZP
@@ -1794,6 +1798,7 @@ al C:3c0a .LogoColour
 al C:8 .NumChallengeStages
 al C:f827 .TextIDs
 al C:14 .EnemyID
+al C:3e5a .DrawFlagshipScore
 al C:3408 .TEXT
 al C:9eb3 .DoX
 al C:4 .SUBTUNE_HI_SCORE
@@ -1824,7 +1829,7 @@ al C:f28 .Ready__1
 al C:18bb .Ready__2
 al C:2f8f .Ready__3
 al C:3d8c .Ready__4
-al C:3ebb .Ready__5
+al C:3eff .Ready__5
 al C:fb25 .Ready__6
 al C:fc55 .Ready__7
 al C:87b3 .Ready__8
@@ -1892,7 +1897,7 @@ al C:1 .TRUE
 al C:0 .SFX_FIRE
 al C:28 .DelayTime__0
 al C:5 .DelayTime__1
-al C:5 .DelayTime__2
+al C:32 .DelayTime__2
 al C:2 .DelayTime__3
 al C:7 .FlashTime__0
 al C:10 .FlashTime__1
@@ -2064,7 +2069,7 @@ al C:9516 .FlagshipMasterCounter_1
 al C:874f .CantAdd
 al C:3682 .Next
 al C:3063 .NotTransform
-al C:3e30 .Show__0
+al C:3e39 .Show__0
 al C:f839 .Show__1
 al C:e38 .ShowSecondShip
 al C:13 .NameColumn
@@ -2073,7 +2078,7 @@ al C:1f06 .TileRowLoop
 al C:a3d .JOY_UP_NOW
 al C:20c4 .MovingDown
 al C:8750 .DrawShip
-al C:3e4e .ColourAliens
+al C:3e84 .ColourAliens
 al C:6e5f .NoStars
 al C:3064 .Kill
 al C:10 .SPRITE_POINTER
@@ -2113,6 +2118,8 @@ al C:f9af .NoCopy
 al C:902d .NotReady
 al C:96b1 .HandleShockedSwarm
 al C:f9f5 .PopulateTable
+al C:3e34 .SecondNumber
+al C:3e38 .Sequence
 al C:10d9 .DontShow
 al C:3 .MAX_EXPLOSIONS
 al C:7 .RETURNING_TO_SWARM

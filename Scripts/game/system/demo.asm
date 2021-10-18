@@ -2,12 +2,13 @@ DEMO: {
 
 	* = * "Demo"
 
-	.label DelayTime = 5
+	.label DelayTime = 50
 	.label FlipTime = 250
 
 
 	DelayTimer:	.byte DelayTime
 	FlipTimer:	.byte 0
+
 
 
 	Progress:	.byte 0
@@ -20,7 +21,10 @@ DEMO: {
 	StartColumn:	.byte 10, 8, 8, 12, 14, 14, 14, 14, 7
 
 
+	FirstNumber:	.byte 1, 2, 3, 8
+	SecondNumber:	.byte 5, 0, 0, 0
 
+	Sequence:		.byte 0
 
 
 	Show: {
@@ -29,6 +33,8 @@ DEMO: {
 		sta MAPLOADER.CurrentMapID
 
 		jsr MAPLOADER.DrawMap
+
+		jsr DrawFlagshipScore
 
 
 		lda #GAME_MODE_DEMO
@@ -45,6 +51,43 @@ DEMO: {
 
 		rts
 	}
+
+
+
+	DrawFlagshipScore: {
+
+		ldx Sequence
+		lda FirstNumber, x
+
+		clc
+		adc #48
+		sta SCREEN_RAM + 502
+
+		lda SecondNumber, x
+		
+		clc
+		adc #48
+		sta SCREEN_RAM + 503
+
+		lda #DelayTime
+		sta DelayTimer
+
+		inc Sequence
+		lda Sequence
+		cmp #4
+		bcc Okay
+
+		lda #0
+		sta Sequence
+
+
+		Okay:
+
+
+		rts
+	}
+
+
 
 	ColourAliens: {
 
@@ -109,6 +152,19 @@ DEMO: {
 	}
 
 	FrameCode: {
+
+		lda DelayTimer
+		beq ReadyToNum
+
+		dec DelayTimer
+		jmp FlipCheck
+
+		ReadyToNum:	
+
+			jsr DrawFlagshipScore
+
+		FlipCheck:
+
 
 		lda FlipTimer
 		beq Ready

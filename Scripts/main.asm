@@ -158,6 +158,7 @@ MAIN: {
 
 		sfx(SFX_COIN)
 
+
 		jmp ShowTitleScreen	
 
 		jmp InitialiseGame

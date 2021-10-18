@@ -2378,27 +2378,35 @@
 .label PATH_TOP_DOUBLE_LEFT_MIR=$3
 .label drone_max=$8fff
 .label DEMO=$3e05 {
+  .label FirstNumber=$3e30
   .label Progress=$3e07
   .label FlipTime=$fa
+  .label SecondNumber=$3e34
+  .label DrawFlagshipScore=$3e5a {
+    .label Okay=$3e83
+  }
   .label DelayTimer=$3e05
   .label FlipTimer=$3e06
-  .label DelayTime=$5
-  .label ColourRows=$3e6b {
-    .label Loop=$3e6d
-    .label ColumnLoop=$3e84
+  .label Sequence=$3e38
+  .label DelayTime=$32
+  .label ColourRows=$3ea1 {
+    .label Loop=$3ea3
+    .label ColumnLoop=$3eba
   }
   .label StartColumn=$3e27
-  .label FrameCode=$3e93 {
-    .label NoFire=$3eba
-    .label Ready=$3ebb
-    .label CheckFire=$3ea1
-    .label Title=$3eb7
+  .label FrameCode=$3ec9 {
+    .label NoFire=$3efe
+    .label Ready=$3eff
+    .label CheckFire=$3ee5
+    .label FlipCheck=$3ed7
+    .label Title=$3efb
+    .label ReadyToNum=$3ed4
   }
-  .label ColourAliens=$3e4e {
+  .label ColourAliens=$3e84 {
   }
   .label Colours=$3e1e
   .label Sprite1=$3e08
-  .label Show=$3e30 {
+  .label Show=$3e39 {
   }
   .label Rows=$3e15
 }
