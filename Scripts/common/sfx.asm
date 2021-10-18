@@ -213,7 +213,7 @@ StopChannel0: {
 .label SFX_THEME = 9
 .label SFX_SWARM = 10
 
-channels:	.byte 0, 0, 0, 0, 0, 1, 2, 2, 1, 2, 2
+channels:	.byte 0, 0, 0, 0, 0, 1, 2, 1, 1, 2, 2
 
 sfx_fire: .import binary "../../Assets/goattracker/fire.sfx"
 sfx_hitG1: .import binary "../../Assets/goattracker/hitG1.sfx"

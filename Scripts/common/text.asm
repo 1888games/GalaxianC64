@@ -70,7 +70,7 @@ TEXT: {
 	Rea:	.text @"get ready\$00"	
 	Onu:	.text @"1 up\$00"	
 	Twu:	.text @"2 up\$00"	
-	Gmo:	.text @"game over\$00"	
+	Gmo:	.text @"game  over\$00"	
 	Res:	.text @"-results-\$00"	
 	Shf:	.text @"shots fired\$00"
 	Nmh:	.text @"number of hits\$00"		

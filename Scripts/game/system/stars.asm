@@ -1,7 +1,7 @@
 STARS: {
 
 
-	.label MAX_STARS = 24
+	.label MAX_STARS = 32
 	.label FlashTime = 7
 
 	Columns:	.fill MAX_STARS, random() * 38 + 1

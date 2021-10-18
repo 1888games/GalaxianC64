@@ -8,7 +8,7 @@ END_GAME: {
 	.label GameOverTime = 75
 	.label StatsTime = 250
 	.label OverRow = 14
-	.label OverColumn = 10
+	.label OverColumn = 9
 
 
 	.label StatsColumn = 1

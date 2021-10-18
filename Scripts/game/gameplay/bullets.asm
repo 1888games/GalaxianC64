@@ -83,6 +83,8 @@ BULLETS: {
 
 
 			lda #SHIP.CharY
+			clc
+			adc #1
 			sta CharY, x
 			
 			lda SHIP.CharX + 1, y
@@ -210,6 +212,8 @@ BULLETS: {
 		NoSFX:
 
 			lda #SHIP.CharY
+			clc
+			adc #1
 			sta CharY, x
 			
 			lda SHIP.CharX, y
@@ -392,8 +396,10 @@ BULLETS: {
 
 			dec CharY, x
 			lda CharY, x
-			cmp #253
+			cmp #252
 			beq BulletDead
+
+
 			
 			jsr UpdateSprite
 			jsr CheckFormationCollision
@@ -404,7 +410,7 @@ BULLETS: {
 
 		BulletDead:
 
-			
+
 			lda #1
 			sta Cooldown
 

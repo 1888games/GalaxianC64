@@ -2,7 +2,7 @@
 	* = * "Enemy Data"
 
 
-	EnemyTypeFrameStart:		.byte 17, 33, 33, 33, 33
+	EnemyTypeFrameStart:		.byte 17, 63, 33, 33, 33
 	Colours:					.byte YELLOW, YELLOW, YELLOW, CYAN, WHITE, WHITE
 	ExplosionFrames:			.byte 50, 51, 52, 53
 	ExplosionColours:			.byte WHITE, YELLOW, YELLOW, YELLOW, YELLOW, WHITE
