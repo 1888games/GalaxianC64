@@ -115,6 +115,12 @@ PRE_STAGE: {
 			lda #1
 			sta STARS.Scrolling
 
+			lda #$6
+			sta CHARGER.FlagshipMasterCounter_2
+
+			lda #$40
+			sta CHARGER.FlagshipMasterCounter_1
+
 			jsr LIVES.Decrease
 			jsr SHIP.Initialise
 			jsr SHIP.SecondShip

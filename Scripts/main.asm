@@ -460,11 +460,13 @@ MAIN: {
 		GameOver:
 
 			jsr PLEXOR.Sort
+			jsr FORMATION.FrameUpdate	
 			jsr LIVES.FrameUpdate
 			jsr STARS.FrameUpdate
 			jsr END_GAME.FrameUpdate
 			jsr BONUS.FrameUpdate
 			jsr CHARGER.FrameUpdate
+
 
 			jmp Loop
 		
@@ -508,6 +510,7 @@ MAIN: {
 			jsr PRE_STAGE.FrameUpdate
 			jsr LIVES.FrameUpdate
 			jsr BONUS.FrameUpdate
+		//	jsr SHIP.FrameUpdate
 			jsr CHARGER.FrameUpdate
 
 			jmp Loop
@@ -650,7 +653,7 @@ MAIN: {
 
 		MillByte:			.byte $00, $00, $00, $00, $00
 		HiByte:				.byte $01, $01, $00, $00, $00
-		MedByte:			.byte $50, $00, $75, $50, $25
+		MedByte:			.byte $50, $00, $75, $40, $10
 		LowByte:			.byte $00, $00, $00, $00, $00
 
 * = $a500 "Game ZP Backup"

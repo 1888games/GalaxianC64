@@ -135,8 +135,8 @@ TITLE: {
 
 		lda Infinite
 		eor #%00000001
-		lda Infinite
-		lda VIC.BORDER_COLOR
+		sta Infinite
+		sta VIC.BORDER_COLOR
 
 		 //nop
 		 //nop

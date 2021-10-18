@@ -177,7 +177,7 @@ END_GAME: {
 		lda #0
 		sta VIC.SPRITE_ENABLE
 		
-
+		
 		jsr FORMATION.ClearAll
 
 		ldy #OverRow

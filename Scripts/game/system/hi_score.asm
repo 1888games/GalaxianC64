@@ -375,7 +375,7 @@ HI_SCORE:  {
 			lda #0
 			sta InitialPosition
 
-			lda #32
+			lda #1
 			sta FirstInitials, x
 
 			lda #32
@@ -424,10 +424,112 @@ HI_SCORE:  {
 	}
 
 
+	PopulateTop: {
+
+		.label rowUse = 7
+
+		lda Mode
+		beq Finish
+
+		ldx PlayerPosition
+
+		Name:
+
+			ldy #rowUse
+		
+			lda #NameColumn
+			clc
+			adc #4
+			tax
+
+			lda #YELLOW
+			sta ZP.Colour
+
+			jsr PLOT.GetCharacter
+
+			ldx ZP.StartID
+			lda FirstInitials, x
+
+			ldy #0
+			sta (ZP.ScreenAddress), y
+
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			lda SecondInitials, x
+
+			iny
+			sta (ZP.ScreenAddress), y
+
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+			lda ThirdInitials, x
+
+			iny
+			sta (ZP.ScreenAddress), y
+
+			lda ZP.Colour
+			sta (ZP.ColourAddress), y
+
+		Score:
+
+			
+			lda #YELLOW
+			sta ZP.Colour
+
+			ldy #rowUse
+
+			lda #ScoreColumn
+			clc
+			adc #4
+			tax
+
+			jsr PLOT.GetCharacter
+
+			ldx PlayerPosition
+
+			lda MillByte, x
+			sta Scores + 3
+
+			lda HiByte, x
+			sta Scores + 2
+
+			lda MedByte, x
+			sta Scores + 1
+
+			lda LowByte, x
+			sta Scores
+
+			jsr DrawScore
+
+		Position:
+
+			lda #rowUse
+			sta TextRow
+
+			lda #NumberColumn
+			clc
+			adc #4
+			sta TextColumn
+
+			ldx #YELLOW
+			lda #TEXT.NUM_START
+			clc
+			adc PlayerPosition
+
+			jsr TEXT.Draw
+
+		Finish:
+
+		rts
+	}
+
 	PopulateTable: {
 
+		jsr PopulateTop
 
-	//	jsr PopulateHeader
+		//jsr PopulateHeader
 
 		ldx Screen
 		lda StartIndexes, x

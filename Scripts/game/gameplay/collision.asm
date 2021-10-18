@@ -279,7 +279,7 @@
 				lda #240
 				sta CHARGER.AliensInShockCounter
 
-				lda CHARGER.FlagshipEscortCount
+				lda CHARGER.StartEscortCount
 				beq NotRed
 
 				cmp #1

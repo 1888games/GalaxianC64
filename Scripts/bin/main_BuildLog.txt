@@ -28,9 +28,9 @@ Default-segment:
   $137d-$1488 Enemies Left
   $1489-$19e7 Offset
   $19e8-$1a10 Hmm
-  $1a11-$1e8e Unnamed
-  $1e8f-$21b9 Maploader
-  $21ba-$29ff Challenge Paths 4-8
+  $1a11-$1e9a Unnamed
+  $1e9b-$21c5 Maploader
+  $21c6-$29ff Challenge Paths 4-8
   $2a00-$2a97 VicSpriteTable
   $2a98-$2d89 IRQ
   $2d8a-$2e4b Enemy
@@ -52,32 +52,32 @@ Default-segment:
   $3e0f-$3f0c Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6ea9 Main
+  $6c00-$6eac Main
   $7400-$7503 Game Map
   $7504-$767f Game Tiles
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
   $8158-$843f Score
-  $8440-$8623 Bombs
-  $8624-$880b Lives
-  $880c-$8a90 Pre-Stage
-  $8a91-$8ae2 -Random
-  $8ae3-$8b8c -Plot
-  $8b8d-$8df8 STATS
-  $8df9-$8dfa GAME OVER
-  $8dfb-$8e1c 
-  $8e1d-$8ff7 DisplayGameOver
-  $8ff8-$94e1 -Sound
-  $94e2-$9508 Chargers
-  $9509-$9971 Have Alien
-  $9972-$9f5a Flight
+  $8440-$8628 Bombs
+  $8629-$8810 Lives
+  $8811-$8a9f Pre-Stage
+  $8aa0-$8af1 -Random
+  $8af2-$8b9b -Plot
+  $8b9c-$8e07 STATS
+  $8e08-$8e09 GAME OVER
+  $8e0a-$8e2b 
+  $8e2c-$9006 DisplayGameOver
+  $9007-$94f0 -Sound
+  $94f1-$9517 Chargers
+  $9518-$998e Have Alien
+  $998f-$9f7d Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset
   $f800-$f7ff Unnamed
   $f800-$f829 High Scores
-  $f82a-$fc5d Position
+  $f82a-$fcdc Position
   $fd00-$feff SpriteCharLookup
 
 Writing Vice symbol file: /Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/bin/main.vs

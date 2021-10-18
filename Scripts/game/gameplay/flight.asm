@@ -398,6 +398,12 @@
 
 		UseFlagship:
 
+			lda SpriteY, x
+			sec
+			sbc SpriteY + 1
+			cmp #20
+			bcs CheckOff
+
 			lda SpriteX + 1
 			clc
 			adc ENEMY.XOffset, x
@@ -718,6 +724,12 @@
 
 		UseFlagship:
 
+			lda SpriteY, x
+			sec
+			sbc SpriteY + 1
+			cmp #20
+			bcs CheckOff
+
 			lda SpriteX + 1
 			clc
 			adc ENEMY.XOffset, x
@@ -970,7 +982,7 @@
 
 	ContinuingAttackFromTop: {
 
-		inc $d020
+		//inc $d020
 
 		inc SpriteY, x
 
@@ -1007,7 +1019,7 @@
 
 		Finish:
 
-		dec $d020
+		//dec $d020
 
 		rts
 		
@@ -1016,8 +1028,8 @@
 
 	FullSpeedCharge: {
 
-		lda #4
-		sta $d020
+		//lda #4
+		//sta $d020
 
 		inc SpriteY, x
 
@@ -1038,7 +1050,7 @@
 
 		Loop:
 
-			.break
+			jmp Veer
 
 			lda #LOOP_THE_LOOP
 			sta ENEMY.Plan, x
@@ -1081,7 +1093,7 @@
 			lda #100
 			sta ENEMY.TempCounter1, x
 
-			dec $d020
+			//dec $d020
 
 
 
@@ -1089,8 +1101,6 @@
 	}
 
 	AttackingAggressively: {
-
-		.break
 
 		lda #0
 		sta ZP.Amount
@@ -1216,8 +1226,6 @@
 	}
 
 	LoopTheLoop: {
-
-		rts
 
 		lda ENEMY.ArcTableLSB, x
 		sta ZP.DataAddress

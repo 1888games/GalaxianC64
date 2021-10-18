@@ -34,6 +34,9 @@ BOMBS: {
 
 		ldy #BombStartID
 
+		lda SHIP.Active
+		beq Finish
+
 		FindLoop:
 
 			lda Active, y
@@ -274,8 +277,8 @@ BOMBS: {
 		sbc #14
 		sec
 		sbc SpriteY, x
-		adc #7
-		cmp #14
+		adc #8
+		cmp #16
 		bcs NoCollision
 
 		lda SHIP.PosX_MSB

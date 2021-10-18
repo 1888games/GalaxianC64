@@ -755,7 +755,7 @@ FORMATION: {
 
 			ldy #YELLOW
 
-			lda IllegalOffsetLeft
+			lda EnemiesLeftInStage
 			ldx #0
 			jsr TEXT.DrawByteInDigits
 
@@ -972,7 +972,16 @@ FORMATION: {
 			cpx #6
 			bcc Loop
 
-			
+		ldx #0
+
+		Loop2:
+
+			lda #0
+			sta FORMATION.Occupied, x
+
+			inx
+			cpx #48
+			bcc Loop2
 
 		rts
 	}

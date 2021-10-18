@@ -57,6 +57,7 @@
 
 	AliensAttackRightFlank:		.byte 1
 	FlagshipEscortCount:		.byte 0
+	StartEscortCount:			.byte 0
 	EscortKillCount:			.byte 0
 	FlagshipActive:				.byte 0
 
@@ -457,6 +458,9 @@
 		lda SHIP.Active
 		beq Finish
 
+		lda SHIP.Dead
+		bne Finish
+
 		lda HaveAliensInTopRow
 		beq Finish
 
@@ -497,6 +501,9 @@
 
 			lda SHIP.Active
 			beq Finish
+
+			lda SHIP.Dead
+			bne Finish
 
 			lda SwarmAliens
 			beq Finish
@@ -601,6 +608,9 @@
 
 	CalculateIfCanAttack: {
 
+		lda #0
+		sta CanAlienAttack
+
 		DecrementMaster:
 
 			dec AttackMasterCounter
@@ -608,9 +618,7 @@
 			beq DecrementSecondary
 
 		CantAttackYet:
-
-			lda #0
-			sta CanAlienAttack
+	
 			rts
 
 		DecrementSecondary:
@@ -865,6 +873,7 @@
 
 		lda ZP.C
 		sta FlagshipEscortCount
+		sta StartEscortCount
 
 
 		rts
