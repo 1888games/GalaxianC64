@@ -317,7 +317,7 @@ STAGE: {
 			sta FORMATION.Alive, x
 
 			inx
-			cpx #48
+			cpx #7
 		//	cpx #1
 			bcc Loop
 

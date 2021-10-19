@@ -69,10 +69,10 @@ Default-segment:
   $8e06-$8e07 GAME OVER
   $8e08-$8e29 
   $8e2a-$9004 DisplayGameOver
-  $9005-$95cd -Sound
-  $95ce-$95f4 Chargers
-  $95f5-$9a73 Have Alien
-  $9a74-$a10a Flight
+  $9005-$9727 -Sound
+  $9728-$974e Chargers
+  $974f-$9bcd Have Alien
+  $9bce-$a273 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset

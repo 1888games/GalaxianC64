@@ -32,6 +32,7 @@ drone_delay:	.byte 255
 drone_max:		.byte 255
 dive_time:		.byte 255
 diving_enemy:	.byte 255
+dive_mode:		.byte 255
 
 .label startDelay = 65
 
@@ -63,8 +64,11 @@ StartDive: {
 
 	lda #0
 	sta dive_time
+	sta dive_mode
 
 	stx diving_enemy
+
+
 
 	sfx(SFX_DIVE)
 
@@ -104,15 +108,60 @@ HandleDive: {
 	bne Finish
 
 	inc dive_time
-	lda dive_time
-	cmp #36
-	bcc Finish
+
+	lda dive_mode
+	beq Wheew
 
 
-	sfx(SFX_DIVE_2)
+	cmp #1
+	beq PartTwo
 
-	lda #255
-	sta dive_time
+
+	PartThree:
+
+		lda dive_time
+		cmp #60
+		bcc Finish
+
+		sfx(SFX_DIVE_3)
+
+		lda #0
+		sta dive_time
+
+		inc dive_mode
+
+		rts
+
+	PartTwo:
+
+		lda dive_time
+		cmp #60
+		bcc Finish
+
+		
+		sfx(SFX_DIVE_3)
+
+		lda #0
+		sta dive_time
+
+		inc dive_mode
+
+		rts
+
+	Wheew:
+
+		lda dive_time
+		cmp #36
+		bcc Finish
+
+	StartPart2:
+
+		sfx(SFX_DIVE_2)
+
+		inc dive_mode
+
+		lda #0
+		sta dive_time
 
 	Finish:
 
@@ -123,6 +172,14 @@ HandleDive: {
 
 KillDive: {
 
+	lda CHARGER.HaveAggressiveAliens
+	beq NotAggressive
+
+	lda FORMATION.EnemiesLeftInStage
+	bne Finish
+
+	NotAggressive:
+
 	cpx diving_enemy
 	bne Finish
 
@@ -130,6 +187,7 @@ KillDive: {
 
 	lda #255
 	sta dive_time
+	sta dive_mode
 
 	Finish:
 
@@ -285,13 +343,16 @@ StopChannel1: {
 .label SFX_SWARM = 10
 .label SFX_DIVE_2 = 11
 .label SFX_EMPTY = 12
+.label SFX_DIVE_3 = 13
 
-channels:	.byte 0, 0, 0, 0, 0, 1, 2, 1, 1, 2, 2, 1, 1
+channels:	.byte 0, 0, 0, 0, 0, 1, 2, 1, 1, 2, 2, 1, 1, 1
 
 sfx_fire: .import binary "../../Assets/goattracker/fire.sfx"
 sfx_hitG1: .import binary "../../Assets/goattracker/hitG1.sfx"
 sfx_hit2: .import binary "../../Assets/goattracker/hitG2.sfx"
+
 sfx_dive2:	.import binary "../../Assets/goattracker/divept2.sfx"
+sfx_dive3:	.import binary "../../Assets/goattracker/divept3.sfx"
 sfx_dive: .import binary "../../Assets/goattracker/diveg4.sfx"
 
 
@@ -311,8 +372,8 @@ sfx_empty: .import binary "../../Assets/goattracker/empty.sfx"
 
 
 wavetable_l:
-.byte <sfx_fire,<sfx_hit2, <sfx_hitG1, <sfx_hitG1, <sfx_hitG1, <sfx_dive,  <sfx_coin, <sfx_extra, <sfx_dead, <sfx_theme, <sfx_swarm, <sfx_dive2, <sfx_empty
+.byte <sfx_fire,<sfx_hit2, <sfx_hitG1, <sfx_hitG1, <sfx_hitG1, <sfx_dive,  <sfx_coin, <sfx_extra, <sfx_dead, <sfx_theme, <sfx_swarm, <sfx_dive2, <sfx_empty, <sfx_dive3
 
 wavetable_h:
-.byte >sfx_fire,>sfx_hit2, >sfx_hitG1, >sfx_hitG1, >sfx_hitG1, >sfx_dive,  >sfx_coin, >sfx_extra, >sfx_dead, >sfx_theme, >sfx_swarm,  >sfx_dive2, >sfx_empty
+.byte >sfx_fire,>sfx_hit2, >sfx_hitG1, >sfx_hitG1, >sfx_hitG1, >sfx_dive,  >sfx_coin, >sfx_extra, >sfx_dead, >sfx_theme, >sfx_swarm,  >sfx_dive2, >sfx_empty, >sfx_dive3
 

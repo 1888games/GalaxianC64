@@ -850,7 +850,17 @@
 			lda #40
 			sta ENEMY.TempCounter1, x
 
-			sfx(SFX_DIVE_2)
+			lda dive_mode
+			bpl DontRestart
+
+			sfx(SFX_DIVE_3)
+
+			lda #0
+			sta dive_time
+			lda #1
+			sta dive_mode
+			
+			DontRestart:
 
 			lda #CONTINUING_ATTACK
 			sta ENEMY.Plan, x
