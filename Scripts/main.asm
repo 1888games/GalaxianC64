@@ -107,7 +107,7 @@ MAIN: {
 		lda #11
 		sta TextRow
 
-		lda #16
+		lda #14
 		sta TextColumn
 
 		ldx #WHITE
@@ -115,7 +115,7 @@ MAIN: {
 
 		jsr TEXT.Draw
 
-		lda #16
+		lda #14
 		sta TextColumn
 
 		inc TextRow
@@ -158,7 +158,6 @@ MAIN: {
 
 		sfx(SFX_COIN)
 
-
 		jmp ShowTitleScreen	
 
 		jmp InitialiseGame
@@ -168,7 +167,7 @@ MAIN: {
 	
 	LoadScores: {
 
-		//jsr DISK.LOAD
+		jsr DISK.LOAD
 
 		lda LowByte
 		sta SCORE.Best + 0
@@ -710,7 +709,7 @@ MAIN: {
 
 		MillByte:			.byte $00, $00, $00, $00, $00
 		HiByte:				.byte $01, $01, $00, $00, $00
-		MedByte:			.byte $50, $00, $75, $40, $10
+		MedByte:			.byte $50, $00, $75, $50, $20
 		LowByte:			.byte $00, $00, $00, $00, $00
 
 * = $a500 "Game ZP Backup"

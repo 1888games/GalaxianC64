@@ -11,9 +11,11 @@
 
 .macro sfxFromA() {
 
+		sta ZP.SoundID
+
 		:StoreState()
 
-		tax	
+		ldx ZP.SoundID
 		jsr sfx_play
 
 		:RestoreState()

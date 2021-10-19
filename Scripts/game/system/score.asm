@@ -69,9 +69,8 @@ SCORE:{
 
 		sty ZP.Temp2
 
-		lda #0
+		lda BULLETS.PlayerShooting
 		sta ZP.Amount
-
 		
 		Okay:
 		asl

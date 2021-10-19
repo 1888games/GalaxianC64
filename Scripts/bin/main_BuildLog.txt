@@ -8,11 +8,11 @@ Writing prg file: /Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/b
 Memory Map
 ----------
 Default-segment:
-  *$0002-$0024 Temp vars zero page
-  *$0025-$003c LPAX
-  *$003d-$0053 SpriteX
-  *$0054-$00c6 SpriteY
-  *$00c7-$00e1 SpriteCopyY
+  *$0002-$0025 Temp vars zero page
+  *$0026-$003d LPAX
+  *$003e-$0054 SpriteX
+  *$0055-$00c7 SpriteY
+  *$00c8-$00e2 SpriteCopyY
   $0801-$080d Basic
   $080e-$080d Basic End
   $0810-$0832 Hi score_Data
@@ -22,57 +22,57 @@ Default-segment:
   $0a37-$0a53 Input
   $0a54-$0af1 Joystick
   $0af2-$0ea4 SHIP
-  $0ea5-$0f49 CheckDead
-  $0f4a-$128a Bullets
-  $128b-$134d Formation
-  $134e-$1389 Alive
-  $138a-$1495 Enemies Left
-  $1496-$19f9 Offset
-  $19fa-$1a22 Hmm
-  $1a23-$1eb8 Unnamed
-  $1eb9-$21ea Maploader
-  $21eb-$2aff Challenge Paths 4-8
+  $0ea5-$0f4c CheckDead
+  $0f4d-$1281 Bullets
+  $1282-$1344 Formation
+  $1345-$1380 Alive
+  $1381-$148c Enemies Left
+  $148d-$19f6 Offset
+  $19f7-$1a1f Hmm
+  $1a20-$1eb0 Unnamed
+  $1eb1-$21e2 Maploader
+  $21e3-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
   $2b98-$2e89 IRQ
   $2e8a-$2f4b Enemy
   $2f4c-$2f9b Enemy Variables
   $2f9c-$2fc3 Plan
-  $2fc4-$305d Extra
-  $305e-$3062 Enemies In Wave
-  $3063-$3085 Enemy Ship ID
-  $3086-$3238 Enemies
-  $3239-$3252 Spawn
-  $3253-$3309 Pathfinding
-  $330a-$34a7 Stage
-  $34a8-$3520 Check Complete
-  $3521-$3718 ---String Data
-  $3719-$384e ---Text
-  $384f-$3d04 Enemy Data
-  $3d05-$3d9b Title
-  $3d9c-$3f1d Check Left Finish
-  $3f1e-$401b Demo
+  $2fc4-$3065 Extra
+  $3066-$306a Enemies In Wave
+  $306b-$308d Enemy Ship ID
+  $308e-$3243 Enemies
+  $3244-$325d Spawn
+  $325e-$3314 Pathfinding
+  $3315-$34b2 Stage
+  $34b3-$352b Check Complete
+  $352c-$372b ---String Data
+  $372c-$3861 ---Text
+  $3862-$3d17 Enemy Data
+  $3d18-$3dae Title
+  $3daf-$3f30 Check Left Finish
+  $3f31-$402e Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6efd Main
+  $6c00-$6f00 Main
   $7400-$7503 Game Map
-  $7504-$767f Game Tiles
+  $7504-$7687 Game Tiles
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
-  $8158-$843f Score
-  $8440-$8621 Bombs
-  $8622-$8809 Lives
-  $880a-$8a98 Pre-Stage
-  $8a99-$8aea -Random
-  $8aeb-$8b94 -Plot
-  $8b95-$8e00 STATS
-  $8e01-$8e02 GAME OVER
-  $8e03-$8e24 
-  $8e25-$8fff DisplayGameOver
-  $9000-$95c8 -Sound
-  $95c9-$95ef Chargers
-  $95f0-$9a6b Have Alien
-  $9a6c-$a055 Flight
+  $8158-$8440 Score
+  $8441-$8626 Bombs
+  $8627-$880e Lives
+  $880f-$8a9d Pre-Stage
+  $8a9e-$8aef -Random
+  $8af0-$8b99 -Plot
+  $8b9a-$8e05 STATS
+  $8e06-$8e07 GAME OVER
+  $8e08-$8e29 
+  $8e2a-$9004 DisplayGameOver
+  $9005-$95cd -Sound
+  $95ce-$95f4 Chargers
+  $95f5-$9a73 Have Alien
+  $9a74-$a10a Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset

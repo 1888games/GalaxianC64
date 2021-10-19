@@ -90,8 +90,8 @@ TEXT: {
 	Nm4:		.text @"4th\$00"
 	Nm5:		.text @"5th\$00"
 	Pau:		.text @"paused - hit fire to quit\$00"
-	Loa:		.text @"ram ok\$00"
-	Lo2:		.text @"rom ok\$00"
+	Loa:		.text @"  loading\$00"
+	Lo2:		.text @"please wait\$00"
 	Ver:		.text @"v1.00\$00"
 
 	*=* "---Text"

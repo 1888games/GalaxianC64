@@ -103,7 +103,6 @@ DISK: {
             // Akkumulatorkkumulator contains BASIC error code
 
 
-            .break
 
              lda #2               // Logical 
             jsr K_close 

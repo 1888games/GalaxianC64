@@ -245,6 +245,9 @@ BOMBS: {
 			clc
 			adc #2
 			sta SpriteY, x
+
+	 		cmp #20
+	 		bcc Reached
 				
 			rts
 
@@ -315,7 +318,7 @@ BOMBS: {
 				cpy #BombStartID + 6
 				bcc DestroyLoop
 
-				lda  #0
+				lda #0
 				sta ActiveBombs
 
 				rts

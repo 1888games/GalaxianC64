@@ -23,7 +23,7 @@ BULLETS: {
 	PlayerLookup:	.byte 0, 1, 0, 1
 
 	.label SPEED_MSB = 4
-	.label SPEED_LSB = 220
+	.label SPEED_LSB = 235
 	.label CooldownTime = 3
 	.label SpriteYOffset = 0
 
@@ -256,14 +256,6 @@ BULLETS: {
 
 			jsr STATS.Shoot
 
-			lda SHIP.DualFighter
-			beq NoDual
-
-			lda ZP.Amount
-			bne NoDual
-
-			jmp Finish
-
 		NoDual:
 
 			lda #CooldownTime
@@ -319,8 +311,6 @@ BULLETS: {
 
 			stx ZP.StoredXReg
 
-			lda PlayerLookup, x
-			sta PlayerShooting
 
 			lda CharX, x
 			bpl ActiveBullet
@@ -355,6 +345,9 @@ BULLETS: {
 
 
 		ActiveBullet:
+
+			lda PlayerLookup, x
+			sta PlayerShooting
 
 			lda CharY, x
 			sta ZP.Temp1

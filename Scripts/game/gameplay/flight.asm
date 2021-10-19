@@ -33,6 +33,7 @@
 
 		lda #0
 		sta ENEMY.SortieCount, x
+		sta ENEMY.Targeting, x
 	
 		GetSpeed:
 
@@ -42,8 +43,18 @@
 			lda FORMATION.Relative_Row, y
 			tay
 
+
 			lda SpeedLookup, y
-			sta ENEMY.Speed, x	
+			sta ENEMY.Speed, x
+
+			lda SHIP.TwoPlayer
+			beq NoTarget
+
+			lda ZP.Counter	
+			and #%00000001
+			sta ENEMY.Targeting, x
+
+		NoTarget:
 
 		Position:
 
@@ -238,6 +249,7 @@
 
 		ReadyToAttack:
 
+
 			lda #READY_TO_ATTACK
 			sta ENEMY.Plan, x
 			rts
@@ -273,9 +285,11 @@
 
 		NotRed:	
 
+			ldy ENEMY.Targeting, x
+
 			lda SpriteX, x
 			sec
-			sbc ShipX
+			sbc SHIP.PosX_MSB, y
 			bcc AlienToLeft
 
 		AlienToRight:
@@ -447,6 +461,9 @@
 		NearBottomOfScreen:
 
 			lda #NEAR_BOTTOM_OF_SCREEN
+
+			//jmp FullSpeedCharge.Loop
+
 			sta ENEMY.Plan, x
 			rts
 			
@@ -494,7 +511,9 @@
 
 	CalculateLookAtFrame: {
 
-		lda ShipX
+		ldy ENEMY.Targeting, x
+
+		lda SHIP.PosX_MSB, y
 		sec
 		sbc SpriteX, x
 		bcs ShipToRight
@@ -702,14 +721,14 @@
 			cpx #4
 			bcs NotEscort
 
-			IsEscort:
+		IsEscort:
 
 			lda ENEMY.Plan + 1
 			bne UseFlagship
 
 		PretendFlagship:
 
-			ldx #1	
+			ldx #1
 			jsr Attack_Y_Add	
 
 			lda ENEMY.PivotXValue, x
@@ -726,7 +745,7 @@
 			lda SpriteY, x
 			sec
 			sbc SpriteY + 1
-			cmp #20
+			cmp #36
 			bcc SkipYCheck
 
 			lda SpriteX, x
@@ -831,6 +850,8 @@
 			lda #40
 			sta ENEMY.TempCounter1, x
 
+			sfx(SFX_DIVE_2)
+
 			lda #CONTINUING_ATTACK
 			sta ENEMY.Plan, x
 
@@ -881,6 +902,12 @@
 
 			lda #PLAN_INACTIVE
 			sta ENEMY.Plan + 1
+
+			lda ENEMY.Slot + 1
+			tay
+
+			lda #0
+			sta FORMATION.Alive, y
 
 		Finish:
 
@@ -992,7 +1019,9 @@
 
 		inc SpriteY, x
 
-		lda ShipX
+		ldy ENEMY.Targeting, x
+
+		lda SHIP.PosX_MSB, y
 		sec
 		sbc SpriteX, x
 
@@ -1056,8 +1085,6 @@
 
 		Loop:
 
-			jmp Veer
-
 			lda #LOOP_THE_LOOP
 			sta ENEMY.Plan, x
 
@@ -1070,7 +1097,13 @@
 			lda #0
 			sta ENEMY.ArcTableLSB, x
 
-			lda ShipX
+
+			lda #8
+			sta ENEMY.Angle, x
+
+			ldy ENEMY.Targeting, x
+
+			lda SHIP.PosX_MSB, y
 			sec
 			sbc SpriteX, x
 			bcc Left
@@ -1080,6 +1113,7 @@
 
 			lda #1
 			sta ENEMY.ArcClockwise, x
+
 			rts
 
 
@@ -1087,6 +1121,7 @@
 
 			lda #0
 			sta ENEMY.ArcClockwise, x
+
 			rts
 
 		Veer:
@@ -1135,7 +1170,9 @@
 
 		Towards:
 
-			lda ShipX
+			ldy ENEMY.Targeting, x
+
+			lda SHIP.PosX_MSB, y
 			sec
 			sbc ENEMY.PivotXValue, x
 			bcc ShipToLeft
@@ -1232,51 +1269,140 @@
 
 	LoopTheLoop: {
 
-		lda ENEMY.ArcTableLSB, x
-		sta ZP.DataAddress
+			lda #0
+			sta ZP.Amount
 
-		lda #$1E
-		sta ZP.DataAddress + 1
+		Repeat:
 
-		ldy #0
+			lda ENEMY.ArcTableLSB, x
+			tay
 
-		lda SpriteX, x
-		sec
-		sbc (ZP.DataAddress), y
-		sta SpriteX, x
+			lda AlienArcTable, y
+			sta ENEMY.MoveY
 
-		iny
+			iny
+			lda AlienArcTable, y
+			sta ENEMY.MoveX
 
-		lda ENEMY.ArcClockwise, y
-		bne Clockwise
-
-
-		AntiClockwise:
-
+		
 			lda SpriteY, x
-			sec	
-			sbc (ZP.DataAddress), y
+			sec
+			sbc ENEMY.MoveY
 			sta SpriteY, x
+
+			lda ENEMY.ArcClockwise, x
+			bne FacingRight
+
+		FacingLeft:
+
+			lda SpriteX, x
+			clc
+			adc ENEMY.MoveX
+			sta SpriteX, x
+
+		UpdateAngleLeft:
+
+			dec ENEMY.TempCounter1, x
+			bne CheckProgress
+
+			lda #5
+			sta ENEMY.TempCounter1, x
+
+			dec ENEMY.Angle, x
+
+			lda ENEMY.Angle, x
+			bpl Okay3
+
+			lda #16
+			sta ENEMY.Angle, x
+
+			jmp ReadyToAttack
+
+		Okay3:
+
+			lda ENEMY.BasePointer, x
+			clc
+			adc ENEMY.Angle, x
+			sta SpritePointer, x
+
+			jmp CheckProgress
+
+		FacingRight:
+
+			lda SpriteX_LSB, x
+			sec
+			sbc ENEMY.FractionSpeedX, x
+			sta SpriteX_LSB, x
+
+			lda SpriteX, x
+			sbc #0
+			sec
+			sbc ENEMY.MoveX
+			sta SpriteX, x
+
+
+			dec ENEMY.TempCounter1, x
+			bne CheckProgress
+
+			lda #5
+			sta ENEMY.TempCounter1, x
+
+			inc ENEMY.Angle, x
+
+			lda ENEMY.Angle, x
+			cmp #16
+			bcc Okay2
+
+			lda #0
+			sta ENEMY.Angle, x
+
+		Okay2:
+
+			lda ENEMY.BasePointer, x
+			clc
+			adc ENEMY.Angle, x
+			sta SpritePointer, x
+
+			lda ENEMY.Angle, x
+			beq ReadyToAttack
+
+			dec ENEMY.TempCounter2
+
+		CheckProgress:
 
 			lda ENEMY.ArcTableLSB, x
 			clc
 			adc #2
 			sta ENEMY.ArcTableLSB, x
 
+			rts
 
-		Clockwise:
+			//cmp #88
+			//bcc Finish
 
-			lda SpriteY, x
-			clc
-			adc (ZP.DataAddress), y
-			sta SpriteY, x
+		ReadyToAttack:
 
-			lda ENEMY.ArcTableLSB, x
-			clc
-			adc #2
+			lda #0
 			sta ENEMY.ArcTableLSB, x
 
+			lda #3
+			sta ENEMY.TempCounter1, x
 
+			lda #8
+			sta ENEMY.TempCounter2, x
+		
+
+			lda #FLIES_IN_ARC
+			sta ENEMY.Plan, x
+			rts
+
+
+		Finish:
+
+		
+
+		DontRepeat:
+				
 
 
 		rts

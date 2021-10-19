@@ -833,6 +833,7 @@
 		lda #0
 		sta ZP.C
 		sta EscortKillCount
+		sta FlagshipEscortCount
 
 		lda #1
 		sta FlagshipActive

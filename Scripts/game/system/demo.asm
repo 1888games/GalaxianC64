@@ -91,7 +91,7 @@ DEMO: {
 
 	ColourAliens: {
 
-		lda #RED_MULT
+		lda #YELLOW_MULT
 		sta VIC.COLOR_RAM + 571
 		sta VIC.COLOR_RAM + 572
 		sta VIC.COLOR_RAM + 611

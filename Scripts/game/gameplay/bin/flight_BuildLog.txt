@@ -1,19 +1,18 @@
 parsing
-Got 291 errors while executing:
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 33:7) Unknown symbol 'SFX_DIVE'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 33:3) Macro command 'sfx' not defined
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 36:7) Unknown symbol 'ENEMY'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 40:8) Unknown symbol 'ENEMY'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 43:8) Unknown symbol 'FORMATION'
+Got 331 errors and 0 warnings while executing:
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 32:7) Error: Unknown symbol 'StartDive'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 35:7) Error: Unknown symbol 'ENEMY'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 36:7) Error: Unknown symbol 'ENEMY'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 40:8) Error: Unknown symbol 'ENEMY'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/flight.asm 43:8) Error: Unknown symbol 'FORMATION'
   ...
+
 
  PacksBags: {
 
-  
-  sfx(SFX_DIVE)
+  jsr StartDive
       ^
 
-Error: Unknown symbol 'SFX_DIVE'
-at line 33, column 7 in flight.asm
+Error: Unknown symbol 'StartDive'
 
 

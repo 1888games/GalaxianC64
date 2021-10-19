@@ -859,6 +859,8 @@ SHIP: {
 		lda #1
 		sta GameOver
 
+		jsr StopDrone
+
 		jmp END_GAME.Initialise
 
 	NotGameOver:

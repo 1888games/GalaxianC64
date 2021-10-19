@@ -48,6 +48,7 @@
 	ShootExactY:			.fill MAX_ENEMIES, 0
 	ShootRangeMult:			.fill MAX_ENEMIES, 0
 	XOffset:				.fill MAX_ENEMIES, 0
+	Targeting:				.fill MAX_ENEMIES, 0
 
 
 	Quadrant:			.byte 0

@@ -329,12 +329,23 @@ FORMATION: {
 		// ZP.Row
 		// ZP.Column > y
 
+		.label ERROR = $04
+
 		lda Column, x
 		clc
 		adc Home_Column, x
 		//clc
 		//adc OffsetChars
 		sta ZP.Column
+
+		bpl Okay
+
+		.break
+		lda #ERROR
+		nop
+
+
+		Okay:
 
 		lda Type, x
 		tay
@@ -787,9 +798,6 @@ FORMATION: {
 
 			dec drone_max
 
-			lda #$52
-
-		
 			lda #0
 			sta Occupied, x
 			sta Alive, x
@@ -871,7 +879,7 @@ FORMATION: {
 				bcc UpdateColumnCounts
 
 				inc CHARGER.HaveBluePurpleAliens
-				inc CHARGER.SwarmAliens
+				
 
 			NotHere:
 
@@ -879,6 +887,7 @@ FORMATION: {
 			UpdateColumnCounts:
 
 				inc EnemiesLeftInStage
+				inc CHARGER.SwarmAliens
 
 				lda FORMATION.Relative_Column, y
 				tax
@@ -926,9 +935,6 @@ FORMATION: {
 		lda #-4
 		sta IllegalOffsetLeft
 
-		lda #4
-		sta IllegalOffsetRight
-
 		Loop:
 
 			lda CHARGER.AliensInColumn, x
@@ -940,7 +946,7 @@ FORMATION: {
 			EndLoop:
 
 			inx
-			cpx #5
+			cpx #4
 			bcc Loop
 
 
@@ -962,7 +968,7 @@ FORMATION: {
 			EndLoop2:
 
 			dex
-			cpx #5
+			cpx #6
 			bcs Loop2
 
 		DoneRight:
