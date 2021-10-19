@@ -29,7 +29,8 @@
 
 	PacksBags: {
 
-		jsr StartDive
+		
+		sfx(SFX_DIVE)
 
 		lda #0
 		sta ENEMY.SortieCount, x
@@ -383,6 +384,9 @@
 		PretendFlagship:
 
 			ldx #1
+			lda SpriteX, x
+			sta ZP.B
+
 			jsr Attack_Y_Add	
 
 			lda ENEMY.PivotXValue, x
@@ -396,16 +400,13 @@
 
 		UseFlagship:
 
-			lda SpriteY, x
-			sec
-			sbc SpriteY + 1
-			cmp #24
-			bcc SkipYCheck
+		// 	lda SpriteY, x
+		// 	sec
+		// 	sbc SpriteY + 1
+		// 	cmp #20
+		// 	bcs CheckOff
 
-			lda SpriteX, x
-			jmp CheckOff
-
-		SkipYCheck:
+		// SkipYCheck:
 
 			lda SpriteX + 1
 			clc
@@ -415,6 +416,9 @@
 			jmp CheckOff
 
 		NotEscort:
+
+			lda SpriteX, x
+			sta ZP.B
 
 			jsr Attack_Y_Add
 
@@ -709,7 +713,10 @@
 
 		PretendFlagship:
 
-			ldx #1	
+			ldx #1
+			lda SpriteX, x
+			sta ZP.B
+
 			jsr Attack_Y_Add	
 
 			lda ENEMY.PivotXValue, x
@@ -727,10 +734,7 @@
 			sec
 			sbc SpriteY + 1
 			cmp #20
-			bcc SkipYCheck
-
-			lda SpriteX, x
-			jmp CheckOff
+			bcs CheckOff
 
 		SkipYCheck:
 
@@ -975,8 +979,6 @@
 		lda #10
 		sta SpriteY, x
 
-		jsr KillDive
-
 	Exit:
 
 		rts
@@ -1147,6 +1149,7 @@
 
 
 		ShipToRight:
+
 
 			inc ENEMY.PivotXValue, x
 

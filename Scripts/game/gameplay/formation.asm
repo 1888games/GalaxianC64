@@ -34,6 +34,7 @@ FORMATION: {
 	Column:		.fill 48, 0
 	Switching:	.byte 0
 
+	* = * "Alive"
 	Alive:		.fill 48, 0
 
 	TypeToScore:		.byte 4, 4, 2, 0, 3, 7
@@ -741,6 +742,9 @@ FORMATION: {
 				sbc #2
 				sta ScrollValue
 
+			lda IRQ.SidTimer
+			bmi Finish
+
 			lda DrawIteration
 			cmp #1
 			bne Finish
@@ -901,6 +905,15 @@ FORMATION: {
 			SetDebugBorder(0)
 
 			jsr CalculateExtents
+
+		lda CHARGER.SwarmAliens
+		clc
+		adc CHARGER.InflightAliens
+		bne DontOverride
+
+		sta EnemiesLeftInStage
+
+	DontOverride:
 
 		rts
 

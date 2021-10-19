@@ -8,8 +8,8 @@ STARS: {
 	Rows:		.fill MAX_STARS, random() * 23
 
 	//StartIDs:	.byte 0, 16, 32, 48, 64
-	StartIDs:	.byte 0, MAX_STARS/2
-	EndIDs:		.byte MAX_STARS/2, MAX_STARS
+	StartIDs:	.byte 0, 12
+	EndIDs:		.byte 12, 24
 
 
 	//StartIDs:	.byte 0, 8, 16, 24, 32, 40, 48, 56
@@ -28,9 +28,26 @@ STARS: {
 
 
 	Scrolling: 		.byte 0
+	StarsUse:		.byte 0
 
 
 
+
+	SetupNTSC: {
+
+		lda #8
+		sta StarsUse
+
+		lda #4
+		sta StartIDs + 1
+		sta EndIDs + 0
+		
+		lda #8
+		sta EndIDs + 1
+
+
+		rts
+	}
 	
 	FrameUpdate: {
 
@@ -40,11 +57,11 @@ STARS: {
 
 		 lda FrameTimer
 		 and #%00000001
-		 beq Okay4
+		// beq Okay4
 
-		 SetDebugBorder(0)
+		// SetDebugBorder(0)
 
-		rts
+		//rts
 
 		Okay4:
 

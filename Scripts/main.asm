@@ -518,6 +518,68 @@ MAIN: {
 
 		Playing:	
 
+			lda IRQ.SidTimer
+			bmi DoPalMode
+
+
+
+		DoNTSCMode:
+
+			lda IRQ.SidTimer
+			cmp #1
+			beq Skip
+
+			jsr PLEXOR.Sort
+			
+			jsr FORMATION.CalculateEnemiesLeft
+
+			jsr SHIP.FrameUpdate
+			jsr BULLETS.FrameUpdate		
+			jsr BONUS.FrameUpdate
+			jsr BOMBS.FrameUpdate
+			jsr SFX.FrameUpdate
+
+
+		Skip:
+
+			
+			jsr STAGE.FrameUpdate
+			jsr ENEMY.FrameUpdate
+			jsr CHARGER.FrameUpdate
+			jsr LIVES.FrameUpdate
+
+			lda IRQ.SidTimer
+			cmp #1
+			bne DoMore
+
+			jsr STARS.FrameUpdate
+			
+			jmp Loop
+			
+		DoMore:
+
+		Wait:
+
+			lda $d012
+			cmp #146
+			bcc Wait
+
+		jsr FORMATION.FrameUpdate
+
+			lda $d012
+			cmp #200
+
+			bcs NoStars2
+
+			jsr STARS.FrameUpdate
+
+
+		NoStars2:
+		
+			jmp Loop
+
+		DoPalMode:
+
 			jsr PLEXOR.Sort
 
 			lda IRQ.Frame
@@ -541,15 +603,12 @@ MAIN: {
 			jsr CHARGER.FrameUpdate
 			jsr BOMBS.FrameUpdate
 			jsr LIVES.FrameUpdate
+
 			jsr SHIP.FrameUpdate
-			jsr BULLETS.FrameUpdate
-			
-			
+			jsr BULLETS.FrameUpdate		
 			jsr BONUS.FrameUpdate
 
-
-			Delay:
-
+		Stars:
 				lda $d012
 				cmp #180
 
@@ -558,8 +617,6 @@ MAIN: {
 
 			NoStars:
 		
-				Skip:
-
 			jmp Loop
 
 

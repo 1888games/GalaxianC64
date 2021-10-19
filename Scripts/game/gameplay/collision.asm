@@ -240,6 +240,9 @@
 			sta Plan, x
 			stx ZP.EnemyID
 
+			jsr KillDive
+
+
 			dec drone_max
 			dec drone_max
 
@@ -270,6 +273,8 @@
 			bne NotFlagship
 
 			IsFlagship:
+
+				sfx(1)
 				
 				inc CHARGER.FlagshipHit
 
@@ -309,6 +314,8 @@
 				
 			NotFlagship:
 
+				sfx(2)
+
 				cmp #ALIEN_RED
 				bne NotRed
 
@@ -320,12 +327,7 @@
 			NotRed:
 
 				sty ZP.EnemyType
-				tya
-				clc
-				adc #1
-			
-				sfxFromA()
-
+				
 			NormalStage:
 
 				lda ZP.EnemyType

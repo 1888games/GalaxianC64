@@ -16,7 +16,7 @@ BOMBS: {
 
 	.label BombStartID = 8
 	.label Pointer =49
-	.label BombEndID = BombStartID + 9
+	.label BombEndID = BombStartID + 7
 	.label ReloadTime = 15
 
 	Active: 		.fill MAX_ENEMIES + MAX_BOMBS, 0
@@ -407,7 +407,7 @@ BOMBS: {
 			bne DontRepeat
 
 			inc ENEMY.Repeated
-			//jmp Again
+			jmp Again
 
 		DontRepeat:
 

@@ -359,23 +359,11 @@ STAGE: {
 
 	CheckComplete: {	
 
-/*
-	
-	lda #WHITE
-		sta VIC.COLOR_RAM + 558
-		sta VIC.COLOR_RAM + 598
-		sta VIC.COLOR_RAM + 638
-		sta VIC.COLOR_RAM + 678
-		sta VIC.COLOR_RAM + 718*/
-
-
 
 		lda FORMATION.EnemiesLeftInStage
-		//sta SCREEN_RAM + 558
 		bne LevelNotComplete
 
 		lda SHIP.Active
-		//sta SCREEN_RAM + 678
 		beq LevelNotComplete
 
 		lda DelayTimer

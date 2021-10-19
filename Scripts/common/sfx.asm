@@ -28,6 +28,8 @@ allow_channel_1: .byte 1
 
 drone_delay:	.byte 255
 drone_max:		.byte 255
+dive_time:		.byte 255
+diving_enemy:	.byte 255
 
 .label startDelay = 65
 
@@ -55,6 +57,18 @@ play_background: {
 	rts
 }
 
+StartDive: {
+
+	lda #0
+	sta dive_time
+
+	stx diving_enemy
+
+	sfx(SFX_DIVE)
+
+	rts
+}
+
 StartDrone: {
 
 
@@ -77,9 +91,56 @@ StopDrone: {
 	rts
 }
 
+
+HandleDive: {
+
+	lda dive_time
+	bmi Finish
+
+	lda ZP.Counter
+	and #%00000011
+	bne Finish
+
+	inc dive_time
+	lda dive_time
+	cmp #36
+	bcc Finish
+
+
+	sfx(SFX_DIVE_2)
+
+	lda #255
+	sta dive_time
+
+	Finish:
+
+		rts
+
+}
+
+
+KillDive: {
+
+	cpx diving_enemy
+	bne Finish
+
+	sfx(SFX_EMPTY)
+
+	lda #255
+	sta dive_time
+
+	Finish:
+
+
+	rts
+}
+
 SFX: {
 
  	FrameUpdate: {
+
+ 		jsr HandleDive
+
 
  		lda drone_delay
  		bmi Finish
@@ -197,6 +258,14 @@ StopChannel0: {
 }
 
 
+StopChannel1: {
+
+	lda #0
+	sta $d40B
+	rts
+}
+
+
 
 
 
@@ -212,21 +281,24 @@ StopChannel0: {
 .label SFX_DEAD = 8
 .label SFX_THEME = 9
 .label SFX_SWARM = 10
+.label SFX_DIVE_2 = 11
+.label SFX_EMPTY = 12
 
-channels:	.byte 0, 0, 0, 0, 0, 1, 2, 1, 1, 2, 2
+channels:	.byte 0, 0, 0, 0, 0, 1, 2, 1, 1, 2, 2, 1, 1
 
 sfx_fire: .import binary "../../Assets/goattracker/fire.sfx"
 sfx_hitG1: .import binary "../../Assets/goattracker/hitG1.sfx"
-sfx_hit2: .import binary "../../Assets/goattracker/hit2.sfx"
-sfx_hit3: .import binary "../../Assets/goattracker/hit3.sfx"
-sfx_hit4: .import binary "../../Assets/goattracker/hit4.sfx"
-sfx_dive: .import binary "../../Assets/goattracker/diveg.sfx"
+sfx_hit2: .import binary "../../Assets/goattracker/hitG2.sfx"
+sfx_dive2:	.import binary "../../Assets/goattracker/divept2.sfx"
+sfx_dive: .import binary "../../Assets/goattracker/diveg4.sfx"
+
 
 sfx_coin: .import binary "../../Assets/goattracker/coing.sfx"
 sfx_extra: .import binary "../../Assets/goattracker/extra.sfx"
 sfx_dead: .import binary "../../Assets/goattracker/dead2.sfx"
 sfx_theme: .import binary "../../Assets/goattracker/galax.sfx"
-sfx_swarm: .import binary "../../Assets/goattracker/swarm2.sfx"
+sfx_swarm: .import binary "../../Assets/goattracker/swarm3.sfx"
+sfx_empty: .import binary "../../Assets/goattracker/empty.sfx"
 //.import binary "../../Assets/sfx/high_blip.sfx"
 
 
@@ -237,8 +309,8 @@ sfx_swarm: .import binary "../../Assets/goattracker/swarm2.sfx"
 
 
 wavetable_l:
-.byte <sfx_fire,<sfx_hit3, <sfx_hitG1, <sfx_hitG1, <sfx_hitG1, <sfx_dive,  <sfx_coin, <sfx_extra, <sfx_dead, <sfx_theme, <sfx_swarm
+.byte <sfx_fire,<sfx_hit2, <sfx_hitG1, <sfx_hitG1, <sfx_hitG1, <sfx_dive,  <sfx_coin, <sfx_extra, <sfx_dead, <sfx_theme, <sfx_swarm, <sfx_dive2, <sfx_empty
 
 wavetable_h:
-.byte >sfx_fire,>sfx_hit3, >sfx_hitG1, >sfx_hitG1, >sfx_hitG1, >sfx_dive,  >sfx_coin, >sfx_extra, >sfx_dead, >sfx_theme, >sfx_swarm
+.byte >sfx_fire,>sfx_hit2, >sfx_hitG1, >sfx_hitG1, >sfx_hitG1, >sfx_dive,  >sfx_coin, >sfx_extra, >sfx_dead, >sfx_theme, >sfx_swarm,  >sfx_dive2, >sfx_empty
 

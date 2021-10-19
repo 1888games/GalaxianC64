@@ -356,8 +356,6 @@
 
 		Shocked:
 
-
-
 			lda HaveAggressiveAliens
 			bne DecreaseShock
 
@@ -431,7 +429,7 @@
 			lda #1
 			sta InflightAlienShootRangeMult
 
-			lda #166
+			lda #157
 			sta InflightAlienShootExactY
 
 			jmp Loop
@@ -498,6 +496,9 @@
 
 
 	CheckIfAlienCanAttack: {
+
+			lda #0
+			sta CanAlienAttack
 
 			lda SHIP.Active
 			beq Finish

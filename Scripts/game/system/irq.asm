@@ -49,12 +49,21 @@ IRQ: {
 
 		lda #255
 		sta SidTimer
-
+		
 		lda MAIN.MachineType
 		bne NoSkip
 
+		jsr STARS.SetupNTSC
+
 		lda #SidTime
 		sta SidTimer
+
+		lda #16
+		sta STARS.StarsUse
+
+		lda #8
+		sta STARS.StartIDs + 1
+
 
 		NoSkip:
 
