@@ -772,7 +772,7 @@ FORMATION: {
 
 			lda EnemiesLeftInStage
 			ldx #0
-			jsr TEXT.DrawByteInDigits
+			//jsr TEXT.DrawByteInDigits
 
 		Exit:
 
@@ -804,10 +804,11 @@ FORMATION: {
 
 			sty ZP.FormationID
 
-			lda Type, x
+			lda #1
 			tay
-			clc
-			adc #1
+		//	tay
+			//clc
+			//adc #1
 			
 			sfxFromA()
 

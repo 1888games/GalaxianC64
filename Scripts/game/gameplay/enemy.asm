@@ -8,8 +8,6 @@
 
 		lda #0
 		sta Quadrant
-		sta FormationUpdated
-		sta EnemiesAlive
 		sta MoveX
 		sta MoveY
 		
@@ -47,7 +45,7 @@
 
 
 		ldx #0
-		stx EnemiesAlive
+	
 
 		lda SHIP.PosX_MSB
 		sta CHARGER.ShipX
@@ -70,8 +68,6 @@
 		
 			lda Plan, x
 			beq EndLoop
-
-			inc EnemiesAlive
 
 			ldy #0
 			sty Repeated
@@ -107,9 +103,6 @@
 			bcc Loop
 
 		Finish:
-
-			lda #0
-			sta FormationUpdated
 
 			SetDebugBorder(0)
 		

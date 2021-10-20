@@ -33,7 +33,6 @@
 	Inflight_S1A:			.fill MAX_ENEMIES, 0
 	Inflight_S1B:			.fill MAX_ENEMIES, 0
 	Inflight_S1C:			.fill MAX_ENEMIES, 0
-	Repeated:				.byte 0
 	ShootExactY:			.fill MAX_ENEMIES, 0
 	ShootRangeMult:			.fill MAX_ENEMIES, 0
 	XOffset:				.fill MAX_ENEMIES, 0
@@ -41,11 +40,11 @@
 
 
 	Quadrant:			.byte 0
+	Repeated:				.byte 0
 
 	* = * "Enemies In Wave"
-	EnemiesInWave:		.byte 8
-	FormationUpdated:	.byte 0
-	EnemiesAlive:		.byte 0
+
+
 	MoveX:				.byte 0
 	MoveY:				.byte 0
 

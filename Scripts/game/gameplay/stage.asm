@@ -108,8 +108,6 @@ STAGE: {
 
 		lda #0
 		sta CurrentWave
-		sta SoftlockProtect
-		sta SoftlockProtect + 1
 		sta SpawnedInWave
 		sta SpawnedInStage
 		sta KillCount
@@ -118,7 +116,6 @@ STAGE: {
 		sta WaveKillCount
 		sta WaveKillCount + 1
 		sta MaxExtraEnemies
-		sta ENEMY.EnemiesAlive
 		sta ENEMY.NextSpawnValue
 
 		lda #DelayTime
@@ -132,38 +129,9 @@ STAGE: {
 		lda #1
 		sta STAGE.ReadyNextWave
 
-
-	
-		//lda #30
-		//sta SpawnTimer
-
-
 		rts
 	}
 
-
-
-	GetWaveData: {
-
-
-		lda #DelayTime
-		sta DelayTimer
-
-		lda #50
-		sta SpawnTimer
-
-		NormalStage:
-
-		lda ENEMY.EnemiesInWave
-		sta ENEMY.EnemiesAlive
-
-		lda #0
-		sta EveryCounter
-		sta WaveKillCount
-
-
-		rts
-	}
 
 
 	MoveIntoFormationMode: {
@@ -177,91 +145,9 @@ STAGE: {
 		lda #255
 		sta SpawnTimer
 
-		
-		//lda #SUBTUNE_DANGER
-		//jsr sid.init
-
-
 		rts
 	}
 
-	GetNextWave: {
-
-		inc CurrentWave
-		
-		ldy CurrentWave
-		cpy #NumberOfWaves
-		bcc MoreWaves
-
-	AllWavesDone:
-
-		lda #255
-		sta SpawnTimer
-
-		lda StageIndex
-		cmp #3
-		bcc NotChallenge
-
-	Challenging:
-
-		lda #0
-		sta SpawnedInWave
-
-		rts
-
-
-	NotChallenge:
-
-		jmp MoveIntoFormationMode	
-
-	MoreWaves:
-
-		//jsr ENEMY.ClearData
-
-		lda #30
-		sta SpawnTimer
-
-		//jsr ClearSprites
-
-		cpy #NumberOfWaves - 1
-		bne NotLastWave
-
-		lda STAGE.StageIndex
-		cmp #3
-		bcs ChallengingStage
-
-		IsNormal:
-
-		ChallengingStage:
-
-			lda #50
-			sta SpawnTimer
-
-		NotLastWave:
-	
-
-			lda #0
-			sta SpawnedInWave
-			sta SpawnSide
-
-			tya
-			asl
-			tay
-			
-			lda (ZP.StageWaveOrderAddress), y
-			sta CurrentWaveIDs
-
-			iny
-			lda (ZP.StageWaveOrderAddress), y
-			sta CurrentWaveIDs + 1
-
-			jsr GetWaveData
-			
-		Finish:
-
-		rts
-
-	}
 
 
 	TestFormation: {
@@ -387,27 +273,6 @@ STAGE: {
 		rts
 	}
 
-	CheckSoftlock: {
-
-		lda SoftlockProtect
-		clc
-		adc #1
-		sta SoftlockProtect
-
-		lda SoftlockProtect + 1
-		adc #0
-		sta SoftlockProtect + 1
-
-		cmp #5
-		bcc Okay
-
-		.break
-		
-		Okay:
-
-
-		rts
-	}
 
 	FrameUpdate: {
 
@@ -429,24 +294,6 @@ STAGE: {
 
 
 
-	CheckNewWave: {
-
-		lda SHIP.Active
-		bne Okay
-
-		rts
-
-		Okay:
-
-		jsr GetNextWave
-
-		lda #0
-		sta ReadyNextWave
-
-		
-
-		rts
-	}	
 
 
 

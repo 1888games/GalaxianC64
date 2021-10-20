@@ -395,40 +395,40 @@ PRE_STAGE: {
 		ldx BadgeColumns
 		ldy BadgeRows
 
-		lda #8
+		lda #10
 		jsr UTILITY.DeleteText
 
 		ldx BadgeColumns
 		ldy BadgeRows
 		iny
 
-		lda #8
+		lda #10
 		jsr UTILITY.DeleteText
 
 		ldx BadgeColumns
 		ldy BadgeRows + 4
 
-		lda #8
+		lda #10
 		jsr UTILITY.DeleteText
 
 		ldx BadgeColumns
 		ldy BadgeRows + 4
 		iny
 
-		lda #8
+		lda #10
 		jsr UTILITY.DeleteText
 
 		ldx BadgeColumns
 		ldy BadgeRows + 8
 
-		lda #8
+		lda #10
 		jsr UTILITY.DeleteText
 
 		ldx BadgeColumns
 		ldy BadgeRows + 8
 		iny
 
-		lda #8
+		lda #10
 		jsr UTILITY.DeleteText
 
 

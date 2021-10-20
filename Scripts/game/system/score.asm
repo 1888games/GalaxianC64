@@ -76,6 +76,7 @@ SCORE:{
 		asl
 		asl
 		tax
+		stx ZP.StageOrderID
 
 		sed
 
@@ -91,6 +92,10 @@ SCORE:{
 			adc #0
 			sta Value + 1, x
 			sta ZP.Amount
+
+			lda Value + 2, x
+			adc #0
+			sta Value + 2, x
 
 		SecondDigit:
 		
@@ -147,7 +152,9 @@ SCORE:{
 
 	CheckHighScore: {
 
-		lda Value + 3
+		ldx ZP.StageOrderID
+
+		lda Value + 3, x
 		cmp Best + 3
 		bcc NoHigh
 
@@ -158,7 +165,7 @@ SCORE:{
 
 	Check2:
 
-		lda Value + 2
+		lda Value + 2, x
 		cmp Best + 2
 		bcc NoHigh
 
@@ -168,7 +175,7 @@ SCORE:{
 
 	Check3:
 
-		lda Value + 1
+		lda Value + 1, x
 		cmp Best + 1
 		bcc NoHigh
 
@@ -178,7 +185,7 @@ SCORE:{
 
 	Check4:
 
-		lda Value
+		lda Value, x
 		cmp Best
 		bcc NoHigh
 
@@ -186,23 +193,26 @@ SCORE:{
 
 	IsHigh:
 
-		lda Value
+		lda Value, x
 		sta Best
 
-		lda Value + 1
+		lda Value + 1, x
 		sta Best + 1
 
-		lda Value + 2
+		lda Value + 2, x
 		sta Best + 2
 
-		lda Value + 3
+		lda Value + 3, x
 		sta Best + 3
+
 
 
 		jsr DrawBest
 
 
 		NoHigh:
+
+		ldx BULLETS.PlayerShooting
 
 		rts
 	}

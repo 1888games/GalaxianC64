@@ -87,10 +87,7 @@
 		beq Finish
 
 		lda SpriteY, x
-		cmp #SHIP.SHIP_Y + 1
-		bcs Finish
-
-		cmp #SHIP.SHIP_Y - 16
+		cmp #SHIP.SHIP_Y - 7
 		bcc Finish
 
 		lda SHIP.PreviousX

@@ -9,7 +9,7 @@ TITLE: {
 	TargetRow:	.byte 1
 
 	//CurrentRows:	.byte 25, 26, 36, 38, 43, 47
-	CurrentRows:	.byte 2, 3, 13, 15, 20, 22
+	CurrentRows:	.byte 2, 3, 14, 16, 20, 22
 
 	Columns:		.byte 7, 7, 14, 14, 8, 9
 	Colours:		.byte WHITE, RED, WHITE, WHITE, WHITE, RED
@@ -74,7 +74,7 @@ TITLE: {
 		lda Players
 		asl
 		clc
-		adc #12
+		adc #13
 		tay
 
 		ldx Columns + 2
@@ -90,7 +90,7 @@ TITLE: {
 		eor #%00000001
 		asl
 		clc
-		adc #12
+		adc #13
 		tay
 
 		ldx Columns + 2
@@ -120,6 +120,17 @@ TITLE: {
 			cpy #8
 			bcc Loop
 
+		.label dx_pos = 419
+
+		lda #71
+		sta SCREEN_RAM + dx_pos
+
+		lda #72
+		sta SCREEN_RAM +  dx_pos + 1
+
+		lda #YELLOW
+		sta VIC.COLOR_RAM +  dx_pos
+		sta VIC.COLOR_RAM +  dx_pos + 1
 
 
 		rts
@@ -281,10 +292,10 @@ TITLE: {
 		lda #3
 		sta CurrentRows + 1
 
-		lda #13
+		lda #14
 		sta CurrentRows + 2
 
-		lda #15
+		lda #16
 		sta CurrentRows + 3
 
 		lda #20
@@ -303,6 +314,7 @@ TITLE: {
 
 		jsr DrawArrow
 
+		
 
 		// lda #0
 		// sta SpriteX

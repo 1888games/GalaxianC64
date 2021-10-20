@@ -347,7 +347,7 @@ StopChannel1: {
 .label SFX_EMPTY = 12
 .label SFX_DIVE_3 = 13
 
-channels:	.byte 0, 0, 0, 0, 0, 1, 2, 1, 1, 2, 2, 1, 1, 1
+channels:	.byte 0, 0, 0, 0, 0, 1, 2, 1, 0, 2, 2, 1, 1, 1
 
 sfx_fire: .import binary "../../Assets/goattracker/fire.sfx"
 sfx_hitG1: .import binary "../../Assets/goattracker/hitG1.sfx"

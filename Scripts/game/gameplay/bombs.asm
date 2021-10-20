@@ -293,7 +293,7 @@ BOMBS: {
 
 		lda #SHIP.SHIP_Y
 		sec
-		sbc #14
+		sbc #5
 		sec
 		sbc SpriteY, x
 		adc #8

@@ -21,35 +21,35 @@ Default-segment:
   $09eb-$0a36 Utility
   $0a37-$0a55 Input
   $0a56-$0af6 Joystick
-  $0af7-$0eac SHIP
-  $0ead-$0f54 CheckDead
-  $0f55-$1275 Bullets
-  $1276-$1338 Formation
-  $1339-$1374 Alive
-  $1375-$1480 Enemies Left
-  $1481-$1a09 Offset
-  $1a0a-$1eab Hmm
-  $1eac-$21dd Maploader
-  $21de-$2aff Challenge Paths 4-8
+  $0af7-$0ea4 SHIP
+  $0ea5-$0f4c CheckDead
+  $0f4d-$126d Bullets
+  $126e-$1330 Formation
+  $1331-$136c Alive
+  $136d-$1478 Enemies Left
+  $1479-$19fa Offset
+  $19fb-$1e9c Hmm
+  $1e9d-$21ce Maploader
+  $21cf-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
   $2b98-$2f31 IRQ
-  $2f32-$2fdf Enemy
-  $2fe0-$300f Enemy Variables
-  $3010-$301f Plan
-  $3020-$30b1 Extra
-  $30b2-$30b6 Enemies In Wave
-  $30b7-$30bd Enemy Ship ID
-  $30be-$322c Enemies
-  $322d-$3246 Spawn
-  $3247-$32fd Pathfinding
-  $32fe-$3472 Stage
-  $3473-$34f1 Check Complete
-  $34f2-$36f1 ---String Data
-  $36f2-$3827 ---Text
-  $3828-$3cdd Enemy Data
-  $3cde-$3d74 Title
-  $3d75-$3ef6 Check Left Finish
-  $3ef7-$3ff4 Demo
+  $2f32-$2fce Enemy
+  $2fcf-$2ffe Enemy Variables
+  $2fff-$300e Plan
+  $300f-$30a0 Extra
+  $30a1-$30a2 Enemies In Wave
+  $30a3-$30a9 Enemy Ship ID
+  $30aa-$3214 Enemies
+  $3215-$322e Spawn
+  $322f-$32e5 Pathfinding
+  $32e6-$33ea Stage
+  $33eb-$3444 Check Complete
+  $3445-$3644 ---String Data
+  $3645-$377a ---Text
+  $377b-$3c30 Enemy Data
+  $3c31-$3cd9 Title
+  $3cda-$3e5b Check Left Finish
+  $3e5c-$3f59 Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6f00 Main
@@ -58,20 +58,20 @@ Default-segment:
   $7800-$78ff Game Colours
   $7900-$7937 Logo
   $8000-$8157 Unnamed
-  $8158-$8440 Score
-  $8441-$862a Bombs
-  $862b-$8812 Lives
-  $8813-$8aa1 Pre-Stage
-  $8aa2-$8af3 -Random
-  $8af4-$8b9d -Plot
-  $8b9e-$8e09 STATS
-  $8e0a-$8e0b GAME OVER
-  $8e0c-$8e2d 
-  $8e2e-$9008 DisplayGameOver
-  $9009-$972b -Sound
-  $972c-$9752 Chargers
-  $9753-$9bd1 Have Alien
-  $9bd2-$a277 Flight
+  $8158-$844f Score
+  $8450-$8639 Bombs
+  $863a-$8821 Lives
+  $8822-$8ab0 Pre-Stage
+  $8ab1-$8b02 -Random
+  $8b03-$8bac -Plot
+  $8bad-$8e18 STATS
+  $8e19-$8e1a GAME OVER
+  $8e1b-$8e3c 
+  $8e3d-$9017 DisplayGameOver
+  $9018-$973a -Sound
+  $973b-$9761 Chargers
+  $9762-$9be0 Have Alien
+  $9be1-$a286 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset

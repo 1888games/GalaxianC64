@@ -268,13 +268,6 @@ SHIP: {
 	KillMainShip: {
 
 
-		lda Captured
-		beq NotCaptured
-
-		jmp Finish
-
-		NotCaptured:
-
 		sfx(SFX_DEAD)
 
 		lda DualFighter
@@ -836,7 +829,7 @@ SHIP: {
 		lda FORMATION.Mode
 		bne NoCheckEnemies
 
-		lda ENEMY.EnemiesAlive
+		lda CHARGER.InflightAliens
 		bne Finish
 
 		NoCheckEnemies:
