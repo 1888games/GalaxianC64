@@ -96,7 +96,7 @@ BOMBS: {
 		sta SpriteX_LSB, y
 		sta SpriteY_LSB, y
 
-		lda #WHITE
+		lda #WHITE + 128
 		sta SpriteColor, y
 
 		lda #Pointer

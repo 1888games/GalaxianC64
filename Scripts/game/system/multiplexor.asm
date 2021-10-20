@@ -119,17 +119,18 @@ MP_IRQ: {
 					//bcc 
 
 
-				// 	lda SpriteColor, x
-				// 	bpl !nomsb+
-				// !msb:
-				// 	lda $d010 
-				// 	ora #[pow(2,i)]
-				// 	sta $d010
-				// 	jmp !msbdone+
-				// !nomsb:
-				// 	lda $d010 
-				// 	and #[255 - pow(2,i)]
-				// 	sta $d010
+					//lda SpriteColor, x
+					bmi !nomsb+
+				!msb:
+					lda VIC.SPRITE_MULTICOLOR
+					ora #[pow(2,i)]
+					sta VIC.SPRITE_MULTICOLOR
+					jmp !msbdone+
+				!nomsb:
+					lda VIC.SPRITE_MULTICOLOR
+					and #[255 - pow(2,i)]
+					sta VIC.SPRITE_MULTICOLOR
+				!msbdone:
 				
 					lda SpriteX, x
 					sta $d000 + i * 2

@@ -32,24 +32,24 @@ Default-segment:
   $1ec0-$21f1 Maploader
   $21f2-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
-  $2b98-$2e89 IRQ
-  $2e8a-$2f4b Enemy
-  $2f4c-$2f9b Enemy Variables
-  $2f9c-$2fc3 Plan
-  $2fc4-$3065 Extra
-  $3066-$306a Enemies In Wave
-  $306b-$308d Enemy Ship ID
-  $308e-$3243 Enemies
-  $3244-$325d Spawn
-  $325e-$3314 Pathfinding
-  $3315-$34b2 Stage
-  $34b3-$3531 Check Complete
-  $3532-$3731 ---String Data
-  $3732-$3867 ---Text
-  $3868-$3d1d Enemy Data
-  $3d1e-$3db4 Title
-  $3db5-$3f36 Check Left Finish
-  $3f37-$4034 Demo
+  $2b98-$2f31 IRQ
+  $2f32-$2ff3 Enemy
+  $2ff4-$3043 Enemy Variables
+  $3044-$306b Plan
+  $306c-$310d Extra
+  $310e-$3112 Enemies In Wave
+  $3113-$3135 Enemy Ship ID
+  $3136-$32eb Enemies
+  $32ec-$3305 Spawn
+  $3306-$33bc Pathfinding
+  $33bd-$355a Stage
+  $355b-$35d9 Check Complete
+  $35da-$37d9 ---String Data
+  $37da-$390f ---Text
+  $3910-$3dc5 Enemy Data
+  $3dc6-$3e5c Title
+  $3e5d-$3fde Check Left Finish
+  $3fdf-$40dc Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6f00 Main

@@ -281,7 +281,7 @@ BULLETS: {
 		lda BulletSpriteX, x
 		sta SpriteX + BulletSpriteID,x
 
-		lda #YELLOW
+		lda #YELLOW + 128
 		sta SpriteColor + BulletSpriteID,x
 
 		lda #BulletSpritePointer
@@ -320,7 +320,7 @@ BULLETS: {
 			lda SHIP.Active, x
 			beq DontShow
 
-			lda #YELLOW
+			lda #YELLOW + 128
 			sta SpriteColor + BulletSpriteID,x
 
 			lda #BulletSpritePointer
@@ -606,10 +606,10 @@ BULLETS: {
 		GoingRight:
 
 			pla
-			cmp #13
+			cmp #14
 			bcs Missed
 
-			cmp #5
+			cmp #4
 			bcc EndLoop
 
 			jmp NoOffsetCheck
