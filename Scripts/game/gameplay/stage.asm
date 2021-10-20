@@ -388,6 +388,8 @@ STAGE: {
 			lda #1
 			sta CHARGER.LevelComplete
 
+			jsr KillDive
+
 			inc CurrentStage
 
 			lda CurrentStage

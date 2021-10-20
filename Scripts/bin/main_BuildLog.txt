@@ -19,18 +19,18 @@ Default-segment:
   $0880-$08c1 Modules
   $08c2-$09ea IRQ
   $09eb-$0a36 Utility
-  $0a37-$0a53 Input
-  $0a54-$0af1 Joystick
-  $0af2-$0ea4 SHIP
-  $0ea5-$0f4c CheckDead
-  $0f4d-$1281 Bullets
-  $1282-$1344 Formation
-  $1345-$1380 Alive
-  $1381-$148c Enemies Left
-  $148d-$1a15 Offset
-  $1a16-$1eb7 Hmm
-  $1eb8-$21e9 Maploader
-  $21ea-$2aff Challenge Paths 4-8
+  $0a37-$0a55 Input
+  $0a56-$0af6 Joystick
+  $0af7-$0ea9 SHIP
+  $0eaa-$0f51 CheckDead
+  $0f52-$1286 Bullets
+  $1287-$1349 Formation
+  $134a-$1385 Alive
+  $1386-$1491 Enemies Left
+  $1492-$1a1a Offset
+  $1a1b-$1ebc Hmm
+  $1ebd-$21ee Maploader
+  $21ef-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
   $2b98-$2e89 IRQ
   $2e8a-$2f4b Enemy

@@ -12,6 +12,7 @@ INPUT: {
 	.label joyFireMask = %10000
 
 	JOY_READING: 		.word $00
+	LAST_READING:		.word $00
 	PortToRead:			.byte 0
 
 	JOY_RIGHT_LAST: 	.word $00
@@ -180,6 +181,7 @@ INPUT: {
 		sta INPUT.JOY_LEFT_NOW, y
 		sta INPUT.JOY_UP_NOW, y
 		sta INPUT.JOY_DOWN_NOW, y
+		sta INPUT.FIRE_UP_THIS_FRAME, y
 
 		jsr INPUT.ReadC64Joystick
 		jsr INPUT.CalculateButtons
