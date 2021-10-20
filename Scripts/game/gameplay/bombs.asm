@@ -16,7 +16,7 @@ BOMBS: {
 
 	.label BombStartID = 8
 	.label Pointer =49
-	.label BombEndID = BombStartID + 7
+	//.label BombEndID = BombStartID + 7
 	.label ReloadTime = 15
 
 	Active: 		.fill MAX_ENEMIES + MAX_BOMBS, 0
@@ -27,6 +27,7 @@ BOMBS: {
 	FractionSpeedY:	.fill MAX_ENEMIES + MAX_BOMBS, 0
 
 	ActiveBombs:	.byte 0
+	BombEndID:		.byte BombStartID + 7	
 
 	.label MaxY = 252
 
@@ -43,7 +44,7 @@ BOMBS: {
 			beq Found
 
 			iny
-			cpy #BombEndID
+			cpy BombEndID
 			bcc FindLoop
 
 			jmp Finish
@@ -416,7 +417,7 @@ BOMBS: {
 
 			ldx ZP.StoredXReg
 			inx
-			cpx #BombEndID
+			cpx BombEndID
 			bcc Loop
 
 		Finish:

@@ -146,6 +146,7 @@ BULLETS: {
 	
 	Fire: {
 
+		
 		lda FORMATION.EnemiesLeftInStage
 		bne CanFire	
 

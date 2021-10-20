@@ -869,8 +869,13 @@ FORMATION: {
 			lda ENEMY.Plan, y
 			beq EndFlyingLoop
 
+			cmp #RETURNING_TO_SWARM
+			beq DontRemoveYet
+
 			lda #0
 			sta FORMATION.Occupied, y
+
+		DontRemoveYet:
 
 			inc CHARGER.InflightAliens
 			inc EnemiesLeftInStage

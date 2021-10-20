@@ -21,16 +21,16 @@ Default-segment:
   $09eb-$0a36 Utility
   $0a37-$0a55 Input
   $0a56-$0af6 Joystick
-  $0af7-$0ea4 SHIP
-  $0ea5-$0f4c CheckDead
-  $0f4d-$126d Bullets
-  $126e-$1330 Formation
-  $1331-$136c Alive
-  $136d-$1478 Enemies Left
-  $1479-$19fd Offset
-  $19fe-$1e9f Hmm
-  $1ea0-$21d1 Maploader
-  $21d2-$2aff Challenge Paths 4-8
+  $0af7-$0e9d SHIP
+  $0e9e-$0f45 CheckDead
+  $0f46-$1266 Bullets
+  $1267-$1329 Formation
+  $132a-$1365 Alive
+  $1366-$1471 Enemies Left
+  $1472-$19fa Offset
+  $19fb-$1e9c Hmm
+  $1e9d-$21ce Maploader
+  $21cf-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
   $2b98-$2f31 IRQ
   $2f32-$2fce Enemy
@@ -59,19 +59,19 @@ Default-segment:
   $7900-$7937 Logo
   $8000-$8157 Unnamed
   $8158-$844f Score
-  $8450-$8639 Bombs
-  $863a-$8821 Lives
-  $8822-$8ab0 Pre-Stage
-  $8ab1-$8b02 -Random
-  $8b03-$8bac -Plot
-  $8bad-$8e18 STATS
-  $8e19-$8e1a GAME OVER
-  $8e1b-$8e3c 
-  $8e3d-$9017 DisplayGameOver
-  $9018-$973a -Sound
-  $973b-$9761 Chargers
-  $9762-$9be0 Have Alien
-  $9be1-$a286 Flight
+  $8450-$863c Bombs
+  $863d-$8824 Lives
+  $8825-$8ab3 Pre-Stage
+  $8ab4-$8b05 -Random
+  $8b06-$8baf -Plot
+  $8bb0-$8e1b STATS
+  $8e1c-$8e1d GAME OVER
+  $8e1e-$8e3f 
+  $8e40-$901a DisplayGameOver
+  $901b-$973d -Sound
+  $973e-$9764 Chargers
+  $9765-$9be3 Have Alien
+  $9be4-$a289 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset

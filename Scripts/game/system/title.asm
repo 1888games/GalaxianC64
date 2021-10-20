@@ -212,6 +212,8 @@ TITLE: {
 
 		CheckDown:
 
+			//jmp Finish
+
 			lda Players
 			bne Finish
 

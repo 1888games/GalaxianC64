@@ -150,6 +150,11 @@ SHIP: {
 		lda #200
 		sta StartTimer
 
+		lda #BOMBS.BombStartID
+		clc
+		adc #7
+		sta BOMBS.BombEndID
+
 
 		lda #SPRITE_POINTER
 		sta SpritePointer + MAIN_SHIP_POINTER + 1
@@ -160,9 +165,6 @@ SHIP: {
 		lda #SHIP_Y
 		//sta SpriteY + MAIN_SHIP_POINTER + 1
 
-		lda #0
-		sta BULLETS.PlayerLookup + 2
-		sta BULLETS.PlayerLookup + 3
 
 		lda TwoPlayer
 		beq Finish
@@ -176,15 +178,18 @@ SHIP: {
 			lda #SPRITE_POINTER
 			sta SpritePointer + MAIN_SHIP_POINTER + 1
 
+
+			lda #BOMBS.BombStartID
+			clc
+			adc #5
+			sta BOMBS.BombEndID
+
 			lda #1
 		//	sta Active + 1
 
 			lda #14
 			sta CharX + 1
 
-			lda #1
-			sta BULLETS.PlayerLookup + 2
-			sta BULLETS.PlayerLookup + 3
 
 			lda #6
 			sta OffsetX + 1
@@ -686,7 +691,7 @@ SHIP: {
 
 		lda #10
 		sta SpriteY + MAIN_SHIP_POINTER
-		sta SpriteY + MAIN_SHIP_POINTER + 1
+	
 
 		rts
 
@@ -701,8 +706,8 @@ SHIP: {
 
 		CheckSecond:
 
-			lda StartTimer
-			bne HideBoth
+			//lda StartTimer
+			//bne HideBoth
 
 			lda TwoPlayer
 			bne ShowSecondShip
