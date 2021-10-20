@@ -27,11 +27,11 @@ Default-segment:
   $1282-$1344 Formation
   $1345-$1380 Alive
   $1381-$148c Enemies Left
-  $148d-$19f6 Offset
-  $19f7-$1a1f Hmm
-  $1a20-$1eb0 Unnamed
-  $1eb1-$21e2 Maploader
-  $21e3-$2aff Challenge Paths 4-8
+  $148d-$19fc Offset
+  $19fd-$1a2c Hmm
+  $1a2d-$1ebd Unnamed
+  $1ebe-$21ef Maploader
+  $21f0-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
   $2b98-$2e89 IRQ
   $2e8a-$2f4b Enemy

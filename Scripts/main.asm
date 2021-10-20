@@ -597,14 +597,17 @@ MAIN: {
 			jsr FORMATION.CalculateEnemiesLeft
 		
 			jsr SFX.FrameUpdate
+
 			jsr STAGE.FrameUpdate
 			jsr ENEMY.FrameUpdate
 			jsr CHARGER.FrameUpdate
 			jsr BOMBS.FrameUpdate
 			jsr LIVES.FrameUpdate
 
+
 			jsr SHIP.FrameUpdate
 			jsr BULLETS.FrameUpdate		
+			
 			jsr BONUS.FrameUpdate
 
 		Stars:

@@ -120,7 +120,7 @@ HandleDive: {
 	PartThree:
 
 		lda dive_time
-		cmp #60
+		cmp #62
 		bcc Finish
 
 		sfx(SFX_DIVE_3)
@@ -135,7 +135,7 @@ HandleDive: {
 	PartTwo:
 
 		lda dive_time
-		cmp #60
+		cmp #62
 		bcc Finish
 
 		

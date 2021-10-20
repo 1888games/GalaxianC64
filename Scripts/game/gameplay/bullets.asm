@@ -374,6 +374,8 @@ BULLETS: {
 
 		CheckOffset:
 
+			jsr UpdateSprite
+
 			lda SpriteY_MSB, x
 			sec
 			sbc ZP.Amount
@@ -394,7 +396,7 @@ BULLETS: {
 
 
 			
-			jsr UpdateSprite
+			
 			jsr CheckFormationCollision
 			
 			

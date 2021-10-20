@@ -859,7 +859,7 @@
 			sta dive_time
 			lda #1
 			sta dive_mode
-			
+
 			DontRestart:
 
 			lda #CONTINUING_ATTACK
@@ -910,6 +910,8 @@
 
 			inc CHARGER.FlagshipSurvivorCount
 
+		Finish:
+
 			lda #PLAN_INACTIVE
 			sta ENEMY.Plan + 1
 
@@ -918,8 +920,6 @@
 
 			lda #0
 			sta FORMATION.Alive, y
-
-		Finish:
 
 		rts
 	}
