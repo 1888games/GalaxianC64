@@ -859,15 +859,41 @@ FORMATION: {
 
 		jsr ResetFlags
 
-		Loop:
+		ldy #1
 
-			lda FORMATION.Alive, y
-			beq CheckDive
+		FlyingLoop:
+
+			lda ENEMY.Plan, y
+			beq EndFlyingLoop
+
+			lda #0
+			sta FORMATION.Occupied, y
+
+			inc CHARGER.InflightAliens
+			inc EnemiesLeftInStage
+
+			lda ENEMY.Slot, y
+			tax
+
+			lda FORMATION.Relative_Column, x
+			tax
+			inc CHARGER.AliensInColumn, x
+
+			EndFlyingLoop:
+
+			iny
+			cpy #MAX_ENEMIES
+			bcc FlyingLoop
+
+
+		ldy #0
+
+		Loop:
 
 			* = * "Hmm"
 
 			lda FORMATION.Occupied, y
-			beq NotHere
+			beq EndLoop
 
 			UpdateRowCounts:
 
@@ -880,10 +906,6 @@ FORMATION: {
 
 				inc CHARGER.HaveBluePurpleAliens
 				
-
-			NotHere:
-
-
 			UpdateColumnCounts:
 
 				inc EnemiesLeftInStage
@@ -892,18 +914,6 @@ FORMATION: {
 				lda FORMATION.Relative_Column, y
 				tax
 				inc CHARGER.AliensInColumn, x
-			
-			CheckDive:
-
-				cpy #MAX_ENEMIES
-				bcs EndLoop
-
-				lda ENEMY.Plan, y
-				beq EndLoop
-
-				* = *
-
-				inc CHARGER.InflightAliens
 
 			EndLoop:
 
@@ -914,13 +924,6 @@ FORMATION: {
 			SetDebugBorder(0)
 
 			jsr CalculateExtents
-
-		lda CHARGER.SwarmAliens
-		clc
-		adc CHARGER.InflightAliens
-		bne DontOverride
-
-		sta EnemiesLeftInStage
 
 	DontOverride:
 
