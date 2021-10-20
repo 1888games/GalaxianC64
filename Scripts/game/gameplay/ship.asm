@@ -341,6 +341,8 @@ SHIP: {
 			sta Active
 			sta PlayerDied
 
+			jsr KillDive.Force
+
 			lda ExplosionFrames
 			sta SpritePointer + MAIN_SHIP_POINTER
 

@@ -384,11 +384,12 @@ STAGE: {
 
 			lda #0
 			sta FORMATION.Mode
+			sta CHARGER.HaveAggressiveAliens
 
 			lda #1
 			sta CHARGER.LevelComplete
 
-			jsr KillDive
+			jsr KillDive.Force
 
 			inc CurrentStage
 

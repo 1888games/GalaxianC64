@@ -21,16 +21,16 @@ Default-segment:
   $09eb-$0a36 Utility
   $0a37-$0a55 Input
   $0a56-$0af6 Joystick
-  $0af7-$0ea9 SHIP
-  $0eaa-$0f51 CheckDead
-  $0f52-$1286 Bullets
-  $1287-$1349 Formation
-  $134a-$1385 Alive
-  $1386-$1491 Enemies Left
-  $1492-$1a1a Offset
-  $1a1b-$1ebc Hmm
-  $1ebd-$21ee Maploader
-  $21ef-$2aff Challenge Paths 4-8
+  $0af7-$0eac SHIP
+  $0ead-$0f54 CheckDead
+  $0f55-$1289 Bullets
+  $128a-$134c Formation
+  $134d-$1388 Alive
+  $1389-$1494 Enemies Left
+  $1495-$1a1d Offset
+  $1a1e-$1ebf Hmm
+  $1ec0-$21f1 Maploader
+  $21f2-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
   $2b98-$2e89 IRQ
   $2e8a-$2f4b Enemy
@@ -43,13 +43,13 @@ Default-segment:
   $3244-$325d Spawn
   $325e-$3314 Pathfinding
   $3315-$34b2 Stage
-  $34b3-$352b Check Complete
-  $352c-$372b ---String Data
-  $372c-$3861 ---Text
-  $3862-$3d17 Enemy Data
-  $3d18-$3dae Title
-  $3daf-$3f30 Check Left Finish
-  $3f31-$402e Demo
+  $34b3-$3531 Check Complete
+  $3532-$3731 ---String Data
+  $3732-$3867 ---Text
+  $3868-$3d1d Enemy Data
+  $3d1e-$3db4 Title
+  $3db5-$3f36 Check Left Finish
+  $3f37-$4034 Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6f00 Main
@@ -59,19 +59,19 @@ Default-segment:
   $7900-$7937 Logo
   $8000-$8157 Unnamed
   $8158-$8440 Score
-  $8441-$8626 Bombs
-  $8627-$880e Lives
-  $880f-$8a9d Pre-Stage
-  $8a9e-$8aef -Random
-  $8af0-$8b99 -Plot
-  $8b9a-$8e05 STATS
-  $8e06-$8e07 GAME OVER
-  $8e08-$8e29 
-  $8e2a-$9004 DisplayGameOver
-  $9005-$9727 -Sound
-  $9728-$974e Chargers
-  $974f-$9bcd Have Alien
-  $9bce-$a273 Flight
+  $8441-$862a Bombs
+  $862b-$8812 Lives
+  $8813-$8aa1 Pre-Stage
+  $8aa2-$8af3 -Random
+  $8af4-$8b9d -Plot
+  $8b9e-$8e09 STATS
+  $8e0a-$8e0b GAME OVER
+  $8e0c-$8e2d 
+  $8e2e-$9008 DisplayGameOver
+  $9009-$972b -Sound
+  $972c-$9752 Chargers
+  $9753-$9bd1 Have Alien
+  $9bd2-$a277 Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset

@@ -54,6 +54,10 @@ BOMBS: {
 			ldx ZP.EnemyID
 		
 			jsr SetupSprite
+
+			//.//lda Active y
+			//beq Finish
+
 			jsr CalculateDistanceToPlayer
 	
 			inc ActiveBombs
@@ -69,6 +73,17 @@ BOMBS: {
 
 	SetupSprite: {
 
+		lda SpriteX, x
+		clc
+		adc #4
+		sta SpriteX, y
+
+		//cmp #35
+		//bcc Skip
+
+		//cmp #245
+		//bcs Skip
+
 		lda SpriteY, x
 		sec
 		sbc #8
@@ -76,11 +91,6 @@ BOMBS: {
 
 		lda #1
 		sta Active, y
-
-		lda SpriteX, x
-		clc
-		adc #4
-		sta SpriteX, y
 
 		lda #0
 		sta SpriteX_LSB, y
@@ -93,6 +103,9 @@ BOMBS: {
 		sta SpritePointer, y
 
 		sty ZP.CurrentID
+
+
+		Skip:
 
 
 		rts	
@@ -238,6 +251,9 @@ BOMBS: {
 			lda SpriteX, x
 			sbc #0
 			sta SpriteX, x
+
+			cmp #16
+			bcc Reached
 
 		MoveYNow:
 

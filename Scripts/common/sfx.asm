@@ -183,6 +183,8 @@ KillDive: {
 	cpx diving_enemy
 	bne Finish
 
+	Force:
+
 	sfx(SFX_EMPTY)
 
 	lda #255
