@@ -23,33 +23,33 @@ Default-segment:
   $0a56-$0af6 Joystick
   $0af7-$0eac SHIP
   $0ead-$0f54 CheckDead
-  $0f55-$1289 Bullets
-  $128a-$134c Formation
-  $134d-$1388 Alive
-  $1389-$1494 Enemies Left
-  $1495-$1a1d Offset
-  $1a1e-$1ebf Hmm
-  $1ec0-$21f1 Maploader
-  $21f2-$2aff Challenge Paths 4-8
+  $0f55-$1275 Bullets
+  $1276-$1338 Formation
+  $1339-$1374 Alive
+  $1375-$1480 Enemies Left
+  $1481-$1a09 Offset
+  $1a0a-$1eab Hmm
+  $1eac-$21dd Maploader
+  $21de-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
   $2b98-$2f31 IRQ
-  $2f32-$2ff3 Enemy
-  $2ff4-$3043 Enemy Variables
-  $3044-$306b Plan
-  $306c-$310d Extra
-  $310e-$3112 Enemies In Wave
-  $3113-$3135 Enemy Ship ID
-  $3136-$32eb Enemies
-  $32ec-$3305 Spawn
-  $3306-$33bc Pathfinding
-  $33bd-$355a Stage
-  $355b-$35d9 Check Complete
-  $35da-$37d9 ---String Data
-  $37da-$390f ---Text
-  $3910-$3dc5 Enemy Data
-  $3dc6-$3e5c Title
-  $3e5d-$3fde Check Left Finish
-  $3fdf-$40dc Demo
+  $2f32-$2fdf Enemy
+  $2fe0-$300f Enemy Variables
+  $3010-$301f Plan
+  $3020-$30b1 Extra
+  $30b2-$30b6 Enemies In Wave
+  $30b7-$30bd Enemy Ship ID
+  $30be-$322c Enemies
+  $322d-$3246 Spawn
+  $3247-$32fd Pathfinding
+  $32fe-$3472 Stage
+  $3473-$34f1 Check Complete
+  $34f2-$36f1 ---String Data
+  $36f2-$3827 ---Text
+  $3828-$3cdd Enemy Data
+  $3cde-$3d74 Title
+  $3d75-$3ef6 Check Left Finish
+  $3ef7-$3ff4 Demo
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
   $6c00-$6f00 Main

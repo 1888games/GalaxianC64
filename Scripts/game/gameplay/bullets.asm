@@ -3,24 +3,20 @@ BULLETS: {
 
 	* = * "Bullets"
 	
-	BulletSpriteX:		.byte 0, 0, 0, 0
-	SpriteY_MSB:		.byte 0, 0, 0, 0
-	SpriteY_LSB:		.byte 0, 0, 0, 0
+	BulletSpriteX:		.byte 0, 0
+	SpriteY_MSB:		.byte 0, 0
+	SpriteY_LSB:		.byte 0, 0
 
+	CharX:		.byte 255, 255
+	CharY:		.byte 0, 0
+	OffsetX:	.byte 0, 0
+	OffsetY:	.byte 0, 0
 
-	CharX:		.byte 255, 255, 255, 255
-	CharY:		.byte 0, 0, 0, 0
-
-	OffsetX:	.byte 0, 0, 0, 0
-	OffsetY:	.byte 0, 0, 0, 0
-
-
-	CharLookups:	.byte 179, 180, 181, 182
 	Cooldown:		.byte CooldownTime, CooldownTime
 	MaxBullets:		.byte 1, 1
 	BulletToDie:	.byte 0
 	PlayerShooting:	.byte 0
-	PlayerLookup:	.byte 0, 1, 0, 1
+	PlayerLookup:	.byte 0, 1
 
 	.label SPEED_MSB = 4
 	.label SPEED_LSB = 235
@@ -31,8 +27,6 @@ BULLETS: {
 	.label BulletSpritePointer = 58
 
 	ActiveBullets:		.byte 0, 0
-
-
 
 	
 	Fire2: {

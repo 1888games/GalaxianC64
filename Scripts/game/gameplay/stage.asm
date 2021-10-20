@@ -120,7 +120,6 @@ STAGE: {
 		sta MaxExtraEnemies
 		sta ENEMY.EnemiesAlive
 		sta ENEMY.NextSpawnValue
-		sta ENEMY.AddingFighter
 
 		lda #DelayTime
 		sta DelayTimer
@@ -129,12 +128,6 @@ STAGE: {
 
 		lda #0
 		sta ZP.Amount
-
-		asl
-		tax
-
-		
-		jsr UpdateTransformType
 
 		lda #1
 		sta STAGE.ReadyNextWave
@@ -149,34 +142,6 @@ STAGE: {
 	}
 
 
-	UpdateTransformType: {
-
-
-		lda STAGE.CurrentStage
-		cmp #3
-		bcc NoTransformIncrease
-
-		lda STAGE.StageIndex
-		cmp #3
-		bcs NoTransformIncrease
-
-		ldx CurrentPlayer
-		inc TransformTypes, x
-
-		lda TransformTypes, x
-		cmp #3
-		bcc NoTransformIncrease
-
-		lda #0
-		sta TransformTypes, x
-
-		NoTransformIncrease:
-
-		rts
-
-	}
-
-	
 
 	GetWaveData: {
 

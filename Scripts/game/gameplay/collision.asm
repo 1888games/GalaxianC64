@@ -176,52 +176,7 @@
 
 	
 
-	CheckTransformBonus: {
-
-		stx ZP.EnemyID
-
-		lda ZP.EnemyType
-		cmp #ENEMY_TRANSFORM
-		bne NotTransform
-
-		inc STAGE.TransformsKilled
-
-		lda STAGE.TransformsKilled
-		cmp #3
-		bcc NotTransform
-
-
-		AddScore:
-
-			lda #14
-			clc
-			adc STAGE.TransformType
-			tay
-
-			jsr SCORE.AddScore
-
-		ShowPopup:
-
-			ldy STAGE.TransformType
-			lda TransformSpriteLookup, y
-			tay
-
-			ldx ZP.EnemyID
-
-			lda SpriteX, x
-			sta ZP.Column
-
-			lda SpriteY, x
-			sta ZP.Row
-
-			jsr BONUS.ShowBonus
-
-			ldx ZP.EnemyID
-
-		NotTransform:
-
-		rts
-	}
+	
 
 	Kill: {
 
@@ -359,17 +314,6 @@
 				ldx ZP.EnemyID
 
 			NoPopup:
-
-				lda FORMATION.Mode
-				cmp #FORMATION_SPREAD
-				beq StillEnemiesToDock
-
-				dec EnemiesAlive
-				lda EnemiesAlive
-				bne StillEnemiesToDock
-
-				lda #1
-				sta STAGE.ReadyNextWave
 
 		StillEnemiesToDock:
 

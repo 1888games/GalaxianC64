@@ -6,16 +6,13 @@
 	// Bashes AX
 	NewGame: {
 
-		lda #255
-		sta EnemyWithShipID
-
 		lda #0
 		sta Quadrant
 		sta FormationUpdated
 		sta EnemiesAlive
 		sta MoveX
 		sta MoveY
-		sta AddingFighter
+		
 		
 		jsr ClearData
 
@@ -29,14 +26,11 @@
 
 		Loop:
 
-			sta Side, x
 			sta Angle, x
 			sta BasePointer, x
 			sta Plan, x
 			sta Slot, x
-			sta HitsLeft, x
-			sta IsExtraEnemy, x
-			sta UltimateTargetSpriteY, x
+	
 
 			inx
 			cpx #MAX_ENEMIES
