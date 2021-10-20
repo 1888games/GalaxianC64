@@ -804,8 +804,10 @@ FORMATION: {
 
 			sty ZP.FormationID
 
-			lda #1
+			lda Type, x
 			tay
+
+			lda #2
 		//	tay
 			//clc
 			//adc #1

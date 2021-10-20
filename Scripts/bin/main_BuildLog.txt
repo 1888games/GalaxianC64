@@ -8,11 +8,11 @@ Writing prg file: /Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/b
 Memory Map
 ----------
 Default-segment:
-  *$0002-$0025 Temp vars zero page
-  *$0026-$003d LPAX
-  *$003e-$0054 SpriteX
-  *$0055-$00c7 SpriteY
-  *$00c8-$00e2 SpriteCopyY
+  *$0002-$0024 Temp vars zero page
+  *$0025-$003c LPAX
+  *$003d-$0053 SpriteX
+  *$0054-$00c6 SpriteY
+  *$00c7-$00e1 SpriteCopyY
   $0801-$080d Basic
   $080e-$080d Basic End
   $0810-$0832 Hi score_Data
@@ -27,10 +27,10 @@ Default-segment:
   $126e-$1330 Formation
   $1331-$136c Alive
   $136d-$1478 Enemies Left
-  $1479-$19fa Offset
-  $19fb-$1e9c Hmm
-  $1e9d-$21ce Maploader
-  $21cf-$2aff Challenge Paths 4-8
+  $1479-$19fd Offset
+  $19fe-$1e9f Hmm
+  $1ea0-$21d1 Maploader
+  $21d2-$2aff Challenge Paths 4-8
   $2b00-$2b97 VicSpriteTable
   $2b98-$2f31 IRQ
   $2f32-$2fce Enemy

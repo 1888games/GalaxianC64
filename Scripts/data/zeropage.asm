@@ -33,7 +33,7 @@ ZP: {
 	StageOrderID:			.byte 0
 	FormationID:			.byte 0
 	KillID:					.byte 0
-	SoundID:				.byte 0
+	SoundID:				.byte
 
 
 	ScreenAddress:			.word 0
