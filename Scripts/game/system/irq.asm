@@ -58,11 +58,11 @@ IRQ: {
 		lda #SidTime
 		sta SidTimer
 
-		lda #16
-		sta STARS.StarsUse
+		//lda #16
+		//sta STARS.StarsUse
 
-		lda #8
-		sta STARS.StartIDs + 1
+		//lda #8
+		//sta STARS.StartIDs + 1
 
 
 		NoSkip:

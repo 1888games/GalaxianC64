@@ -12,7 +12,7 @@ TEXT: {
 	}
 		
 				    // 0   1    2    3    4    5    6    7    8    9    10   11	  12   13   14   15  16.   17   18.  19,  20,  21, 22
-	Bank1:		.word Top, Scr, One, Two, Tmn, Arl, Str, Stg, Cst, Rea, Onu, Twu, Gmo, Res, Shf, Nmh, Hmr, Dot, Pct, Bon, Per, Spb, Fic
+	Bank1:		.word Top, Scr, One, Two, Str, Tmn, Arl, Stg, Cst, Rea, Onu, Twu, Gmo, Res, Shf, Nmh, Hmr, Dot, Pct, Bon, Per, Spb, Fic
 					// 23  24   25   26   27   28   29   30   31   32   33.   34
 				.word Eni, Sco, Tp5, Nm1, Nm2, Nm3, Nm4, Nm5, Pau, Loa, Lo2, Ver
 
@@ -32,7 +32,7 @@ TEXT: {
 
 	.label START = 6
 	.label STAGE = 7
-	.label CHALLENGING_STAGE = 8
+	.label SPEED_RUN = 8
 	.label READY = 9
 
 	.label ONE_UP = 10
@@ -64,9 +64,9 @@ TEXT: {
 	Two:	.text @"  2 players\$00"	
 	Tmn:	.text @"tm and [ 1979 namco ltd.\$00"	
 	Arl:	.text @"c64 port arlasoft 2021\$00"
-	Str:	.text @"start\$00"		
+	Str:	.text @"  speedrun\$00"		
 	Stg:	.text @"stage\$00"
-	Cst:	.text @"challenging stage\$00"
+	Cst:	.text @"speedrun\$00"
 	Rea:	.text @"get ready\$00"	
 	Onu:	.text @"1 up\$00"	
 	Twu:	.text @"2 up\$00"	
@@ -78,8 +78,8 @@ TEXT: {
 	Dot:		.text @".\$00"	
 	Pct:		.text @"%\$00"	
 	Bon:		.text @"bonus\$00"	
-	Per:		.text @"perfect !\$00"	
-	Spb:		.text @"special bonus 10000 pts\$00"	
+	Per:		.text @"speedrun record\$00"	
+	Spb:		.text @"saving data...\$00"	
 	Fic:		.text @"fighter captured\$00"	
 	Eni:		.text @"enter your initials !\$00"
 	Sco:		.text @"pos    score    name\$00"

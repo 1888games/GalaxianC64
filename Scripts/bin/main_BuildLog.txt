@@ -15,44 +15,46 @@ Default-segment:
   *$00c7-$00e1 SpriteCopyY
   $0801-$080d Basic
   $080e-$080d Basic End
-  $0810-$0832 Hi score_Data
+  $0810-$0836 Hi score_Data
   $0880-$08c1 Modules
-  $08c2-$09ea IRQ
-  $09eb-$0a36 Utility
-  $0a37-$0a55 Input
-  $0a56-$0af6 Joystick
-  $0af7-$0e9d SHIP
-  $0e9e-$0f45 CheckDead
-  $0f46-$1266 Bullets
-  $1267-$1329 Formation
-  $132a-$1365 Alive
-  $1366-$1471 Enemies Left
-  $1472-$19fa Offset
-  $19fb-$1e9c Hmm
-  $1e9d-$21ce Maploader
-  $21cf-$2aff Challenge Paths 4-8
-  $2b00-$2b97 VicSpriteTable
-  $2b98-$2f31 IRQ
-  $2f32-$2fce Enemy
-  $2fcf-$2ffe Enemy Variables
-  $2fff-$300e Plan
-  $300f-$30a0 Extra
-  $30a1-$30a2 Enemies In Wave
-  $30a3-$30a9 Enemy Ship ID
-  $30aa-$3214 Enemies
-  $3215-$322e Spawn
-  $322f-$32e5 Pathfinding
-  $32e6-$33ea Stage
-  $33eb-$3444 Check Complete
-  $3445-$3644 ---String Data
-  $3645-$377a ---Text
-  $377b-$3c30 Enemy Data
-  $3c31-$3cd9 Title
-  $3cda-$3e5b Check Left Finish
-  $3e5c-$3f59 Demo
+  $08c2-$09cc IRQ
+  $09cd-$0a17 Utility
+  $0a18-$0a36 Input
+  $0a37-$0ad7 Joystick
+  $0ad8-$0e75 SHIP
+  $0e76-$0f28 CheckDead
+  $0f29-$1235 Bullets
+  $1236-$12f8 Formation
+  $12f9-$1334 Alive
+  $1335-$1440 Enemies Left
+  $1441-$19ba Offset
+  $19bb-$1e58 Hmm
+  $1e59-$2176 Maploader
+  $2177-$29ff Challenge Paths 4-8
+  $2a00-$2a97 VicSpriteTable
+  $2a98-$2d89 IRQ
+  $2d8a-$2e12 Enemy
+  $2e13-$2e42 Enemy Variables
+  $2e43-$2e52 Plan
+  $2e53-$2ee4 Extra
+  $2ee5-$2ee6 Enemies In Wave
+  $2ee7-$2eed Enemy Ship ID
+  $2eee-$3058 Enemies
+  $3059-$3072 Spawn
+  $3073-$3129 Pathfinding
+  $312a-$322e Stage
+  $322f-$329d Check Complete
+  $329e-$3496 ---String Data
+  $3497-$35cc ---Text
+  $35cd-$3a82 Enemy Data
+  $3a83-$3b2f Title
+  $3b30-$3cde Check Left Finish
+  $3cdf-$3ddc Demo
+  $3ddd-$3e07 High Scores
+  $3e08-$4397 Position
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6f00 Main
+  $6c00-$6f0b Main
   $7400-$7503 Game Map
   $7504-$7687 Game Tiles
   $7800-$78ff Game Colours
@@ -60,24 +62,22 @@ Default-segment:
   $8000-$8157 Unnamed
   $8158-$844f Score
   $8450-$863c Bombs
-  $863d-$8824 Lives
-  $8825-$8ab3 Pre-Stage
-  $8ab4-$8b05 -Random
-  $8b06-$8baf -Plot
-  $8bb0-$8e1b STATS
-  $8e1c-$8e1d GAME OVER
-  $8e1e-$8e3f 
-  $8e40-$901a DisplayGameOver
-  $901b-$973d -Sound
-  $973e-$9764 Chargers
-  $9765-$9be3 Have Alien
-  $9be4-$a289 Flight
+  $863d-$8918 Lives
+  $8919-$8ba7 Pre-Stage
+  $8ba8-$8bf9 -Random
+  $8bfa-$8ca3 -Plot
+  $8ca4-$8f0f STATS
+  $8f10-$8f11 GAME OVER
+  $8f12-$8f33 
+  $8f34-$910e DisplayGameOver
+  $910f-$9831 -Sound
+  $9832-$9858 Chargers
+  $9859-$9cb9 Have Alien
+  $9cba-$a35f Flight
   $a500-$a6ff Game ZP Backup
   $c400-$d3bf Sprites
   $f000-$f7ff Charset
   $f800-$f7ff Unnamed
-  $f800-$f829 High Scores
-  $f82a-$fcdc Position
   $fd00-$feff SpriteCharLookup
 
 Writing Vice symbol file: /Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/bin/main.vs

@@ -19,7 +19,7 @@ DISK: {
 .label K_save            = $ffd8 
 
 .label file_start = $0810
-.label file_end = $0832
+.label file_end = $0836
 
 
 // ************************************************************** 
@@ -28,9 +28,6 @@ DISK: {
 
     SAVE: { 
 
-
-            .label file_start = $0810    // example addresses
-            .label file_end   = $0832
 
             lda #0
             sta $02a1 
@@ -128,7 +125,7 @@ DISK: {
           	nop
             rts
 
-    fname:  .text "GALSCORES,S"
+    fname:  .text "GLXSCORES,S"
     fname_end:
 
     }
@@ -174,7 +171,7 @@ DISK: {
             rts
 
     fname:      .byte $53,$30,$3A 
-                .text "GALSCORES"
+                .text "GLXSCORES"
     fname_end:
 
     }
@@ -266,7 +263,7 @@ DISK: {
            nop
             rts
 
-    fname:  .text "GALSCORES,S"
+    fname:  .text "GLXSCORES,S"
     fname_end:
 
 

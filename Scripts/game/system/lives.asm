@@ -8,7 +8,8 @@ LIVES: {
 	.label FlashTime = 16
 	.label LabelColumn = 32
 	.label LivesColumn = 29
-
+	.label TimeRow = 12
+	.label TimeColumn = 32
 
 	Chars:	.byte 36, 38, 34, 35
 
@@ -22,9 +23,16 @@ LIVES: {
 	FlashState:	.byte 1
 
 	LabelRows:	.byte 6, 10
+
 	Left:		.byte 3, 3
 	Active:		.byte 0
 	GameOver:	.byte 0
+
+	SpeedMinutes:	.byte 0
+	SpeedTensSeconds:	.byte 0
+	SpeedSeconds:	.byte 0
+	SpeedHundreds:	.byte 0
+	DoSpeed:		.byte 0
 
 	NewGame: {
 
@@ -37,6 +45,23 @@ LIVES: {
 
 		lda #0
 		sta GameOver
+		sta DoSpeed
+
+		lda SHIP.Speedrun
+		beq NoSpeed
+
+		lda #0
+		sta SpeedSeconds
+		sta SpeedHundreds
+		sta SpeedMinutes
+		sta SpeedTensSeconds
+
+		jsr DrawTimeStart
+
+
+		NoSpeed:
+
+		jsr FrameUpdate.TurnOn
 
 
 		lda SHIP.TwoPlayer
@@ -325,7 +350,187 @@ LIVES: {
 	}
 
 
+	DrawTimeStart: {
+
+		ldy #TimeRow
+		ldx #TimeColumn
+
+		jsr PLOT.GetCharacter
+
+		ldy #0
+		lda SpeedMinutes
+		clc
+		adc #48
+		sta (ZP.ScreenAddress), y
+
+		lda #YELLOW
+		sta (ZP.ColourAddress), y 
+
+		lda #47
+		iny
+		sta (ZP.ScreenAddress), y
+
+		lda #YELLOW
+		sta (ZP.ColourAddress), y 
+
+		iny
+		lda SpeedTensSeconds
+		clc
+		adc #48
+		sta (ZP.ScreenAddress), y
+
+		lda #YELLOW
+		sta (ZP.ColourAddress), y 
+
+		iny
+		lda SpeedSeconds
+		clc
+		adc #48
+		sta (ZP.ScreenAddress), y
+
+		lda #YELLOW
+		sta (ZP.ColourAddress), y 
+
+
+		
+		rts
+	}
+
+
+	
+
+	CheckTimer: {
+
+		lda SHIP.Speedrun
+		bne DoTime
+
+		rts
+
+	DoTime:
+
+
+		ldy #TimeRow
+		ldx #TimeColumn
+
+		jsr PLOT.GetCharacter
+
+		lda DoSpeed
+		bne Hundreds
+
+		rts
+		
+	Hundreds:
+
+		lda SpeedHundreds
+		clc
+		adc #2
+		sta SpeedHundreds
+
+		cmp #100
+		bcs RollSeconds
+
+		rts 
+
+	RollSeconds:
+
+		lda #0
+		sta SpeedHundreds
+
+		lda SpeedSeconds
+		clc
+		adc #1
+		sta SpeedSeconds
+
+		cmp #10
+		bcc NoWrapSeconds
+
+		lda #0
+		sta SpeedSeconds
+
+	NoWrapSeconds:
+
+		ldy #3
+		clc
+		adc #48
+		sta (ZP.ScreenAddress), y
+
+		cmp #48
+		bne Okay
+
+
+	RollTens:
+
+		lda #0
+		sta SpeedSeconds
+
+		lda SpeedTensSeconds
+		clc
+		adc #1
+		sta SpeedTensSeconds
+
+		cmp #6
+		bcc NoWrapTens
+
+		lda #0
+		sta SpeedTensSeconds
+
+	NoWrapTens:
+
+		ldy #2
+		clc
+		adc #48
+		sta (ZP.ScreenAddress), y
+
+		cmp #48
+		bne Okay
+
+	RollMinutes:
+
+		inc SpeedMinutes
+		lda SpeedMinutes
+		cmp #10
+		bcc MinutesOkay
+
+		lda #9
+		sta SpeedMinutes
+
+		lda #5
+		sta SpeedTensSeconds
+
+		lda #9
+		sta SpeedSeconds
+
+		lda #98
+		sta SpeedHundreds
+
+		jsr DrawTimeStart
+
+		lda #0
+		sta DoSpeed
+
+		jmp Finish
+
+
+	MinutesOkay:
+
+		ldy #0
+		clc
+		adc #48
+		sta (ZP.ScreenAddress), y
+
+		Okay:
+
+		Finish:
+
+
+
+		rts
+	}
+
+
 	FrameUpdate: {
+
+		jsr CheckTimer
 
 		lda Active
 		beq Finish
@@ -337,6 +542,8 @@ LIVES: {
 		rts
 
 		Ready:
+
+			rts
 
 			lda #FlashTime
 			sta FlashTimer

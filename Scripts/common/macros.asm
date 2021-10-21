@@ -1,4 +1,6 @@
-ShowDebug: .byte 0
+
+
+.var ShowDebug = 0
 
 .macro StoreState() {
 
@@ -22,11 +24,11 @@ ShowDebug: .byte 0
 
 .macro SetDebugBorder(value) {
 
-	lda ShowDebug
-	beq Finish
+	.if (ShowDebug == 1) {
 
 	lda #value
 	sta $d020
 
-	Finish:
+	}
+
 }

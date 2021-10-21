@@ -8,8 +8,8 @@ STARS: {
 	Rows:		.fill MAX_STARS, random() * 23
 
 	//StartIDs:	.byte 0, 16, 32, 48, 64
-	StartIDs:	.byte 0, 12
-	EndIDs:		.byte 12, 24
+	StartIDs:	.byte 0, 10
+	EndIDs:		.byte 10, 20
 
 
 	//StartIDs:	.byte 0, 8, 16, 24, 32, 40, 48, 56

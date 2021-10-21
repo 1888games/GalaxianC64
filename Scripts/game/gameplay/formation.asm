@@ -99,7 +99,7 @@ FORMATION: {
 
 
 
-	TopLeftChar:		.byte 184, 184, 188, 188, 192, 192, 208, 213
+	TopLeftChar:		.byte 184, 184, 188, 188, 192, 192, 208, 234
 	TopMiddleChar:		.byte 185, 185, 189, 189, 193, 193, 209, 209
 	TopRightChar:		.byte 000, 188, 000, 192, 196, 156, 212, 212
 	BottomLeftChar:		.byte 187, 187, 191, 191, 195, 195, 000, 000
@@ -828,8 +828,10 @@ FORMATION: {
 
 	
 
-	ResetFlags: {
 
+	CalculateEnemiesLeft: {
+
+		SetDebugBorder(9)
 
 		ldy #0
 		sty EnemiesLeftInStage
@@ -853,16 +855,7 @@ FORMATION: {
 		sty CHARGER.AliensInColumn + 8
 		sty CHARGER.AliensInColumn + 9
 
-		rts
-	}
-
-	CalculateEnemiesLeft: {
-
-		SetDebugBorder(9)
-
-		jsr ResetFlags
-
-		ldy #1
+		iny
 
 		FlyingLoop:
 
@@ -872,8 +865,20 @@ FORMATION: {
 			cmp #RETURNING_TO_SWARM
 			beq DontRemoveYet
 
+			lda ENEMY.Slot, y
+			tax
+
 			lda #0
-			sta FORMATION.Occupied, y
+			sta FORMATION.Occupied, x
+
+			lda FORMATION.Relative_Column, x
+			tax
+			inc CHARGER.AliensInColumn, x
+
+			inc CHARGER.InflightAliens
+			inc EnemiesLeftInStage
+
+			jmp EndFlyingLoop
 
 		DontRemoveYet:
 
@@ -930,6 +935,10 @@ FORMATION: {
 				bcc Loop
 
 			SetDebugBorder(0)
+
+			lda ZP.Counter
+			and #%00011111
+			bne DontOverride
 
 			jsr CalculateExtents
 

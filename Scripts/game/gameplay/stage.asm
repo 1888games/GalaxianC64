@@ -177,7 +177,9 @@ STAGE: {
 
 		lda #0
 
+
 		ldy CHARGER.ExtraFlagships
+		//ldy #2
 		cpy #1
 		beq SkipOne
 
@@ -251,8 +253,22 @@ STAGE: {
 			lda #0
 			sta CurrentStage
 
-		NoWrap:
 
+
+		NoWrap:	
+
+			lda SHIP.Speedrun
+			beq NormalStage
+
+			lda #0
+			sta LIVES.DoSpeed
+
+			lda #1
+			sta SHIP.GameOver
+
+			jsr StopDrone
+
+			jmp END_GAME.Initialise
 	
 		NormalStage:
 

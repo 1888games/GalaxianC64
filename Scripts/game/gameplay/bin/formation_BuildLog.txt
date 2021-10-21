@@ -1,10 +1,10 @@
 parsing
-Got 117 errors while executing:
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 228:15) Unknown symbol 'FORMATION_UNISON'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 308:8) Unknown symbol 'STAGE'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 367:7) Unknown symbol 'ZP'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 372:7) Unknown symbol 'ZP'
-  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 377:7) Unknown symbol 'ZP'
+Got 134 errors while executing:
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 226:15) Unknown symbol 'FORMATION_UNISON'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 306:8) Unknown symbol 'STAGE'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 339:7) Unknown symbol 'ZP'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 353:7) Unknown symbol 'ZP'
+  (/Users/nick/Dropbox/C64/Projects/Backburner/Galaxian/Scripts/game/gameplay/formation.asm 356:7) Unknown symbol 'ZP'
   ...
 
  ExplosionColour: .byte WHITE + 8, YELLOW + 8, YELLOW + 8, YELLOW + 8
@@ -14,6 +14,6 @@ Got 117 errors while executing:
               ^
 
 Error: Unknown symbol 'FORMATION_UNISON'
-at line 228, column 15 in formation.asm
+at line 226, column 15 in formation.asm
 
 

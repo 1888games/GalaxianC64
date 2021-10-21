@@ -42,8 +42,9 @@ MAIN: {
 	#import "game/system/title.asm"
 
 	#import "game/system/demo.asm"
+		#import "game/system/hi_score.asm"
 	* = $f800
-	#import "game/system/hi_score.asm"
+
 
 
 		
@@ -166,7 +167,7 @@ MAIN: {
 
 	
 	LoadScores: {
-
+	
 		jsr DISK.LOAD
 
 		lda LowByte
@@ -537,6 +538,7 @@ MAIN: {
 			jsr BONUS.FrameUpdate
 			jsr BOMBS.FrameUpdate
 			jsr SFX.FrameUpdate
+			jsr LIVES.FrameUpdate
 
 
 		Skip:
@@ -545,7 +547,7 @@ MAIN: {
 			jsr STAGE.FrameUpdate
 			jsr ENEMY.FrameUpdate
 			jsr CHARGER.FrameUpdate
-			jsr LIVES.FrameUpdate
+
 
 			lda IRQ.SidTimer
 			cmp #1
@@ -604,7 +606,6 @@ MAIN: {
 			jsr BOMBS.FrameUpdate
 			jsr LIVES.FrameUpdate
 
-
 			jsr SHIP.FrameUpdate
 			jsr BULLETS.FrameUpdate		
 			
@@ -638,6 +639,11 @@ MAIN: {
 			lda #0
 			sta SCORE.ScoreInitialised
 			sta TITLE.Players
+
+			 lda #0
+            sta $d404               // Sid silent 
+            sta $d404+7 
+            sta $d404+14 
 
 			jsr SCORE.Reset
 
@@ -714,6 +720,11 @@ MAIN: {
 		HiByte:				.byte $01, $01, $00, $00, $00
 		MedByte:			.byte $50, $00, $75, $50, $20
 		LowByte:			.byte $00, $00, $00, $00, $00
+
+		Minutes:			.byte 9
+		TenSeconds:			.byte 5
+		Seconds:			.byte 9
+		Hundreds:			.byte 0
 
 * = $a500 "Game ZP Backup"
 	

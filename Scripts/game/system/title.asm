@@ -9,10 +9,10 @@ TITLE: {
 	TargetRow:	.byte 1
 
 	//CurrentRows:	.byte 25, 26, 36, 38, 43, 47
-	CurrentRows:	.byte 2, 3, 14, 16, 20, 22
+	CurrentRows:	.byte 2, 3, 13, 15, 17, 20, 22
 
-	Columns:		.byte 7, 7, 14, 14, 8, 9
-	Colours:		.byte WHITE, RED, WHITE, WHITE, WHITE, RED
+	Columns:		.byte 7, 7, 14, 14, 14, 8, 9
+	Colours:		.byte WHITE, RED, WHITE, WHITE, WHITE, WHITE, RED
 	Mode:			.byte 1
 	Finishing:		.byte 0
 
@@ -26,6 +26,7 @@ TITLE: {
 	FlipTimer:		.byte 0
 
 	Players:		.byte 0
+	Speedrun:		.byte 0
 	Infinite:		.byte 0
 	DebounceTimer:	.byte 0
 
@@ -71,10 +72,24 @@ TITLE: {
 
 	DrawArrow: {
 
+
+		
+		ldy #12
+		ldx Columns + 2
+
+		lda #32
+		jsr PLOT.PlotCharacter
+
+		ldy #80
+		sta (ZP.ScreenAddress), y
+
+		ldy #160
+		sta (ZP.ScreenAddress), y
+
 		lda Players
 		asl
 		clc
-		adc #13
+		adc #12
 		tay
 
 		ldx Columns + 2
@@ -86,18 +101,6 @@ TITLE: {
 		lda #WHITE
 		jsr PLOT.ColorCharacter
 
-		lda Players
-		eor #%00000001
-		asl
-		clc
-		adc #13
-		tay
-
-		ldx Columns + 2
-
-		lda #32
-
-		jsr PLOT.PlotCharacter
 
 		rts
 	}
@@ -120,7 +123,7 @@ TITLE: {
 			cpy #8
 			bcc Loop
 
-		.label dx_pos = 419
+		.label dx_pos = 379
 
 		lda #71
 		sta SCREEN_RAM + dx_pos
@@ -146,8 +149,8 @@ TITLE: {
 
 		lda Infinite
 		eor #%00000001
-		sta Infinite
-		sta VIC.BORDER_COLOR
+		lda Infinite
+		lda VIC.BORDER_COLOR
 
 		 //nop
 		 //nop
@@ -185,8 +188,23 @@ TITLE: {
 
 		Start:
 
+			lda #0
+			sta SHIP.Speedrun
+
 			lda Players
+			cmp #2
+			bne Normal
+
+			lda #0
 			sta SHIP.TwoPlayer
+
+			inc SHIP.Speedrun
+			jmp Go
+
+		Normal:
+			sta SHIP.TwoPlayer
+
+		Go:
 
 			lda #BLACK
 			sta VIC.BORDER_COLOR
@@ -208,6 +226,11 @@ TITLE: {
 			beq CheckDown
 
 			dec Players
+
+
+			lda #10
+			sta DebounceTimer
+
 			jmp Finish
 
 		CheckDown:
@@ -215,12 +238,16 @@ TITLE: {
 			//jmp Finish
 
 			lda Players
-			bne Finish
+			cmp #2
+			beq Finish
 
 			lda INPUT.JOY_DOWN_NOW, y
 			beq Finish
 
 			inc Players
+
+			lda #10
+			sta DebounceTimer
 		
 		Finish:
 
@@ -259,6 +286,13 @@ TITLE: {
 
 	Initialise: {
 
+		lda HI_SCORE.NeedToSave
+		beq SkipSave
+
+		jsr HI_SCORE.ShowSave
+
+		SkipSave:
+
 		lda #0
 		sta INPUT.FIRE_UP_THIS_FRAME + 1
 		sta LogoColour
@@ -294,17 +328,20 @@ TITLE: {
 		lda #3
 		sta CurrentRows + 1
 
-		lda #14
+		lda #13
 		sta CurrentRows + 2
 
-		lda #16
+		lda #15
 		sta CurrentRows + 3
 
-		lda #20
+		lda #17
 		sta CurrentRows + 4
 
-		lda #22
+		lda #20
 		sta CurrentRows + 5
+
+		lda #22
+		sta CurrentRows + 6
 
 		jsr DrawLogo
 
@@ -316,19 +353,7 @@ TITLE: {
 
 		jsr DrawArrow
 
-		
-
-		// lda #0
-		// sta SpriteX
-		// sta SpriteX + 1
-		// sta SpriteX + 2
-		// sta SpriteX + 3
-		// sta SpriteX + 4
-		// sta SpriteX + 5
-		// sta SpriteX + 6
-		// sta SpriteX + 7
-
-
+	
 
 		rts
 	}
@@ -336,7 +361,7 @@ TITLE: {
 	DrawLogo: {
 
 		
-		lda #6
+		lda #5
 		tay
 
 		ldx #13
@@ -403,7 +428,7 @@ TITLE: {
 		inc DelayTimer
 
 		lda DelayTimer
-		cmp #6
+		cmp #7
 		bcc Ready
 
 		lda #0

@@ -21,6 +21,7 @@ SHIP: {
 	Active:			.byte 0, 0
 	DualFighter:	.byte 0
 	TwoPlayer:		.byte 0
+	Speedrun:		.byte 0
 	MaxShipX:		.byte 232, 216
 	Dead:			.byte 0, 0
 	Docked:			.byte 0
@@ -859,6 +860,9 @@ SHIP: {
 		lda #1
 		sta GameOver
 
+		lda #0
+		sta Speedrun
+
 		jsr StopDrone
 
 		jmp END_GAME.Initialise
@@ -919,6 +923,9 @@ SHIP: {
 			lda #1
 			sta Active
 			sta CanControl
+
+			lda Speedrun
+			sta LIVES.DoSpeed
 
 			lda TwoPlayer
 			sta Active + 1

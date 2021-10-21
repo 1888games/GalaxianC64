@@ -33,6 +33,7 @@ HI_SCORE:  {
 
 
 	Scores:	.byte 0, 0, 0, 0
+	NeedToSave:	.byte 0
 
 	TextIDs:	.byte 49, 50, 51
 
@@ -41,7 +42,7 @@ HI_SCORE:  {
 	InitialPosition:	.byte 0
 	AddColumns:		.byte 6, 0
 	AddColumn:		.byte 0
-	AddRows:		.byte 251, 0
+	AddRows:		.byte 250, 0
 	AddRow:			.byte 0
 
 	Mode:		.byte 0
@@ -91,7 +92,8 @@ HI_SCORE:  {
 
 			lda #0
 			sta VIC.SPRITE_ENABLE
-
+			sta NeedToSave
+		
 			lda #1
 			sta Colour
 
@@ -106,6 +108,26 @@ HI_SCORE:  {
 
 			rts
 
+	}
+
+	ShowSave: {
+
+		jsr UTILITY.ClearScreen
+
+		lda #12
+		sta TextColumn
+
+		lda #12
+		sta TextRow
+
+		ldx #WHITE
+		lda #TEXT.SPECIAL
+
+		jsr TEXT.Draw
+
+		jsr DISK.SAVE
+
+		rts
 	}
 
 
@@ -180,10 +202,99 @@ HI_SCORE:  {
 
 			jsr TEXT.Draw
 
+		Time:
+
+			lda Mode
+			bne Skip
+
+			lda #21
+			sta TextRow
+
+			lda #11
+			sta TextColumn
+
+			ldx #WHITE
+
+			lda #TEXT.PERFECT
+
+			jsr TEXT.Draw
+
+			ldy #23
+			ldx #15
+
+			jsr PLOT.GetCharacter
+
+			ldy #0
+			lda Minutes
+			clc
+			adc #48
+			sta (ZP.ScreenAddress), y
+
+			lda #YELLOW
+			sta (ZP.ColourAddress), y 
+
+			lda #47
+			iny
+			sta (ZP.ScreenAddress), y
+
+			lda #YELLOW
+			sta (ZP.ColourAddress), y 
+
+			iny
+			lda TenSeconds
+			clc
+			adc #48
+			sta (ZP.ScreenAddress), y
+
+			lda #YELLOW
+			sta (ZP.ColourAddress), y 
+
+			iny
+			lda Seconds
+			clc
+			adc #48
+			sta (ZP.ScreenAddress), y
+
+			lda #YELLOW
+			sta (ZP.ColourAddress), y
+
+
+
+			ldy #YELLOW
+			ldx #1
+
+			lda #23
+			sta TextRow
+
+			lda #19
+			sta TextColumn
+
+			lda Hundreds
+
+			jsr TEXT.DrawByteInDigits
+
+			ldy #23
+			ldx #15
+
+			jsr PLOT.GetCharacter
+
+			ldy #4
+			lda #47
+			sta (ZP.ScreenAddress), y
+
+			lda #YELLOW
+			sta (ZP.ColourAddress), y 
+
+
+
+
+		Skip:
 
 		rts
 	}
 
+
+	
 
 	ShowEnterMode: {
 
@@ -196,9 +307,76 @@ HI_SCORE:  {
 	}
 
 
+	CheckTime: {
+
+		lda #0
+		sta NeedToSave
+
+		lda SHIP.Speedrun
+		beq Finish
+
+
+		CheckMins:
+
+			lda LIVES.SpeedMinutes
+			cmp Minutes
+			bcc NewHigh
+			beq CheckTens
+
+			rts
+
+		CheckTens:
+
+			lda LIVES.SpeedTensSeconds
+			cmp TenSeconds
+			bcc NewHigh
+			beq CheckSeconds
+
+			rts
+
+		CheckSeconds:
+
+			lda LIVES.SpeedSeconds
+			cmp Seconds
+			bcc NewHigh
+			beq CheckHundreds
+
+			rts
+
+		CheckHundreds:
+
+			lda LIVES.SpeedHundreds
+			cmp Hundreds
+			bcc NewHigh
+
+			rts
+
+		NewHigh:	
+
+			lda LIVES.SpeedMinutes
+			sta Minutes
+
+			lda LIVES.SpeedTensSeconds
+			sta TenSeconds
+
+			lda LIVES.SpeedSeconds
+			sta Seconds
+
+			lda LIVES.SpeedHundreds
+			sta Hundreds
+
+			lda #1
+			sta NeedToSave
+
+		Finish:
+
+
+		rts
+	}
 
 	Check: {
 
+		jsr CheckTime
 
 		//lda MENU.SelectedOption
 		//sta Screen
@@ -991,7 +1169,7 @@ HI_SCORE:  {
 	            sta $d404+7 
 	            sta $d404+14 
 
-				jsr DISK.SAVE	
+				jsr ShowSave
 
 				lda #0
 				sta VIC.SPRITE_ENABLE
