@@ -29,32 +29,31 @@ Default-segment:
   $1343-$144e Enemies Left
   $144f-$19c8 Offset
   $19c9-$1e66 Hmm
-  $1e67-$2184 Maploader
-  $2185-$29ff Challenge Paths 4-8
-  $2a00-$2a97 VicSpriteTable
-  $2a98-$2d89 IRQ
-  $2d8a-$2e12 Enemy
-  $2e13-$2e42 Enemy Variables
-  $2e43-$2e52 Plan
-  $2e53-$2ee4 Extra
-  $2ee5-$2ee6 Enemies In Wave
-  $2ee7-$2eed Enemy Ship ID
-  $2eee-$3058 Enemies
-  $3059-$3072 Spawn
-  $3073-$3129 Pathfinding
-  $312a-$322e Stage
-  $322f-$329d Check Complete
-  $329e-$3496 ---String Data
-  $3497-$35cc ---Text
-  $35cd-$3a82 Enemy Data
-  $3a83-$3b2f Title
-  $3b30-$3cde Check Left Finish
-  $3cdf-$3ddc Demo
-  $3ddd-$3e07 High Scores
-  $3e08-$4397 Position
+  $1e67-$21ff Maploader
+  $2200-$2297 VicSpriteTable
+  $2298-$2589 IRQ
+  $258a-$2612 Enemy
+  $2613-$2642 Enemy Variables
+  $2643-$2652 Plan
+  $2653-$26e4 Extra
+  $26e5-$26e6 Enemies In Wave
+  $26e7-$26ed Enemy Ship ID
+  $26ee-$2858 Enemies
+  $2859-$2872 Spawn
+  $2873-$2929 Pathfinding
+  $292a-$2a2e Stage
+  $2a2f-$2a9d Check Complete
+  $2a9e-$2c96 ---String Data
+  $2c97-$2dcc ---Text
+  $2dcd-$3282 Enemy Data
+  $3283-$332f Title
+  $3330-$34e1 Check Left Finish
+  $34e2-$35df Demo
+  $35e0-$360a High Scores
+  $360b-$3b9a Position
   $5900-$5a03 Demo Map
   $6000-$6be9 sid
-  $6c00-$6f0b Main
+  $6c00-$6f08 Main
   $7400-$7503 Game Map
   $7504-$7687 Game Tiles
   $7800-$78ff Game Colours

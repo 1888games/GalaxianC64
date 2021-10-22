@@ -27,7 +27,7 @@ MAIN: {
 	#import "game/system/stars.asm"
 
 
-	#import "data/challenge_paths.asm"
+
 	#import "game/system/multiplexor.asm"
 	#import "game/gameplay/enemy.asm"
 	#import "game/gameplay/enemy_variables.asm"
