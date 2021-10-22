@@ -105,6 +105,7 @@ PRE_STAGE: {
 		jsr STAGE.NewGame
 		jsr ENEMY.NewGame
 		jsr CHARGER.NewGame
+		jsr BULLETS.NewGame
 		
 
 		NoShipDecrease:

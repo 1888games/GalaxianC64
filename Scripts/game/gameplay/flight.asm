@@ -392,7 +392,12 @@
 		IsEscort:
 
 			lda ENEMY.Plan + 1
-			bne UseFlagship
+			beq PretendFlagship
+
+			cmp #PLAN_EXPLODE
+			beq PretendFlagship
+
+			jmp UseFlagship
 
 		PretendFlagship:
 
@@ -724,7 +729,12 @@
 		IsEscort:
 
 			lda ENEMY.Plan + 1
-			bne UseFlagship
+			beq PretendFlagship
+
+			cmp #PLAN_EXPLODE
+			beq PretendFlagship
+
+			jmp UseFlagship
 
 		PretendFlagship:
 

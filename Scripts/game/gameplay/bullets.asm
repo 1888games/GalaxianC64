@@ -28,6 +28,18 @@ BULLETS: {
 
 	ActiveBullets:		.byte 0, 0
 
+
+	NewGame: {
+
+		lda #255
+		sta CharX
+		sta CharX + 1
+
+
+
+
+		rts
+	}
 	
 	Fire2: {
 
@@ -314,6 +326,9 @@ BULLETS: {
 
 			lda SHIP.Active, x
 			beq DontShow
+
+			lda SHIP.StartTimer
+			bne DontShow
 
 			lda #YELLOW + 128
 			sta SpriteColor + BulletSpriteID,x

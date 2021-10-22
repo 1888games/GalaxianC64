@@ -2303,3 +2303,43 @@ Sound: Closing device `coreaudio'
 AudioComponentInstanceDispose
 Warning - sync is far too late, resetting sync
 Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+Warning - sync is far too late, resetting sync
+sound (coreaudio_init): Found audio device with no outputs: Built-in Microphone
+sound (coreaudio_init): Found output audio device: Built-in Output (Default)
+sound (coreaudio_init): Found output audio device: DisplayPort
+sound (coreaudio_init): Found output audio device: AirBeamTV Audio
+sound (coreaudio_init): Using output audio device: Built-in Output
+sound (coreaudio_init): audio frame buffer size in samples min: 14.000000 max: 4096.000000 fragment size: 64, chosen: 64
+sound (coreaudio_init): sampling rate conversion 22050Hz->44100Hz
+sound (coreaudio_start): Started
+Sound: Opened device `coreaudio', speed 22050Hz, fragment size 2.90ms, buffer size 40.63ms
+reSID: MOS6581, filter on, sampling rate 22050Hz - resampling, pass to 9922Hz
+Copybuffer increase to 96 bytes
+Warning - sync is far too late, resetting sync
+Initiating render thread 0 shutdown
+Joining render thread 0 ...
+Render thread shutdown
+Joined render thread 0.
+VICE thread initiating shutdown
+VICE thread is exiting
+VICE thread has been joined.
+Writing configuration file `/Users/nick/.config/vice/vicerc'.
+VIC-II: VSP Bug: safe channels are: 045. Emulation of memory corruption is disabled.
+Sound: Closing device `coreaudio'
+AudioComponentInstanceDispose
