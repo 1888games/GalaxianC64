@@ -293,6 +293,8 @@ TITLE: {
 
 		SkipSave:
 
+		jsr UTILITY.ClearScreen
+
 		lda #0
 		sta INPUT.FIRE_UP_THIS_FRAME + 1
 		sta LogoColour

@@ -271,7 +271,7 @@ MAIN: {
 	ShowTitleScreen: {
 
 
-		jsr UTILITY.ClearScreen
+	
 		jsr TITLE.Initialise
 		//jsr LoadScreen
 
