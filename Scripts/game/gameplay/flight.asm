@@ -34,6 +34,15 @@
 		lda #0
 		sta ENEMY.SortieCount, x
 		sta ENEMY.Targeting, x
+		sta ENEMY.IsEscort, x
+
+		cpx #2
+		bcc GetSpeed
+
+		cpx #4
+		bcs GetSpeed
+
+		inc ENEMY.IsEscort, x
 	
 		GetSpeed:
 
@@ -383,11 +392,8 @@
 
 			inc SpriteY, x
 
-			cpx #2
-			bcc NotEscort
-
-			cpx #4
-			bcs NotEscort
+			lda ENEMY.IsEscort, x
+			beq NotEscort
 
 		IsEscort:
 
@@ -720,11 +726,8 @@
 
 		NoFlyOut:
 
-			cpx #2
-			bcc NotEscort
-
-			cpx #4
-			bcs NotEscort
+			lda ENEMY.IsEscort, x
+			beq NotEscort
 
 		IsEscort:
 
@@ -874,6 +877,9 @@
 
 			lda #CONTINUING_ATTACK
 			sta ENEMY.Plan, x
+
+			lda #0
+			sta ENEMY.IsEscort, x
 
 		rts
 	}

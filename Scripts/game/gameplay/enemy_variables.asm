@@ -37,6 +37,7 @@
 	ShootRangeMult:			.fill MAX_ENEMIES, 0
 	XOffset:				.fill MAX_ENEMIES, 0
 	Targeting:				.fill MAX_ENEMIES, 0
+	IsEscort:				.fill MAX_ENEMIES, 0
 
 
 	Quadrant:			.byte 0
