@@ -527,7 +527,23 @@ MAIN: {
 
 			lda IRQ.SidTimer
 			cmp #1
-			beq Skip
+			bne Ship
+
+			// SHIP skips this frame, so a fire press first read now would be gone by the next
+			// frame (fire still held). Unread it, so the next IRQ reads it new
+			ldx #1
+
+		KeepPress:
+
+			lda INPUT.JOY_FIRE_NOW, x
+			eor INPUT.FIRE_UP_THIS_FRAME, x
+			sta INPUT.JOY_FIRE_NOW, x
+			dex
+			bpl KeepPress
+
+			jmp Skip
+
+		Ship:
 
 			jsr PLEXOR.Sort
 			
